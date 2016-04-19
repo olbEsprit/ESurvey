@@ -1,0 +1,993 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ESurveyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AnsweredQuestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SessionId" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AnsweredQuestionsOptions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnswerId" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="bit" />
+          <Property Name="Extended_Answer" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AnswerTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestionAnswers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="Is_hidden" Type="bit" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="QuestionType" Type="int" Nullable="false" />
+          <Property Name="Is_hidden" Type="bit" />
+          <Property Name="Is_matrix" Type="bit" />
+          <Property Name="Parent_Question" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestionTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OwnerId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SurveySessions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="int" Nullable="false" />
+          <Property Name="VoterId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Voters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" />
+          <Property Name="IP" Type="binary" MaxLength="4" />
+        </EntityType>
+        <Association Name="FK__AnsweredQ__Answe__6B24EA82">
+          <End Role="QuestionAnswers" Type="Self.QuestionAnswers" Multiplicity="1" />
+          <End Role="AnsweredQuestionsOptions" Type="Self.AnsweredQuestionsOptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionAnswers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnsweredQuestionsOptions">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnsweredQ__Quest__68487DD7">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="AnsweredQuestions" Type="Self.AnsweredQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnsweredQuestions">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnsweredQ__Quest__6C190EBB">
+          <End Role="AnsweredQuestions" Type="Self.AnsweredQuestions" Multiplicity="1" />
+          <End Role="AnsweredQuestionsOptions" Type="Self.AnsweredQuestionsOptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnsweredQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnsweredQuestionsOptions">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnsweredQ__Sessi__6754599E">
+          <End Role="SurveySessions" Type="Self.SurveySessions" Multiplicity="1" />
+          <End Role="AnsweredQuestions" Type="Self.AnsweredQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveySessions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnsweredQuestions">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuestionA__Quest__5FB337D6">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="QuestionAnswers" Type="Self.QuestionAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuestionAnswers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuestionAn__Type__60A75C0F">
+          <End Role="AnswerTypes" Type="Self.AnswerTypes" Multiplicity="1" />
+          <End Role="QuestionAnswers" Type="Self.QuestionAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuestionAnswers">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Questions__Paren__5AEE82B9">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="Questions1" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions1">
+              <PropertyRef Name="Parent_Question" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Questions__Quest__59FA5E80">
+          <End Role="QuestionTypes" Type="Self.QuestionTypes" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="QuestionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Questions__Surve__59063A47">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveySes__Surve__6383C8BA">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+          <End Role="SurveySessions" Type="Self.SurveySessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SurveySessions">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveySes__Voter__6477ECF3">
+          <End Role="Voters" Type="Self.Voters" Multiplicity="1" />
+          <End Role="SurveySessions" Type="Self.SurveySessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SurveySessions">
+              <PropertyRef Name="VoterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Survey_AspNetUsers_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ESurveyModelStoreContainer">
+          <EntitySet Name="AnsweredQuestions" EntityType="Self.AnsweredQuestions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnsweredQuestionsOptions" EntityType="Self.AnsweredQuestionsOptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnswerTypes" EntityType="Self.AnswerTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionAnswers" EntityType="Self.QuestionAnswers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionTypes" EntityType="Self.QuestionTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Survey" EntityType="Self.Survey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveySessions" EntityType="Self.SurveySessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Voters" EntityType="Self.Voters" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AnsweredQ__Answe__6B24EA82" Association="Self.FK__AnsweredQ__Answe__6B24EA82">
+            <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
+            <End Role="AnsweredQuestionsOptions" EntitySet="AnsweredQuestionsOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnsweredQ__Quest__68487DD7" Association="Self.FK__AnsweredQ__Quest__68487DD7">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnsweredQ__Quest__6C190EBB" Association="Self.FK__AnsweredQ__Quest__6C190EBB">
+            <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
+            <End Role="AnsweredQuestionsOptions" EntitySet="AnsweredQuestionsOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnsweredQ__Sessi__6754599E" Association="Self.FK__AnsweredQ__Sessi__6754599E">
+            <End Role="SurveySessions" EntitySet="SurveySessions" />
+            <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuestionA__Quest__5FB337D6" Association="Self.FK__QuestionA__Quest__5FB337D6">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuestionAn__Type__60A75C0F" Association="Self.FK__QuestionAn__Type__60A75C0F">
+            <End Role="AnswerTypes" EntitySet="AnswerTypes" />
+            <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Questions__Paren__5AEE82B9" Association="Self.FK__Questions__Paren__5AEE82B9">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Questions1" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Questions__Quest__59FA5E80" Association="Self.FK__Questions__Quest__59FA5E80">
+            <End Role="QuestionTypes" EntitySet="QuestionTypes" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Questions__Surve__59063A47" Association="Self.FK__Questions__Surve__59063A47">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveySes__Surve__6383C8BA" Association="Self.FK__SurveySes__Surve__6383C8BA">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="SurveySessions" EntitySet="SurveySessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveySes__Voter__6477ECF3" Association="Self.FK__SurveySes__Voter__6477ECF3">
+            <End Role="Voters" EntitySet="Voters" />
+            <End Role="SurveySessions" EntitySet="SurveySessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Survey_AspNetUsers_Id" Association="Self.FK_Survey_AspNetUsers_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Survey" EntitySet="Survey" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ESurveyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AnsweredQuestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SessionId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK__AnsweredQ__Quest__68487DD7" FromRole="AnsweredQuestions" ToRole="Questions" />
+          <NavigationProperty Name="AnsweredQuestionsOptions" Relationship="Self.FK__AnsweredQ__Quest__6C190EBB" FromRole="AnsweredQuestions" ToRole="AnsweredQuestionsOptions" />
+          <NavigationProperty Name="SurveySessions" Relationship="Self.FK__AnsweredQ__Sessi__6754599E" FromRole="AnsweredQuestions" ToRole="SurveySessions" />
+        </EntityType>
+        <EntityType Name="AnsweredQuestionsOptions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnswerId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="Boolean" />
+          <Property Name="Extended_Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AnsweredQuestions" Relationship="Self.FK__AnsweredQ__Quest__6C190EBB" FromRole="AnsweredQuestionsOptions" ToRole="AnsweredQuestions" />
+          <NavigationProperty Name="QuestionAnswers" Relationship="Self.FK__AnsweredQ__Answe__6B24EA82" FromRole="AnsweredQuestionsOptions" ToRole="QuestionAnswers" />
+        </EntityType>
+        <EntityType Name="AnswerTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="QuestionAnswers" Relationship="Self.FK__QuestionAn__Type__60A75C0F" FromRole="AnswerTypes" ToRole="QuestionAnswers" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Survey" Relationship="Self.FK_Survey_AspNetUsers_Id" FromRole="AspNetUsers" ToRole="Survey" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="QuestionAnswers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Is_hidden" Type="Boolean" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AnsweredQuestionsOptions" Relationship="Self.FK__AnsweredQ__Answe__6B24EA82" FromRole="QuestionAnswers" ToRole="AnsweredQuestionsOptions" />
+          <NavigationProperty Name="AnswerTypes" Relationship="Self.FK__QuestionAn__Type__60A75C0F" FromRole="QuestionAnswers" ToRole="AnswerTypes" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK__QuestionA__Quest__5FB337D6" FromRole="QuestionAnswers" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionType" Type="Int32" Nullable="false" />
+          <Property Name="Is_hidden" Type="Boolean" />
+          <Property Name="Is_matrix" Type="Boolean" />
+          <Property Name="Parent_Question" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AnsweredQuestions" Relationship="Self.FK__AnsweredQ__Quest__68487DD7" FromRole="Questions" ToRole="AnsweredQuestions" />
+          <NavigationProperty Name="QuestionAnswers" Relationship="Self.FK__QuestionA__Quest__5FB337D6" FromRole="Questions" ToRole="QuestionAnswers" />
+          <NavigationProperty Name="Questions1" Relationship="Self.FK__Questions__Paren__5AEE82B9" FromRole="Questions" ToRole="Questions1" />
+          <NavigationProperty Name="Questions2" Relationship="Self.FK__Questions__Paren__5AEE82B9" FromRole="Questions1" ToRole="Questions" />
+          <NavigationProperty Name="QuestionTypes" Relationship="Self.FK__Questions__Quest__59FA5E80" FromRole="Questions" ToRole="QuestionTypes" />
+          <NavigationProperty Name="Survey" Relationship="Self.FK__Questions__Surve__59063A47" FromRole="Questions" ToRole="Survey" />
+        </EntityType>
+        <EntityType Name="QuestionTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK__Questions__Quest__59FA5E80" FromRole="QuestionTypes" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Survey_AspNetUsers_Id" FromRole="Survey" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK__Questions__Surve__59063A47" FromRole="Survey" ToRole="Questions" />
+          <NavigationProperty Name="SurveySessions" Relationship="Self.FK__SurveySes__Surve__6383C8BA" FromRole="Survey" ToRole="SurveySessions" />
+        </EntityType>
+        <EntityType Name="SurveySessions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Int32" Nullable="false" />
+          <Property Name="VoterId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AnsweredQuestions" Relationship="Self.FK__AnsweredQ__Sessi__6754599E" FromRole="SurveySessions" ToRole="AnsweredQuestions" />
+          <NavigationProperty Name="Survey" Relationship="Self.FK__SurveySes__Surve__6383C8BA" FromRole="SurveySessions" ToRole="Survey" />
+          <NavigationProperty Name="Voters" Relationship="Self.FK__SurveySes__Voter__6477ECF3" FromRole="SurveySessions" ToRole="Voters" />
+        </EntityType>
+        <EntityType Name="Voters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IP" Type="Binary" MaxLength="4" FixedLength="true" />
+          <NavigationProperty Name="SurveySessions" Relationship="Self.FK__SurveySes__Voter__6477ECF3" FromRole="Voters" ToRole="SurveySessions" />
+        </EntityType>
+        <Association Name="FK__AnsweredQ__Quest__68487DD7">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="AnsweredQuestions" Type="Self.AnsweredQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnsweredQuestions">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnsweredQ__Quest__6C190EBB">
+          <End Role="AnsweredQuestions" Type="Self.AnsweredQuestions" Multiplicity="1" />
+          <End Role="AnsweredQuestionsOptions" Type="Self.AnsweredQuestionsOptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnsweredQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnsweredQuestionsOptions">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnsweredQ__Sessi__6754599E">
+          <End Role="SurveySessions" Type="Self.SurveySessions" Multiplicity="1" />
+          <End Role="AnsweredQuestions" Type="Self.AnsweredQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveySessions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnsweredQuestions">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnsweredQ__Answe__6B24EA82">
+          <End Role="QuestionAnswers" Type="Self.QuestionAnswers" Multiplicity="1" />
+          <End Role="AnsweredQuestionsOptions" Type="Self.AnsweredQuestionsOptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionAnswers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AnsweredQuestionsOptions">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuestionAn__Type__60A75C0F">
+          <End Role="AnswerTypes" Type="Self.AnswerTypes" Multiplicity="1" />
+          <End Role="QuestionAnswers" Type="Self.QuestionAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuestionAnswers">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Survey_AspNetUsers_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuestionA__Quest__5FB337D6">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="QuestionAnswers" Type="Self.QuestionAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuestionAnswers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Questions__Paren__5AEE82B9">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="Questions1" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions1">
+              <PropertyRef Name="Parent_Question" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Questions__Quest__59FA5E80">
+          <End Role="QuestionTypes" Type="Self.QuestionTypes" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="QuestionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Questions__Surve__59063A47">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveySes__Surve__6383C8BA">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+          <End Role="SurveySessions" Type="Self.SurveySessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SurveySessions">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveySes__Voter__6477ECF3">
+          <End Role="Voters" Type="Self.Voters" Multiplicity="1" />
+          <End Role="SurveySessions" Type="Self.SurveySessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SurveySessions">
+              <PropertyRef Name="VoterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ESurveyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AnsweredQuestions" EntityType="Self.AnsweredQuestions" />
+          <EntitySet Name="AnsweredQuestionsOptions" EntityType="Self.AnsweredQuestionsOptions" />
+          <EntitySet Name="AnswerTypes" EntityType="Self.AnswerTypes" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="QuestionAnswers" EntityType="Self.QuestionAnswers" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" />
+          <EntitySet Name="QuestionTypes" EntityType="Self.QuestionTypes" />
+          <EntitySet Name="Survey" EntityType="Self.Survey" />
+          <EntitySet Name="SurveySessions" EntityType="Self.SurveySessions" />
+          <EntitySet Name="Voters" EntityType="Self.Voters" />
+          <AssociationSet Name="FK__AnsweredQ__Quest__68487DD7" Association="Self.FK__AnsweredQ__Quest__68487DD7">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnsweredQ__Quest__6C190EBB" Association="Self.FK__AnsweredQ__Quest__6C190EBB">
+            <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
+            <End Role="AnsweredQuestionsOptions" EntitySet="AnsweredQuestionsOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnsweredQ__Sessi__6754599E" Association="Self.FK__AnsweredQ__Sessi__6754599E">
+            <End Role="SurveySessions" EntitySet="SurveySessions" />
+            <End Role="AnsweredQuestions" EntitySet="AnsweredQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnsweredQ__Answe__6B24EA82" Association="Self.FK__AnsweredQ__Answe__6B24EA82">
+            <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
+            <End Role="AnsweredQuestionsOptions" EntitySet="AnsweredQuestionsOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuestionAn__Type__60A75C0F" Association="Self.FK__QuestionAn__Type__60A75C0F">
+            <End Role="AnswerTypes" EntitySet="AnswerTypes" />
+            <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Survey_AspNetUsers_Id" Association="Self.FK_Survey_AspNetUsers_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Survey" EntitySet="Survey" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuestionA__Quest__5FB337D6" Association="Self.FK__QuestionA__Quest__5FB337D6">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Questions__Paren__5AEE82B9" Association="Self.FK__Questions__Paren__5AEE82B9">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Questions1" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Questions__Quest__59FA5E80" Association="Self.FK__Questions__Quest__59FA5E80">
+            <End Role="QuestionTypes" EntitySet="QuestionTypes" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Questions__Surve__59063A47" Association="Self.FK__Questions__Surve__59063A47">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveySes__Surve__6383C8BA" Association="Self.FK__SurveySes__Surve__6383C8BA">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="SurveySessions" EntitySet="SurveySessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveySes__Voter__6477ECF3" Association="Self.FK__SurveySes__Voter__6477ECF3">
+            <End Role="Voters" EntitySet="Voters" />
+            <End Role="SurveySessions" EntitySet="SurveySessions" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ESurveyModelStoreContainer" CdmEntityContainer="ESurveyEntities">
+          <EntitySetMapping Name="AnsweredQuestions">
+            <EntityTypeMapping TypeName="ESurveyModel.AnsweredQuestions">
+              <MappingFragment StoreEntitySet="AnsweredQuestions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnsweredQuestionsOptions">
+            <EntityTypeMapping TypeName="ESurveyModel.AnsweredQuestionsOptions">
+              <MappingFragment StoreEntitySet="AnsweredQuestionsOptions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="Extended_Answer" ColumnName="Extended_Answer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnswerTypes">
+            <EntityTypeMapping TypeName="ESurveyModel.AnswerTypes">
+              <MappingFragment StoreEntitySet="AnswerTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="ESurveyModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="ESurveyModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="ESurveyModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="ESurveyModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionAnswers">
+            <EntityTypeMapping TypeName="ESurveyModel.QuestionAnswers">
+              <MappingFragment StoreEntitySet="QuestionAnswers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="Is_hidden" ColumnName="Is_hidden" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="ESurveyModel.Questions">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="QuestionType" ColumnName="QuestionType" />
+                <ScalarProperty Name="Is_hidden" ColumnName="Is_hidden" />
+                <ScalarProperty Name="Is_matrix" ColumnName="Is_matrix" />
+                <ScalarProperty Name="Parent_Question" ColumnName="Parent_Question" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionTypes">
+            <EntityTypeMapping TypeName="ESurveyModel.QuestionTypes">
+              <MappingFragment StoreEntitySet="QuestionTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Survey">
+            <EntityTypeMapping TypeName="ESurveyModel.Survey">
+              <MappingFragment StoreEntitySet="Survey">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveySessions">
+            <EntityTypeMapping TypeName="ESurveyModel.SurveySessions">
+              <MappingFragment StoreEntitySet="SurveySessions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="VoterId" ColumnName="VoterId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Voters">
+            <EntityTypeMapping TypeName="ESurveyModel.Voters">
+              <MappingFragment StoreEntitySet="Voters">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ESurveyModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
