@@ -1,32 +1,33 @@
-﻿using EnergyManager.DAL.Abstract;
-using EnergyManager.Entity;
+﻿using ESurvey.DAL.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ESurvey.DAL.Concrete;
+using ESurvey.Entity;
 
-namespace EnergyManager.DAL.Concrate
+namespace ESurvey.DAL.Concrate
 {
     public class RepositoryHolder : IRepositoryHolder
     {
-        protected EnergyManagerEntities _context; 
-        protected IDeviceGroupRepository _deviceGroupRepository;
-        protected IDeviceInfoRepository _deviceInfoRepository;
-        protected IDeviceRepository _deviceRepository;
-        protected IExceptionLoggerDataRepository _exceptionLoggerDataRepository;
-        protected IRoomRepository _roomRepository;
-        protected IStabilizerRepository _stabilizerRepository;
-        protected ISystemDeviceGroupsRepository _systemDeviceGroupsRepository;
-        protected ISystemDeviceInfoRepository _systemDeviceInfoRepository;
-        protected ISystemDevicesRepository _systemDevicesRepository;
-        protected IUserPremisionsRepository _userPremisionsRepository;
-        protected IUserRoomPremisionsRepository _userRoomPremisionsRepository;
-        protected IUsersRoomRepository _usersRoomRepository;
+        protected ESurveyEntities _context;
 
+        protected IAnsweredQuestionsOptionsRepository _answeredQuestionsOptionsRepository;
+        protected IAnsweredQuestionsRepository _answeredQuestionsRepository;
+        protected IAnswerRepository _answerRepository;
+        protected IQuestionRepository _questionRepository;
+        protected ISurveyRepository _surveyRepository;
+        protected ISurveySessionRepository _surveySessionRepository;
+        protected IUserRepository _userRepository;
+        protected IVoterRepository _voterRepository;
+
+        
+        
+        
         public RepositoryHolder()
         {
-            _context = new EnergyManagerEntities();
+            _context = new ESurveyEntities();
         }
 
         public void Dispose()
@@ -34,128 +35,85 @@ namespace EnergyManager.DAL.Concrate
             _context.Dispose();
         }
 
-        public IDeviceGroupRepository DeviceGroupRepository
-        {
-            get 
-            {
-                if (_deviceGroupRepository == null)
-                    _deviceGroupRepository = new DeviceGroupRepository(_context);
-                return _deviceGroupRepository;
-            }
-        }
-
-        public IDeviceInfoRepository DeviceInfoRepository
+        public IAnsweredQuestionsOptionsRepository AnsweredQuestionsOptionsRepository
         {
             get
             {
-                if (_deviceInfoRepository == null)
-                    _deviceInfoRepository = new DeviceInfoRepository(_context);
-                return _deviceInfoRepository;
+                if(_answeredQuestionsOptionsRepository == null)
+                    _answeredQuestionsOptionsRepository = new AnsweredQuestionsOptionsRepository(_context);
+                return _answeredQuestionsOptionsRepository;
             }
         }
 
-        public IDeviceRepository DeviceRepository
+        public IAnsweredQuestionsRepository AnsweredQuestionsRepository
         {
             get
             {
-                if (_deviceRepository == null)
-                    _deviceRepository = new DeviceRepository(_context);
-                return _deviceRepository;
+                if(_answeredQuestionsRepository == null)
+                    _answeredQuestionsOptionsRepository = new AnsweredQuestionsOptionsRepository(_context);
+                return _answeredQuestionsRepository;
             }
         }
 
-        public IExceptionLoggerDataRepository ExceptionLoggerDataRepository
+        public IAnswerRepository AnswerRepository
         {
             get
             {
-                if (_exceptionLoggerDataRepository == null)
-                    _exceptionLoggerDataRepository = new ExceptionLoggerDataRepository(_context);
-                return _exceptionLoggerDataRepository;
+                if(_answerRepository == null)
+                    _answerRepository = new AnswerRepository(_context);
+                return _answerRepository;
             }
         }
 
-        public IRoomRepository RoomRepository
+        public IQuestionRepository QuestionRepository
         {
             get
             {
-                if (_roomRepository == null)
-                    _roomRepository  = new RoomRepository(_context);
-                return _roomRepository;
+                if(_questionRepository == null)
+                    _questionRepository = new QuestionRepository(_context);
+                return _questionRepository;
             }
         }
 
-        public IStabilizerRepository StabilizerRepository
+        public ISurveyRepository SurveyRepository
         {
             get
             {
-                if (_stabilizerRepository == null)
-                    _stabilizerRepository = new StabilizerRepository(_context);
-                return _stabilizerRepository;
+                if(_surveyRepository == null)
+                    _surveyRepository = new SurveyRepository(_context);
+                return _surveyRepository;
             }
         }
 
-        public ISystemDeviceGroupsRepository SystemDeviceGroupsRepository
+        public ISurveySessionRepository SurveySessionRepository
         {
             get
             {
-                if (_systemDeviceGroupsRepository == null)
-                    _systemDeviceGroupsRepository = new SystemDeviceGroupsRepository(_context);
-                return _systemDeviceGroupsRepository;
+                if(_surveySessionRepository == null)
+                    _surveySessionRepository = new SurveySessionRepository(_context);
+                return _surveySessionRepository;
             }
         }
 
-        public ISystemDeviceInfoRepository SystemDeviceInfoRepository
+        public IUserRepository UserRepository
         {
             get
             {
-                if (_systemDeviceInfoRepository == null)
-                    _systemDeviceInfoRepository = new SystemDeviceInfoRepository(_context);
-                return _systemDeviceInfoRepository;
+                if(_userRepository == null)
+                    _userRepository = new UserRepository(_context);
+                return _userRepository;
             }
         }
 
-        public ISystemDevicesRepository SystemDevicesRepository
+        public IVoterRepository VoterRepository
         {
             get
             {
-                if (_systemDevicesRepository == null)
-                    _systemDevicesRepository = new SystemDevicesRepository(_context);
-                return _systemDevicesRepository;
+                if(_voterRepository == null)
+                    _voterRepository = new VoterRepository(_context);
+                return _voterRepository;
             }
         }
-        
-
-        public IUserPremisionsRepository UserPremisionsRepository
-        {
-            get
-            {
-                if (_userPremisionsRepository == null)
-                    _userPremisionsRepository = new UserPremisionsRepository(_context);
-                return _userPremisionsRepository;
-            }
-        }
-
-        public IUserRoomPremisionsRepository UserRoomPremisionsRepository
-        {
-            get
-            {
-
-                if (_userRoomPremisionsRepository == null)
-                    _userRoomPremisionsRepository = new UserRoomPremisionsRepository(_context);
-                return _userRoomPremisionsRepository;
-            }
-        }
-
-        public IUsersRoomRepository UsersRoomRepository
-        {
-            get
-            {
-                if (_usersRoomRepository == null)
-                    _usersRoomRepository = new UsersRoomRepository(_context);
-                return _usersRoomRepository;
-            }
-        }
-
 
         public async Task SaveChangesAsync()
         {
