@@ -16,6 +16,18 @@ namespace ESurvey.DAL.Abstract
     {
 
         /// <summary>
+        /// Delete collection of records by expression
+        /// </summary>
+        /// <param name="predicate"></param>
+        void RemoveBy(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
+        /// Delete collection of records
+        /// </summary>
+        /// <param name="items"></param>
+        void RemoveRange(IEnumerable<T> items);
+
+        /// <summary>
         /// Method for insert data at DB 
         /// </summary>
         /// <param name="item">Entity object</param>

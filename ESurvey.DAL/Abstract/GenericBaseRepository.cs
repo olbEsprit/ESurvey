@@ -42,12 +42,25 @@ namespace ESurvey.DAL.Abstract
 
         public void Update(T item)
         {
-            _dbContext.Entry(item).State = EntityState.Modified;
+            _dbContext.Entry(item).State =  EntityState.Modified;
         }
+
+
 
         public void Remove(T item)
         {
             _dbContext.Set<T>().Remove(item);
+        }
+
+        public void RemoveBy(Expression<Func<T, bool>> predicate)
+        {
+            var set = _dbContext.Set<T>().Where(predicate);
+            _dbContext.Set<T>().RemoveRange(set);
+        }
+
+        public void RemoveRange(IEnumerable<T> items)
+        {
+            _dbContext.Set<T>().RemoveRange(items);
         }
 
         #endregion
@@ -75,7 +88,7 @@ namespace ESurvey.DAL.Abstract
         }
 
 
-
+        
 
 
         public async Task<List<T>> FetchAsync()
