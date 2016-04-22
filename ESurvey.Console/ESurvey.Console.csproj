@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1AF7FE88-5B91-4F44-9316-9B53503DBCC5}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{1D1BD61B-F52F-4D02-A3E9-48DC13F3B48B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ESurvey.BL</RootNamespace>
-    <AssemblyName>ESurvey.BL</AssemblyName>
+    <RootNamespace>ESurvey.Console</RootNamespace>
+    <AssemblyName>ESurvey.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,7 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,16 +52,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concrete\SurveyAccessManager.cs" />
-    <Compile Include="Concrete\SurveyEditor.cs" />
-    <Compile Include="Mappers\AnswerMapper.cs" />
-    <Compile Include="Mappers\QuestionMapper.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Abstract\" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESurvey.BL\ESurvey.BL.csproj">
+      <Project>{1af7fe88-5b91-4f44-9316-9b53503dbcc5}</Project>
+      <Name>ESurvey.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESurvey.Common\ESurvey.Common.csproj">
+      <Project>{9c94f0e1-6935-441c-85c5-494aa423ca93}</Project>
+      <Name>ESurvey.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESurvey.DAL\ESurvey.DAL.csproj">
       <Project>{c3c79d64-e972-4d38-84d8-feb0ae9cc5b4}</Project>
       <Name>ESurvey.DAL</Name>

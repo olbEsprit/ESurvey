@@ -25,6 +25,7 @@ namespace ESurvey.Entity
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AnsweredQuestions> AnsweredQuestions { get; set; }
         public virtual DbSet<AnsweredQuestionsOptions> AnsweredQuestionsOptions { get; set; }
         public virtual DbSet<AnswerTypes> AnswerTypes { get; set; }

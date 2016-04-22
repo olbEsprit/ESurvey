@@ -26,9 +26,9 @@ namespace ESurvey.Entity
         public int SurveyId { get; set; }
         public string Title { get; set; }
         public int QuestionType { get; set; }
-        public Nullable<bool> Is_hidden { get; set; }
-        public Nullable<bool> Is_matrix { get; set; }
-        public int Parent_Question { get; set; }
+        public bool Is_hidden { get; set; }
+        public bool Is_matrix { get; set; }
+        public Nullable<int> Parent_Question { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnsweredQuestions> AnsweredQuestions { get; set; }

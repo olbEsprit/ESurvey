@@ -22,7 +22,7 @@ namespace ESurvey.Entity
     
         public int Id { get; set; }
         public int QuestionId { get; set; }
-        public Nullable<bool> Is_hidden { get; set; }
+        public bool Is_hidden { get; set; }
         public string Title { get; set; }
         public int Type { get; set; }
     

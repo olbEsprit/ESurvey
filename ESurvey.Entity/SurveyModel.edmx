@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="ESurveyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
         <EntityType Name="AnsweredQuestions">
           <Key>
             <PropertyRef Name="Id" />
@@ -87,7 +97,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuestionId" Type="int" Nullable="false" />
-          <Property Name="Is_hidden" Type="bit" />
+          <Property Name="Is_hidden" Type="bit" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="Type" Type="int" Nullable="false" />
         </EntityType>
@@ -99,9 +109,9 @@
           <Property Name="SurveyId" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="QuestionType" Type="int" Nullable="false" />
-          <Property Name="Is_hidden" Type="bit" />
-          <Property Name="Is_matrix" Type="bit" />
-          <Property Name="Parent_Question" Type="int" Nullable="false" />
+          <Property Name="Is_hidden" Type="bit" Nullable="false" />
+          <Property Name="Is_matrix" Type="bit" Nullable="false" />
+          <Property Name="Parent_Question" Type="int" />
         </EntityType>
         <EntityType Name="QuestionTypes">
           <Key>
@@ -206,8 +216,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Questions__Paren__5AEE82B9">
-          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+        <Association Name="FK__Questions__Paren__6E01572D">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="0..1" />
           <End Role="Questions1" Type="Self.Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
@@ -335,6 +345,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ESurveyModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnsweredQuestions" EntityType="Self.AnsweredQuestions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnsweredQuestionsOptions" EntityType="Self.AnsweredQuestionsOptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnswerTypes" EntityType="Self.AnswerTypes" Schema="dbo" store:Type="Tables" />
@@ -373,7 +384,7 @@
             <End Role="AnswerTypes" EntitySet="AnswerTypes" />
             <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Questions__Paren__5AEE82B9" Association="Self.FK__Questions__Paren__5AEE82B9">
+          <AssociationSet Name="FK__Questions__Paren__6E01572D" Association="Self.FK__Questions__Paren__6E01572D">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Questions1" EntitySet="Questions" />
           </AssociationSet>
@@ -419,6 +430,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ESurveyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="AnsweredQuestions">
           <Key>
             <PropertyRef Name="Id" />
@@ -506,7 +527,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QuestionId" Type="Int32" Nullable="false" />
-          <Property Name="Is_hidden" Type="Boolean" />
+          <Property Name="Is_hidden" Type="Boolean" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AnsweredQuestionsOptions" Relationship="Self.FK__AnsweredQ__Answe__6B24EA82" FromRole="QuestionAnswers" ToRole="AnsweredQuestionsOptions" />
@@ -521,13 +542,13 @@
           <Property Name="SurveyId" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="QuestionType" Type="Int32" Nullable="false" />
-          <Property Name="Is_hidden" Type="Boolean" />
-          <Property Name="Is_matrix" Type="Boolean" />
-          <Property Name="Parent_Question" Type="Int32" Nullable="false" />
+          <Property Name="Is_hidden" Type="Boolean" Nullable="false" />
+          <Property Name="Is_matrix" Type="Boolean" Nullable="false" />
+          <Property Name="Parent_Question" Type="Int32" />
           <NavigationProperty Name="AnsweredQuestions" Relationship="Self.FK__AnsweredQ__Quest__68487DD7" FromRole="Questions" ToRole="AnsweredQuestions" />
           <NavigationProperty Name="QuestionAnswers" Relationship="Self.FK__QuestionA__Quest__5FB337D6" FromRole="Questions" ToRole="QuestionAnswers" />
-          <NavigationProperty Name="Questions1" Relationship="Self.FK__Questions__Paren__5AEE82B9" FromRole="Questions" ToRole="Questions1" />
-          <NavigationProperty Name="Questions2" Relationship="Self.FK__Questions__Paren__5AEE82B9" FromRole="Questions1" ToRole="Questions" />
+          <NavigationProperty Name="Questions1" Relationship="Self.FK__Questions__Paren__6E01572D" FromRole="Questions" ToRole="Questions1" />
+          <NavigationProperty Name="Questions2" Relationship="Self.FK__Questions__Paren__6E01572D" FromRole="Questions1" ToRole="Questions" />
           <NavigationProperty Name="QuestionTypes" Relationship="Self.FK__Questions__Quest__59FA5E80" FromRole="Questions" ToRole="QuestionTypes" />
           <NavigationProperty Name="Survey" Relationship="Self.FK__Questions__Surve__59063A47" FromRole="Questions" ToRole="Survey" />
         </EntityType>
@@ -682,8 +703,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Questions__Paren__5AEE82B9">
-          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+        <Association Name="FK__Questions__Paren__6E01572D">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="0..1" />
           <End Role="Questions1" Type="Self.Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
@@ -747,6 +768,7 @@
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
         </Association>
         <EntityContainer Name="ESurveyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AnsweredQuestions" EntityType="Self.AnsweredQuestions" />
           <EntitySet Name="AnsweredQuestionsOptions" EntityType="Self.AnsweredQuestionsOptions" />
           <EntitySet Name="AnswerTypes" EntityType="Self.AnswerTypes" />
@@ -796,7 +818,7 @@
             <End Role="Questions" EntitySet="Questions" />
             <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Questions__Paren__5AEE82B9" Association="Self.FK__Questions__Paren__5AEE82B9">
+          <AssociationSet Name="FK__Questions__Paren__6E01572D" Association="Self.FK__Questions__Paren__6E01572D">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Questions1" EntitySet="Questions" />
           </AssociationSet>
@@ -827,6 +849,16 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ESurveyModelStoreContainer" CdmEntityContainer="ESurveyEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="ESurveyModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AnsweredQuestions">
             <EntityTypeMapping TypeName="ESurveyModel.AnsweredQuestions">
               <MappingFragment StoreEntitySet="AnsweredQuestions">
