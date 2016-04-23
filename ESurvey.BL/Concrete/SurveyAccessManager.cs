@@ -16,15 +16,7 @@ namespace ESurvey.BL.Concrete
         private const string _alg = "HmacSHA256";
         private const string _salt = "rz8LuOtFBXphj9WQfvFh";
 
-        public async Task<IEnumerable<Survey>> GetUserSurveys(string ownerId)
-        {
-            using (var holder = new RepositoryHolder())
-            {
-                return await holder.SurveyRepository.FetchByAsync(s => s.OwnerId == ownerId);
-            }
-        }
-
-
+        
         public async Task<bool> HasAccess(string userId, int surveyId)
         {
             using (var holder = new RepositoryHolder())
@@ -34,9 +26,41 @@ namespace ESurvey.BL.Concrete
             }
         }
 
+        public async Task<string> GetIdFromToken(string token)
+        {
 
-        
+            using (var holder = new RepositoryHolder())
+            {
+                var tokens = await holder.TokenRepository.FetchByAsync(t=>t.Value==token);
+                var tok = tokens.FirstOrDefault();
+                if (tok == null || tok.Expires<DateTime.Now)
+                {
+                    return null;
+                }
+                else
+                {
+                    return tok.UserId;
+                }
+            }
+        }
 
+        public async Task RegisterToken(string userId, string token, DateTime expires)
+        {
+            var Token = new UserToken()
+            {
+                UserId = userId,
+                Value = token,
+                Expires = expires
+            };
+
+            using (var holder = new RepositoryHolder())
+            {
+                holder.TokenRepository.Insert(Token);
+                await holder.SaveChangesAsync();
+            }
+
+
+        } 
 
         public static string GenerateToken(string username, string password, string ip, string userAgent, long ticks)
         {
@@ -56,7 +80,6 @@ namespace ESurvey.BL.Concrete
 
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Join(":", hashLeft, hashRight)));
         }
-
 
     }
     

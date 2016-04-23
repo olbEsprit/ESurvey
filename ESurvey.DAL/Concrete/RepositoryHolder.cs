@@ -21,7 +21,7 @@ namespace ESurvey.DAL.Concrate
         protected ISurveySessionRepository _surveySessionRepository;
         protected IUserRepository _userRepository;
         protected IVoterRepository _voterRepository;
-
+        protected ITokenRepository _tokenRepository;
         
         
         
@@ -112,6 +112,17 @@ namespace ESurvey.DAL.Concrate
                 if(_voterRepository == null)
                     _voterRepository = new VoterRepository(_context);
                 return _voterRepository;
+            }
+        }
+
+
+        public ITokenRepository TokenRepository
+        {
+            get
+            {
+                if (_tokenRepository == null)
+                    _tokenRepository = new TokenRepository(_context);
+                return _tokenRepository;
             }
         }
 

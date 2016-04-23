@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ESurveyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ESurveyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -135,6 +135,15 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SurveyId" Type="int" Nullable="false" />
           <Property Name="VoterId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Value" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Expires" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Voters">
           <Key>
@@ -276,6 +285,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__UserToken__UserI__71D1E811">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="UserToken" Type="Self.UserToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserToken">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -359,6 +380,7 @@
           <EntitySet Name="QuestionTypes" EntityType="Self.QuestionTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Survey" EntityType="Self.Survey" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SurveySessions" EntityType="Self.SurveySessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserToken" EntityType="Self.UserToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Voters" EntityType="Self.Voters" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__AnsweredQ__Answe__6B24EA82" Association="Self.FK__AnsweredQ__Answe__6B24EA82">
             <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
@@ -404,6 +426,10 @@
             <End Role="Voters" EntitySet="Voters" />
             <End Role="SurveySessions" EntitySet="SurveySessions" />
           </AssociationSet>
+          <AssociationSet Name="FK__UserToken__UserI__71D1E811" Association="Self.FK__UserToken__UserI__71D1E811">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserToken" EntitySet="UserToken" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -425,8 +451,7 @@
             <End Role="Survey" EntitySet="Survey" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ESurveyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -520,6 +545,7 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Survey" Relationship="Self.FK_Survey_AspNetUsers_Id" FromRole="AspNetUsers" ToRole="Survey" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="UserToken" Relationship="ESurveyModel.FK__UserToken__UserI__71D1E811" FromRole="AspNetUsers" ToRole="UserToken" />
         </EntityType>
         <EntityType Name="QuestionAnswers">
           <Key>
@@ -842,7 +868,34 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="UserToken" EntityType="ESurveyModel.UserToken" />
+          <AssociationSet Name="FK__UserToken__UserI__71D1E811" Association="ESurveyModel.FK__UserToken__UserI__71D1E811">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserToken" EntitySet="UserToken" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="UserToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Expires" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ESurveyModel.FK__UserToken__UserI__71D1E811" FromRole="UserToken" ToRole="AspNetUsers" />
+        </EntityType>
+        <Association Name="FK__UserToken__UserI__71D1E811">
+          <End Type="ESurveyModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="ESurveyModel.UserToken" Role="UserToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserToken">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -999,6 +1052,16 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="UserToken">
+            <EntityTypeMapping TypeName="ESurveyModel.UserToken">
+              <MappingFragment StoreEntitySet="UserToken">
+                <ScalarProperty Name="Expires" ColumnName="Expires" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

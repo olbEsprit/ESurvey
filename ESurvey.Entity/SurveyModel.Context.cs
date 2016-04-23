@@ -39,5 +39,6 @@ namespace ESurvey.Entity
         public virtual DbSet<Survey> Survey { get; set; }
         public virtual DbSet<SurveySessions> SurveySessions { get; set; }
         public virtual DbSet<Voters> Voters { get; set; }
+        public virtual DbSet<UserToken> UserToken { get; set; }
     }
 }

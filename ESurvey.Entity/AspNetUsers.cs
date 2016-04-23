@@ -21,6 +21,7 @@ namespace ESurvey.Entity
             this.AspNetUserLogins = new HashSet<AspNetUserLogins>();
             this.Survey = new HashSet<Survey>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
+            this.UserToken = new HashSet<UserToken>();
         }
     
         public string Id { get; set; }
@@ -44,5 +45,7 @@ namespace ESurvey.Entity
         public virtual ICollection<Survey> Survey { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserToken> UserToken { get; set; }
     }
 }

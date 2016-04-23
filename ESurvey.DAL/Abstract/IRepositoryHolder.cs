@@ -18,6 +18,7 @@ namespace ESurvey.DAL.Abstract
         ISurveySessionRepository SurveySessionRepository {get;}
         IUserRepository UserRepository { get; }
         IVoterRepository VoterRepository { get; }
+        ITokenRepository TokenRepository { get; }
         
         Task SaveChangesAsync();
         void SaveChanges();

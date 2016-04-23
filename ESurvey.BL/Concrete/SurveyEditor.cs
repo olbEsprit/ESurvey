@@ -20,8 +20,6 @@ namespace ESurvey.BL.Concrete
 
         public SurveyAccessManager AccessManager { get; set; }
         
-
-
         public async void CreateSurvey(SurveyUIModel surveyModel)
         {
             using (var holder = new RepositoryHolder())
@@ -59,7 +57,7 @@ namespace ESurvey.BL.Concrete
             }
         }
 
-        public async void AlterQuestion(AlterQuestionRequest request)
+        public async void UpdateQuestion(AlterQuestionRequest request)
         {
             using (var holder = new RepositoryHolder())
             {
@@ -103,6 +101,7 @@ namespace ESurvey.BL.Concrete
         }
 
 
+
         public async Task<QuestionUIModel>  GetQuestion(int id)
         {
             using (var holder = new RepositoryHolder())
@@ -124,7 +123,13 @@ namespace ESurvey.BL.Concrete
             }
         }
 
-
+        public async Task<IEnumerable<Survey>> GetUserSurveys(string ownerId)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+                return await holder.SurveyRepository.FetchByAsync(s => s.OwnerId == ownerId);
+            }
+        }
 
 
 

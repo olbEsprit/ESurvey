@@ -34,6 +34,8 @@
         <AssociationConnector Association="ESurveyModel.FK__SurveySes__Surve__6383C8BA" ManuallyRouted="false" />
         <AssociationConnector Association="ESurveyModel.FK__SurveySes__Voter__6477ECF3" ManuallyRouted="false" />
         <AssociationConnector Association="ESurveyModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ESurveyModel.UserToken" Width="1.5" PointX="5.25" PointY="1.5" />
+        <AssociationConnector Association="ESurveyModel.FK__UserToken__UserI__71D1E811" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -58,6 +58,7 @@
     <Compile Include="Abstract\IRepositoryHolder.cs" />
     <Compile Include="Abstract\ISurveyRepository.cs" />
     <Compile Include="Abstract\ISurveySessionRepository.cs" />
+    <Compile Include="Abstract\ITokenRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Abstract\IVoterRepository.cs" />
     <Compile Include="Concrete\AnsweredQuestionsOptionsRepository.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Concrete\RepositoryHolder.cs" />
     <Compile Include="Concrete\SurveyRepository.cs" />
     <Compile Include="Concrete\SurveySessionRepository.cs" />
+    <Compile Include="Concrete\TokenRepository.cs" />
     <Compile Include="Concrete\UserRepository.cs" />
     <Compile Include="Concrete\VoterRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -106,6 +106,9 @@
     <Compile Include="SurveySessions.cs">
       <DependentUpon>SurveyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserToken.cs">
+      <DependentUpon>SurveyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Voters.cs">
       <DependentUpon>SurveyModel.tt</DependentUpon>
     </Compile>
