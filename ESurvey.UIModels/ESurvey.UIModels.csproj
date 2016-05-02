@@ -50,7 +50,9 @@
     <Compile Include="SurveyEditor\AnswerUIModel.cs" />
     <Compile Include="SurveyEditor\QuestionUIModel.cs" />
     <Compile Include="SurveyEditor\SurveyUIModel.cs" />
+    <Compile Include="SurveyLinkUi.cs" />
     <Compile Include="SurveyRequest.cs" />
+    <Compile Include="ViewModels\ProfileUiModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
