@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlterQuestionRequest.cs" />
+    <Compile Include="CreateResult.cs" />
+    <Compile Include="CreateSurveyRequestUi.cs" />
     <Compile Include="DataResult.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Result.cs" />

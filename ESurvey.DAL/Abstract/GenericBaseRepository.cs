@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq.Expressions;
 
 
@@ -45,7 +46,7 @@ namespace ESurvey.DAL.Abstract
             _dbContext.Entry(item).State =  EntityState.Modified;
         }
 
-
+        
 
         public void Remove(T item)
         {
@@ -58,6 +59,7 @@ namespace ESurvey.DAL.Abstract
             _dbContext.Set<T>().RemoveRange(set);
         }
 
+        
         public void RemoveRange(IEnumerable<T> items)
         {
             _dbContext.Set<T>().RemoveRange(items);

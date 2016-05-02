@@ -16,122 +16,97 @@ namespace ESurvey.BL.Concrete
     public class SurveyEditor
     {
 
-        
 
-        public SurveyAccessManager AccessManager { get; set; }
-        
-        public async void CreateSurvey(SurveyUIModel surveyModel)
-        {
-            using (var holder = new RepositoryHolder())
-            {
-                var survey = new Survey
-                {
-                    Title = surveyModel.Title,
-                    OwnerId = surveyModel.OwnerId
-                };
+    //    private SurveyAccessManager _accessManager;
 
-                holder.SurveyRepository.Insert(survey);
-                await holder.SaveChangesAsync();
-            }
-        }
+        //public SurveyAccessManager AccessManager
+        //{
+        //    get { return _accessManager; }
+        //}
 
-        public async void DeleteSurvey(int id)
-        {
-            using (var holder = new RepositoryHolder())
-            {
-                holder.SurveyRepository.RemoveBy(s => s.Id == id);
-                await holder.SaveChangesAsync();
-            }
-        }
+        //public SurveyEditor(SurveyAccessManager manager)
+        //{
+        //    _accessManager = manager;
+        //}
+
 
         
 
-        public async void CreateQuestion(QuestionUIModel question)
-        {
-
-            using (var holder = new RepositoryHolder())
-            {                
-                var entry = new QuestionMapper().UIToEntity(question);
-                holder.QuestionRepository.Insert(entry);
-                await holder.SaveChangesAsync();
-            }
-        }
-
-        public async void UpdateQuestion(AlterQuestionRequest request)
-        {
-            using (var holder = new RepositoryHolder())
-            {
-                var questionMapper = new QuestionMapper();
-                var question = questionMapper.UIToEntity(request.Question);
-
-
-                question.SurveyId = request.SurveyId;
-                holder.QuestionRepository.Update(question);
-                
-
-                
-                var aMapper = new AnswerMapper();
-                foreach (var answer in aMapper.UIToEntity(request.Answers))
-                {
-                    answer.QuestionId = question.Id;
-                    if (answer.Id != 0)
-                    {
-                        holder.AnswerRepository.Update(answer);
-                    }
-                    else
-                    {
-                        holder.AnswerRepository.Insert(answer);
-                    }
-                }
-
-                var deleteId = request.DeletedAnswersID;
-                holder.AnswerRepository.RemoveBy(a => deleteId.Contains(a.Id));
-
-                await holder.SaveChangesAsync();
-            }
-        }
-
-        public async void DeleteQuestion(int id)
-        {
-            using (var holder = new RepositoryHolder())
-            {
-                holder.QuestionRepository.RemoveBy(q => q.Id == id);
-                await holder.SaveChangesAsync();
-            }
-        }
+        //public async Task<SurveyUiModel> GetSurveyData(int surveyId)
+        //{
+        //    using (var holder = new RepositoryHolder())
+        //    {
+        //       // holder.
+        //    }
+        //}
 
 
 
-        public async Task<QuestionUIModel>  GetQuestion(int id)
+
+
+
+
+        public async Task<QuestionUiModel> GetQuestionAgregate(int id)
         {
             using (var holder = new RepositoryHolder())
             {
                 var questions = holder.QuestionRepository;
                 var question = await questions.GetByIdAsync(id);
+                var qMapper = new QuestionMapper();
+                var uiQuestion = qMapper.EntityToUi(question);
 
-                //var subquestions = await questions.FetchByAsync(q => q.Parent_Question == question.Id);
+                if (question.Is_matrix)
+                {
+                    var children = await questions.FetchByAsync(q => q.Parent_Question == question.Id);
+                    uiQuestion.Children = children.Select(q=>qMapper.EntityToUi(q)).ToList();
+                }
+
+
                 var answers = await holder.AnswerRepository.FetchByAsync(a => a.QuestionId == question.Id);
-
-                var UIQuestion = new QuestionMapper().EntityToUI(question);
-                
                 var aMapper = new AnswerMapper();
 
-                UIQuestion.Answers = aMapper.EntityToUI(answers);
+                
 
-                return UIQuestion;
+
+
+                return uiQuestion;
 
             }
         }
 
-        public async Task<IEnumerable<Survey>> GetUserSurveys(string ownerId)
+
+
+
+
+
+
+
+        public async Task<List<AnswerUiModel>> GetQuestionAnswers(int questionId)
         {
             using (var holder = new RepositoryHolder())
             {
-                return await holder.SurveyRepository.FetchByAsync(s => s.OwnerId == ownerId);
+                var answers = await holder.AnswerRepository.FetchByAsync(a => a.QuestionId == questionId);
+                var mapper = new AnswerMapper();
+                return answers.Select(a => mapper.EntityToUi(a)).ToList();
             }
         }
+        
 
+        public async Task<List<QuestionUiModel>> GetSurveyMajorQuestions(int surveyId)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+                var questions = await holder.QuestionRepository
+                    .FetchByAsync(
+                    q=> q.SurveyId == surveyId &&
+                    q.Parent_Question==null);
 
+                var mapper = new QuestionMapper();
+                return questions.Select(s => mapper.EntityToUi(s)).ToList();
+            }
+        } 
+
+        
 
     }
 

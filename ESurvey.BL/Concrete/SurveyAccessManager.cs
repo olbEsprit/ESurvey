@@ -13,20 +13,56 @@ namespace ESurvey.BL.Concrete
     
     public class SurveyAccessManager
     {
-        private const string _alg = "HmacSHA256";
-        private const string _salt = "rz8LuOtFBXphj9WQfvFh";
+        private const string Alg = "HmacSHA256";
+        private const string Salt = "rz8LuOtFBXphj9WQfvFh";
 
         
-        public async Task<bool> HasAccess(string userId, int surveyId)
+        public async Task<bool> HasAccessToSurvey(string userId, int surveyId)
         {
             using (var holder = new RepositoryHolder())
             {
                 var survey = await holder.SurveyRepository.GetByIdAsync(surveyId);
+
+                if (survey == null)
+                    return false;
+
                 return survey.OwnerId == userId;
             }
         }
 
-        public async Task<string> GetIdFromToken(string token)
+
+        public async Task<bool> HasAccessToQuestion(string userId, int questionId)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+                var question = await holder.QuestionRepository.GetByIdAsync(questionId);
+                if (question == null)
+                    return false;
+
+                var survey = await holder.SurveyRepository.GetByIdAsync(question.SurveyId);
+                return survey.OwnerId == userId;
+            }
+        }
+
+
+        public async Task<bool> HasAccessToAnswer(string userId, int answerId)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+                var answer = await holder.AnswerRepository.GetByIdAsync(answerId);
+                if (answer == null)
+                    return false;
+
+                var question = await holder.QuestionRepository.GetByIdAsync(answer.QuestionId);
+                
+
+                var survey = await holder.SurveyRepository.GetByIdAsync(question.SurveyId);
+                return survey.OwnerId == userId;
+            }
+        } 
+
+
+        public async Task<string> GetUserIdFromToken(string token)
         {
 
             using (var holder = new RepositoryHolder())
@@ -68,7 +104,7 @@ namespace ESurvey.BL.Concrete
             string hashLeft = "";
             string hashRight = "";
 
-            using (HMAC hmac = HMACSHA256.Create(_alg))
+            using (HMAC hmac = HMACSHA256.Create(Alg))
             {
                 hmac.Key = Encoding.UTF8.GetBytes(password);
                 hmac.ComputeHash(Encoding.UTF8.GetBytes(hash));

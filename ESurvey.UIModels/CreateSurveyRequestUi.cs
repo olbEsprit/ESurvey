@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ESurvey.UIModels
 {
-    public class Request
+    public class CreateSurveyRequestUi
     {
-        public string UserToken { get; set; }
-        public int SurveyId { get; set; }
+        public string Name { get; set; } = "Untitled";
 
-      //  public TData Data { get; set; }
+        
+
+
     }
 }

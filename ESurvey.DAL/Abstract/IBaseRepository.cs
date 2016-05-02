@@ -21,6 +21,9 @@ namespace ESurvey.DAL.Abstract
         /// <param name="predicate"></param>
         void RemoveBy(Expression<Func<T, bool>> predicate);
 
+
+       // void RemoveById(int id);
+
         /// <summary>
         /// Delete collection of records
         /// </summary>
@@ -90,6 +93,7 @@ namespace ESurvey.DAL.Abstract
         /// <returns>Reccord from current entity by id</returns>
         T GetById(int id);
 
+        
 
         Task<int> GetCountAsync();
         Task<T> GetByIdAsync(int id);

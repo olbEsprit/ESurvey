@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESurvey.UIModels.SurveyEditor
 {
-    public class SurveyUIModel
+    public class SurveyUiModel
     {
         public int Id { get; set; }
         public string OwnerId { get; set; }

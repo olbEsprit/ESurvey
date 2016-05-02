@@ -9,6 +9,6 @@ namespace ESurvey.UIModels
 {
     public class SurveyRequest:Request
     {
-       public SurveyUIModel Survey { get; set; }
+       public SurveyUiModel Survey { get; set; }
     }
 }

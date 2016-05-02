@@ -10,7 +10,7 @@ namespace ESurvey.BL.Mappers
 {
     public class SurveyMapper
     {
-        public Survey UIToEntity(SurveyUIModel model)
+        public Survey UiToEntity(SurveyUiModel model)
         {
             return new Survey()
             {
@@ -20,14 +20,18 @@ namespace ESurvey.BL.Mappers
             };
         }
 
-        public SurveyUIModel EntityToUI(Survey entity)
+        public SurveyUiModel EntityToUi(Survey entity)
         {
-            return new SurveyUIModel()
+            return new SurveyUiModel()
             {
                 Id = entity.Id,
                 OwnerId = entity.OwnerId,
                 Title = entity.Title
             };
         }
+
+
+
+        
     }
 }

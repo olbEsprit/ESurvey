@@ -10,7 +10,7 @@ namespace ESurvey.BL.Mappers
 {
     public class QuestionMapper
     {
-        public Questions UIToEntity(QuestionUIModel question)
+        public Questions UiToEntity(QuestionUiModel question)
         {
             return new Questions()
             {
@@ -23,9 +23,9 @@ namespace ESurvey.BL.Mappers
             };
         }
 
-        public QuestionUIModel EntityToUI(Questions question)
+        public QuestionUiModel EntityToUi(Questions question)
         {
-            return new QuestionUIModel()
+            return new QuestionUiModel()
             {
                 Id = question.Id,
                 SurveyId = question.SurveyId,

@@ -11,12 +11,38 @@ namespace ESurvey.WebUI.Controllers
     {
         
 
-        [ActionName("Create")]
+        
         [HttpPost]
         public void Create()
         {
 
         }
-        
+
+        [HttpPost]
+        public void Update()
+        {
+            
+        }
+
+        [HttpPost]
+        public void Delete()
+        {
+
+        }
+
+
+        [HttpPost]
+        public void Get()
+        {
+
+        }
+
+
+        [HttpPost]
+        public void GetUserSurveys()
+        {
+            
+        }
+
     }
 }

@@ -40,10 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\AnswerCrudLogic.cs" />
+    <Compile Include="Concrete\QuestionCrudLogic.cs" />
+    <Compile Include="Concrete\QuestionEditor.cs" />
     <Compile Include="Concrete\SurveyAccessManager.cs" />
+    <Compile Include="Concrete\SurveyCrudLogic.cs" />
     <Compile Include="Concrete\SurveyEditor.cs" />
     <Compile Include="Mappers\AnswerMapper.cs" />
     <Compile Include="Mappers\QuestionMapper.cs" />
+    <Compile Include="Mappers\SurveyMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

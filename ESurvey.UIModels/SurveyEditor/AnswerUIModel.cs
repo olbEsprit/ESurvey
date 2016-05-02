@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESurvey.UIModels.SurveyEditor
 {
-    public class AnswerUIModel
+    public class AnswerUiModel
     {
         public string Title { get; set; }
         public bool IsHidden { get; set; }

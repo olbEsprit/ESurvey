@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ESurvey.UIModels
 {
-    public class Request
+    public class CreateResult
     {
-        public string UserToken { get; set; }
-        public int SurveyId { get; set; }
-
-      //  public TData Data { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -23,8 +23,8 @@
                             {
                                 @Html.AntiForgeryToken()
                                 <div>
-                                    @Html.Hidden("loginProvider", account.LoginProvider)
-                                    @Html.Hidden("providerKey", account.ProviderKey)
+                                    @Html.Hidden("loginProvsurveyIder", account.LoginProvsurveyIder)
+                                    @Html.Hidden("provsurveyIderKey", account.ProvsurveyIderKey)
                                     <input type="submit" class="btn btn-default" value="Remove" title="Remove this @account.LoginProvider login from your account" />
                                 </div>
                             }

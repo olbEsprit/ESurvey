@@ -10,9 +10,9 @@ namespace ESurvey.BL.Mappers
 {
     public class AnswerMapper
     {
-        public AnswerUIModel EntityToUI(QuestionAnswers answer)
+        public AnswerUiModel EntityToUi(QuestionAnswers answer)
         {
-            return new AnswerUIModel()
+            return new AnswerUiModel()
             {
                 Id = answer.Id,
                 Title = answer.Title,
@@ -21,7 +21,7 @@ namespace ESurvey.BL.Mappers
             };
         }
 
-       public QuestionAnswers UIToEntity(AnswerUIModel answer)
+       public QuestionAnswers UiToEntity(AnswerUiModel answer)
         {
             return new QuestionAnswers()
             {
@@ -32,14 +32,14 @@ namespace ESurvey.BL.Mappers
             };
         }
 
-        public List<QuestionAnswers> UIToEntity(List<AnswerUIModel> answers)
+        public List<QuestionAnswers> UiToEntity(List<AnswerUiModel> answers)
         {
-            return answers.Select(a => UIToEntity(a)).ToList();
+            return answers.Select(UiToEntity).ToList();
         }
 
-        public List<AnswerUIModel> EntityToUI(List<QuestionAnswers> answers)
+        public List<AnswerUiModel> EntityToUi(List<QuestionAnswers> answers)
         {
-            return answers.Select(a => EntityToUI(a)).ToList();
+            return answers.Select(a => EntityToUi(a)).ToList();
         }
 
 

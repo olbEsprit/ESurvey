@@ -9,8 +9,8 @@ namespace ESurvey.UIModels
 {
     public class AlterQuestionRequest:Request
     {
-        public QuestionUIModel Question { get; set; }
-        public List<AnswerUIModel> Answers { get; set; }
-        public List<int> DeletedAnswersID { get; set; } 
+        public QuestionUiModel Question { get; set; }
+        public List<AnswerUiModel> Answers { get; set; }
+        public List<int> DeletedAnswersId { get; set; } 
     }
 }

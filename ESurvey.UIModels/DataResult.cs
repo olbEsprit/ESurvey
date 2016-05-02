@@ -1,6 +1,6 @@
 ﻿namespace ESurvey.UIModels
 {
-    public class DataResult<TData> : Result where TData : class
+    public class DataResult<TData> : Result
     {
         public DataResult(string errorMessage)
         {
