@@ -23,5 +23,12 @@ namespace IdentitySample.Controllers
 
             return View();
         }
+
+        [Authorize]
+        public ActionResult Profile()
+        {
+
+            return View();
+        }
     }
 }
