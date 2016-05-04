@@ -4,6 +4,9 @@ namespace IdentitySample.Controllers
 {
     public class HomeController : Controller
     {
+
+        
+
         public ActionResult Index()
         {
             return View();
@@ -25,9 +28,8 @@ namespace IdentitySample.Controllers
         }
 
         [Authorize]
-        public ActionResult Profile()
+        public ActionResult UserProfile()
         {
-
             return View();
         }
     }

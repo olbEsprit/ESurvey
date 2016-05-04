@@ -8,6 +8,6 @@ namespace ESurvey.UIModels.ViewModels
 {
     public class ProfileUiModel
     {
-        public List<SurveyLinkUi> Surveys { get; set; }
+        public List<SurveyListUi> Surveys { get; set; }
     }
 }

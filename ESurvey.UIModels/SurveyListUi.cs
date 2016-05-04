@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ESurvey.UIModels
 {
-    public class SurveyLinkUi
+    public class SurveyListUi
     {
-        public int SurveyId { get; set; }
-        public string SurveyName { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
 
     }
 }

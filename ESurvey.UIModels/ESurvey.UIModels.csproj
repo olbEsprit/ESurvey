@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="AlterQuestionRequest.cs" />
     <Compile Include="CreateResult.cs" />
-    <Compile Include="CreateSurveyRequestUi.cs" />
+    <Compile Include="CreateSurveyModel.cs" />
     <Compile Include="DataResult.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Result.cs" />
@@ -50,7 +50,7 @@
     <Compile Include="SurveyEditor\AnswerUIModel.cs" />
     <Compile Include="SurveyEditor\QuestionUIModel.cs" />
     <Compile Include="SurveyEditor\SurveyUIModel.cs" />
-    <Compile Include="SurveyLinkUi.cs" />
+    <Compile Include="SurveyListUi.cs" />
     <Compile Include="SurveyRequest.cs" />
     <Compile Include="ViewModels\ProfileUiModel.cs" />
   </ItemGroup>

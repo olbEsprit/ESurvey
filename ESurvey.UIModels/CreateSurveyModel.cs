@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESurvey.UIModels
 {
-    public class CreateSurveyRequestUi
+    public class CreateSurveyModel
     {
         public string Name { get; set; } = "Untitled";
 
