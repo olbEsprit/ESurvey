@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESurvey.Common", "ESurvey.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESurvey.UIModels", "ESurvey.UIModels\ESurvey.UIModels.csproj", "{4351602B-706D-4344-83B4-92F6A5756CB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESurvey.Shell", "ESurvey.Console\ESurvey.Shell.csproj", "{1D1BD61B-F52F-4D02-A3E9-48DC13F3B48B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESurvey.Debug", "ESurvey.Debug\ESurvey.Debug.csproj", "{71AA7EDC-3012-44D6-B0F1-80ED189129EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{4351602B-706D-4344-83B4-92F6A5756CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4351602B-706D-4344-83B4-92F6A5756CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4351602B-706D-4344-83B4-92F6A5756CB9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D1BD61B-F52F-4D02-A3E9-48DC13F3B48B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D1BD61B-F52F-4D02-A3E9-48DC13F3B48B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D1BD61B-F52F-4D02-A3E9-48DC13F3B48B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D1BD61B-F52F-4D02-A3E9-48DC13F3B48B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71AA7EDC-3012-44D6-B0F1-80ED189129EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71AA7EDC-3012-44D6-B0F1-80ED189129EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71AA7EDC-3012-44D6-B0F1-80ED189129EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71AA7EDC-3012-44D6-B0F1-80ED189129EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

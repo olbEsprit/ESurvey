@@ -25,6 +25,22 @@ namespace IdentitySample
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                "~/Scripts/angular.min.js",
+                "~/Scripts/angular-sanitize.min.js",
+                "~/Scripts/angular-resource-min.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/angularUi").Include(
+                "~/Scripts/angular-ui/ui-bootstrap-tpls.min.js",
+                "~/Scripts/angular-ui/ui-bootstrap.min.js",
+                "~/Scripts/angular-ui/angular-modal-service.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/angularApp").Include(
+                "~/Scripts/angapps/adminapp.js"
+                ));
         }
     }
 }

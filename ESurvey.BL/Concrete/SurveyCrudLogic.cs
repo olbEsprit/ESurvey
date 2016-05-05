@@ -15,18 +15,27 @@ namespace ESurvey.BL.Concrete
     {
         public async Task<DataResult<SurveyListUi>> CreateSurvey(SurveyListUi surveyModel, string ownerId)
         {
-            using (var holder = new RepositoryHolder())
+            try
             {
+                using (var holder = new RepositoryHolder())
+                {
 
-                var surveyEntity = new SurveyListMapper().UiToEntity(surveyModel);
-                surveyEntity.OwnerId = ownerId;
-                
-                holder.SurveyRepository.Insert(surveyEntity);
-                await holder.SaveChangesAsync();
+                    var surveyEntity = new SurveyListMapper().UiToEntity(surveyModel);
+                    surveyEntity.OwnerId = ownerId;
 
-                var data = new SurveyListMapper().EntityToUi(surveyEntity);
-                return new DataResult<SurveyListUi>(data);
+                    holder.SurveyRepository.Insert(surveyEntity);
+                    await holder.SaveChangesAsync();
+
+                    var data = new SurveyListMapper().EntityToUi(surveyEntity);
+                    return new DataResult<SurveyListUi>(data);
+                }
             }
+            catch (Exception e)
+            {
+                var r = e.Message;
+                return new DataResult<SurveyListUi>("DBError");
+            }
+            
         }
 
         public async Task<Result> DeleteSurvey(int surveyId)

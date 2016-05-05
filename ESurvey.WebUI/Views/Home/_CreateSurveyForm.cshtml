@@ -1,0 +1,13 @@
+﻿@model ESurvey.WebUI.Models.CreateSurveyFormModel
+
+
+
+<div id="CreateForm">
+<h1> Enter your survey name</h1>
+    @Html.LabelFor(m => m.Title)
+    @Html.EditorFor(m=>m.Title)
+    <button type="button" id="SubmitForm" value="button">Submit</button>
+    <button type="button" id="CancelForm" value="button">Cancel</button>    
+ </div>
+
+

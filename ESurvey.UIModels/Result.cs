@@ -2,6 +2,7 @@
 {
     public class Result
     {
+        
         public bool HadError { get; set; }
         public string ErrorMessage { get; set; }
 

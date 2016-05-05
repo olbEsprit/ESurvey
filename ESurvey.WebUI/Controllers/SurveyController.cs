@@ -38,41 +38,42 @@ namespace ESurvey.WebUI.Controllers
         }
 
         [HttpPost]
-        
         public async Task<JsonResult> Create(SurveyListUi model)
         {
             var ownerId = User.Identity.GetUserId();
+            //ownerId.Replace(" ", "");
             var result = await CrudLogic.CreateSurvey(model, ownerId);
-            
-
+            return Json(result);
         }
 
         [HttpPost]
-        public async Task<Result> Update(SurveyUiModel model)
+        public async Task<JsonResult> Update(SurveyUiModel model)
         {
             string userId = User.Identity.GetUserId();
             if (!await AccessManager.HasAccessToSurvey(userId, model.Id))
             {
-                return new Result("You have no access");
+                return Json(new Result("You have no access"));
             }
             else
             {
-                return await CrudLogic.UpdateSurvey(model);
+                var result = await CrudLogic.UpdateSurvey(model);
+                return Json(result);
             }
 
         }
 
         [HttpPost]
-        public async Task<Result> Delete(int id)
+        public async Task<JsonResult> Delete(int id)
         {
-            string userId = User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId();
+            //return Json(new Result());
             if (!await AccessManager.HasAccessToSurvey(userId, id))
             {
-                return new Result("You have no access");
+                return Json(new Result("You have no access"));
             }
             else
             {
-                return await CrudLogic.DeleteSurvey(id);
+                return Json(await CrudLogic.DeleteSurvey(id));
             }
         }
 
@@ -83,21 +84,22 @@ namespace ESurvey.WebUI.Controllers
         {
 
             string userId = User.Identity.GetUserId();
-/*            
+                       
             if (!await AccessManager.HasAccessToSurvey(userId, id))
             {
-                return new DataResult<SurveyUiModel>(new SurveyUiModel())
+                var res =  new DataResult<SurveyUiModel>(new SurveyUiModel())
                 {
                     HadError = true,
                     ErrorMessage = "HasNoAccess"
                 };
+                return Json(res, JsonRequestBehavior.AllowGet);
             }
             
             else
             {
-                return await CrudLogic.GetSurvey(id);
-            }*/
-
+                return Json(await CrudLogic.GetSurvey(id), JsonRequestBehavior.AllowGet);
+            }
+            /*
             var data = new DataResult<SurveyUiModel>(
                 new SurveyUiModel()
                 {
@@ -106,16 +108,34 @@ namespace ESurvey.WebUI.Controllers
                     Title = "MYSYT"
                 });
             var result = JsonConvert.SerializeObject(data);
-            
-            return Json(result, JsonRequestBehavior.AllowGet);
+            */
+           // return Json(result, JsonRequestBehavior.AllowGet);
 
         }
 
 
-        [HttpPost]
-        public void GetUserSurveys()
+        [HttpGet]
+        [Authorize]
+        public async Task<JsonResult> UserSurveys()
         {
-
+            var id = User.Identity.GetUserId();
+            var result = await CrudLogic.GetUserSurveys(id);
+            /*
+            var surveys = new List<SurveyListUi>()
+            {
+                new SurveyListUi()
+                {
+                    Id = 4,
+                    Title = "Hello"
+                },
+                new SurveyListUi()
+                {
+                    Id = 5,
+                    Title = "SURVE"
+                }
+            };
+            var result = new DataResult<List<SurveyListUi>>(surveys);*/
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         

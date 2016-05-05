@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using ESurvey.WebUI.Models;
+using Microsoft.AspNet.Identity;
 
 namespace IdentitySample.Controllers
 {
@@ -10,6 +13,13 @@ namespace IdentitySample.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Test()
+        {
+            ViewBag.Test = DateTime.Now.ToString();
+            return PartialView();
         }
 
         [Authorize]
@@ -32,5 +42,14 @@ namespace IdentitySample.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateSurveyForm()
+        {
+            return PartialView("_CreateSurveyForm",new CreateSurveyFormModel());
+        }
+
+        
     }
 }
