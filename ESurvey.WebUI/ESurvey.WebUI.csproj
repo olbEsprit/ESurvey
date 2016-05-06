@@ -220,6 +220,7 @@
     </Content>
     <Content Include="scripts\angapps\adminapp.js" />
     <Content Include="scripts\angapps\editorApp.js" />
+    <Content Include="scripts\angapps\questionListController.js" />
     <Content Include="scripts\angapps\surveyDetailsEditor.js" />
     <Content Include="scripts\angular-mocks.js" />
     <Content Include="scripts\angular-resource.js" />

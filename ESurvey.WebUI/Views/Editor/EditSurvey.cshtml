@@ -5,14 +5,17 @@
 
 <h2>EditSurvey</h2>
 <div ng-app="editorApp">
-    <div ng-controller="editorController">
-        
-        
-        <survey-Details-Editor survey-Details="surveyDetails" loading="loading" survey-Id="@ViewBag.Id"></survey-Details-Editor>
+    <div ng-controller="mainController" ng-init="init(@ViewBag.Id)">
+
+
+        <div ng-controller="editorController" ng-init="init()">
+            {{q}}
+            <div class="btn" ng-click="setPath()">BB</div>
+            <survey-details-editor></survey-details-editor>
+        </div>
+
 
 
     </div>
-        
-    
 </div>
 
