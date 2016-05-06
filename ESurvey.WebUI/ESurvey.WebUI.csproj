@@ -247,6 +247,7 @@
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Editor\EditSurvey.cshtml" />
     <Content Include="Views\Editor\SurveyDetailsForm.cshtml" />
+    <Content Include="Views\Editor\_QuestionListTemplate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,6 +1,41 @@
 ﻿var editorApp = angular.module("editorApp", []);
 
 
+
+editorApp.controller('mainController',['$scope','$http','$templateCache', function($scope,$htpp,$templateCahe) {
+    $scope.loading = true;
+    $scope.surveyId = 0;
+    $scope.hello = "Main";
+    $scope.init = function (value) {
+        $scope.surveyId = value;
+    };
+    }
+]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //editorApp.factory('surveyDetailsService', [
 //    '$http', function($http) {
 //        var endpoint = '/Survey/';
@@ -51,21 +86,4 @@
 //        };
 //    }
 //]);
-
-
-    editorApp.controller('mainController',['$scope','$http','$templateCache', function($scope,$htpp,$templateCahe) {
-
-    $scope.loading = true;
-    $scope.surveyId = 0;
-    $scope.hello = "Main";
-
-
-    $scope.init = function (value) {
-        $scope.surveyId = value;
-    };
-    }
-]);
-
-
-
 

@@ -136,7 +136,7 @@ namespace ESurvey.WebUI.Controllers
             var result = new DataResult<List<SurveyListUi>>(surveys);*/
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
         
+
     }
 }

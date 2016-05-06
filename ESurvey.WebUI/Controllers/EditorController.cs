@@ -32,5 +32,13 @@ namespace ESurvey.WebUI.Controllers
             return PartialView();
         }
 
+
+
+        [HttpGet]
+        public ActionResult QuestionListTemplate(int? id)
+        {
+            return PartialView("_QuestionListTemplate");
+        }
+
     }
 }

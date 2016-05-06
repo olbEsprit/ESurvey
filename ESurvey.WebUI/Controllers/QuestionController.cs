@@ -14,11 +14,11 @@ namespace ESurvey.WebUI.Controllers
     {
         // GET: Question
         private QuestionCrudLogic _questionCrud;
-        private SurveyAccessManager _accessManager;
+        private SurveyAccessManager _surveyAccessManager;
 
-        public SurveyAccessManager AccessManager
+        public SurveyAccessManager SurveyAccess
         {
-            get { return _accessManager; }
+            get { return _surveyAccessManager; }
         }
 
         public QuestionCrudLogic QuestionCrud
@@ -29,16 +29,16 @@ namespace ESurvey.WebUI.Controllers
         public QuestionController()
         {
             _questionCrud = new QuestionCrudLogic();
-            _accessManager = new SurveyAccessManager();
+            _surveyAccessManager = new SurveyAccessManager();
         }
 
         [HttpGet]
         public async Task<JsonResult> QuestionList(int id)
         {
             var userId = User.Identity.GetUserId();
-            if (await AccessManager.HasAccessToSurvey(userId, id))
+            if (await SurveyAccess.HasAccessToSurvey(userId, id))
             {
-                var result = QuestionCrud.GetSurveyQuestions(id);
+                var result = await QuestionCrud.GetSurveyQuestionList(id);
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             else
@@ -46,5 +46,6 @@ namespace ESurvey.WebUI.Controllers
                 return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
             }
         }
+
     }
 }

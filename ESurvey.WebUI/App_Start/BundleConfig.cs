@@ -44,7 +44,8 @@ namespace IdentitySample
 
             bundles.Add(new ScriptBundle("~/bundles/editorApp").Include(
             "~/scripts/angapps/editorApp.js",
-            "~/scripts/angapps/surveyDetailsEditor.js"
+            "~/scripts/angapps/surveyDetailsEditor.js",
+            "~/scripts/angapps/questionListController.js"
             ));
         }
     }

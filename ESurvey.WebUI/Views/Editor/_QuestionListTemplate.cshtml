@@ -1,0 +1,14 @@
+﻿<div>
+    <h1>QlistTEmplate</h1>
+    <ul>
+        <li ng-repeat="quest in questionList | orderBy:Number">
+            
+                Q{{quest.Number}}: &nbsp;
+                {{quest.Title}}&nbsp;
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning">Edit</button>
+                <button type="button" class="btn btn-danger">X</button>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -82,14 +82,15 @@ namespace ESurvey.BL.Concrete
             }
         }
 
-        public async Task<DataResult<List<QuestionUiModel>>> GetSurveyQuestions(int surveyId)
+        public async Task<DataResult<List<QuestionListUiModel>>> GetSurveyQuestionList(int surveyId)
         {
             using (var holder = new RepositoryHolder())
             {
-                var questions = await holder.QuestionRepository.FetchByAsync(q => q.SurveyId == surveyId);
-                var mapper = new QuestionMapper();
+                var questions = await holder.QuestionRepository
+                    .FetchByAsync(q => q.SurveyId == surveyId && q.Parent_Question==null);
+                var mapper = new QuestionListMapper();
                 var data = questions.Select(q => mapper.EntityToUi(q)).ToList();
-                return new DataResult<List<QuestionUiModel>>(data);
+                return new DataResult<List<QuestionListUiModel>>(data);
             }
         }
 

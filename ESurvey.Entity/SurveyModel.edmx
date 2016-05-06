@@ -107,11 +107,12 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SurveyId" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="QuestionType" Type="int" Nullable="false" />
           <Property Name="Is_hidden" Type="bit" Nullable="false" />
           <Property Name="Is_matrix" Type="bit" Nullable="false" />
           <Property Name="Parent_Question" Type="int" />
+          <Property Name="Number" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="QuestionTypes">
           <Key>
@@ -566,7 +567,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SurveyId" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="QuestionType" Type="Int32" Nullable="false" />
           <Property Name="Is_hidden" Type="Boolean" Nullable="false" />
           <Property Name="Is_matrix" Type="Boolean" Nullable="false" />
@@ -577,6 +578,7 @@
           <NavigationProperty Name="Questions2" Relationship="Self.FK__Questions__Paren__6E01572D" FromRole="Questions1" ToRole="Questions" />
           <NavigationProperty Name="QuestionTypes" Relationship="Self.FK__Questions__Quest__59FA5E80" FromRole="Questions" ToRole="QuestionTypes" />
           <NavigationProperty Name="Survey" Relationship="Self.FK__Questions__Surve__59063A47" FromRole="Questions" ToRole="Survey" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="QuestionTypes">
           <Key>
@@ -999,6 +1001,7 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="ESurveyModel.Questions">
               <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />

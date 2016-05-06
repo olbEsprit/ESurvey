@@ -46,6 +46,7 @@
     <Compile Include="Concrete\SurveyAccessManager.cs" />
     <Compile Include="Concrete\SurveyCrudLogic.cs" />
     <Compile Include="Concrete\SurveyEditor.cs" />
+    <Compile Include="Mappers\QuestionListMapper.cs" />
     <Compile Include="Mappers\SurveyListMapper.cs" />
     <Compile Include="Mappers\AnswerMapper.cs" />
     <Compile Include="Mappers\QuestionMapper.cs" />

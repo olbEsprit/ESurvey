@@ -13,12 +13,9 @@
         
         $scope.surveyDetailsEdited = angular.copy($scope.surveyDetails);
     };
-
     $scope.updateSurveyDetails = function () {
         $scope.surveyDetails = angular.copy($scope.surveyDetailsEdited);
     };
-
-
     //BeginLoadSueveyDetails
     $scope.loadSurveyDetails = function (surveyId) {
         $http({
@@ -43,8 +40,6 @@
         });
     };
 //    EndLoadSurveyDetails
-
-
   //  BeginSendSueveyDetails
     $scope.sendSurveyDetails = function () {
         alert(JSON.stringify($scope.surveyDetailsEdited));
