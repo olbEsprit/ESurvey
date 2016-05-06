@@ -14,5 +14,11 @@ namespace ESurvey.DAL.Concrete
         {
             
         }
+
+        public override void Update(QuestionAnswers item)
+        {
+            base.Update(item);
+            Context.Entry(item).Property(i => i.QuestionId).IsModified = false;
+        }
     }
 }

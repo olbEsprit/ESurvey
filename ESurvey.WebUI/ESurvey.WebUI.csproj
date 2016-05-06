@@ -220,6 +220,7 @@
     </Content>
     <Content Include="scripts\angapps\adminapp.js" />
     <Content Include="scripts\angapps\editorApp.js" />
+    <Content Include="scripts\angapps\surveyDetailsEditor.js" />
     <Content Include="scripts\angular-mocks.js" />
     <Content Include="scripts\angular-resource.js" />
     <Content Include="scripts\angular-resource.min.js" />
@@ -243,6 +244,8 @@
     <Content Include="Views\Home\UserProfile.cshtml" />
     <Content Include="Views\Home\_CreateSurveyForm.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Editor\EditSurvey.cshtml" />
+    <Content Include="Views\Editor\SurveyDetailsForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -329,6 +332,7 @@
     <Compile Include="Controllers\EditorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\SurveyController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
@@ -345,8 +349,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Editor\" />
     <Folder Include="Views\ESurvey\" />
+    <Folder Include="Views\Question\" />
     <Folder Include="Views\Survey\" />
   </ItemGroup>
   <ItemGroup>

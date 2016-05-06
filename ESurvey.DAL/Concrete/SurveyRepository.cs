@@ -12,7 +12,13 @@ namespace ESurvey.DAL.Concrete
     {
         public SurveyRepository(ESurveyEntities context): base(context)
         {
-                
+            
+        }
+
+        public override void Update(Survey item)
+        {
+            base.Update(item);
+            Context.Entry(item).Property(i => i.OwnerId).IsModified = false;
         }
     }
 }

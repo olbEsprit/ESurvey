@@ -4,6 +4,9 @@ adminapp.controller('profileContorller', ['$scope','$http','$templateCache', fun
     $scope.surveys = surveyst;
     $scope.hello = "Test";
     $scope.loading = false;
+    
+
+
     $scope.refresh = function() {
         
         $templateCache.removeAll();
@@ -12,7 +15,7 @@ adminapp.controller('profileContorller', ['$scope','$http','$templateCache', fun
     
 
     $scope.redirectToEdit = function(surveyId) {
-        window.location.href = "/Editor/" + surveyId;
+        window.location.href = "/Editor/EditSurvey/" + surveyId;
     };
 
     $scope.redirectToPublish = function (surveyId) {
@@ -42,7 +45,7 @@ adminapp.controller('profileContorller', ['$scope','$http','$templateCache', fun
         });
     };
 
-    $scope.fetchSurveys();
+    
 
     $scope.deleteSurvey = function (survey) {
         if (confirm("You really want delete survey "+survey.Title+"?")) {
@@ -77,6 +80,11 @@ adminapp.controller('profileContorller', ['$scope','$http','$templateCache', fun
             return item.Id !== surveyId;
         });
     };
+
+
+    $scope.fetchSurveys();
+
+
 }]);
 
 

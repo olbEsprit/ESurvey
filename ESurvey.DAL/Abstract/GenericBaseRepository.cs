@@ -41,7 +41,7 @@ namespace ESurvey.DAL.Abstract
 
         }
 
-        public void Update(T item)
+        public virtual void Update(T item)
         {
             _dbContext.Entry(item).State =  EntityState.Modified;
         }

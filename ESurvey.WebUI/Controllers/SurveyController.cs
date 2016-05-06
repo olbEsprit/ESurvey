@@ -41,7 +41,6 @@ namespace ESurvey.WebUI.Controllers
         public async Task<JsonResult> Create(SurveyListUi model)
         {
             var ownerId = User.Identity.GetUserId();
-            //ownerId.Replace(" ", "");
             var result = await CrudLogic.CreateSurvey(model, ownerId);
             return Json(result);
         }

@@ -12,9 +12,24 @@ namespace ESurvey.WebUI.Controllers
 
 
         // GET: Editor/Edit/5
+        [HttpGet]
         public ActionResult EditSurvey(int id)
         {
+            ViewBag.Id = id;
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return RedirectToAction("UserProfile", "Home");
+        }
+
+
+        [HttpGet]
+        public ActionResult SurveyDetailsForm(int? id)
+        {
+            return PartialView();
         }
 
     }
