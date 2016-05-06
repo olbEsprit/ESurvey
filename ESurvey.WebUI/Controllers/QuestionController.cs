@@ -15,6 +15,7 @@ namespace ESurvey.WebUI.Controllers
         // GET: Question
         private QuestionCrudLogic _questionCrud;
         private SurveyAccessManager _surveyAccessManager;
+        
 
         public SurveyAccessManager SurveyAccess
         {
@@ -39,6 +40,21 @@ namespace ESurvey.WebUI.Controllers
             if (await SurveyAccess.HasAccessToSurvey(userId, id))
             {
                 var result = await QuestionCrud.GetSurveyQuestionList(id);
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Delete(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            if (await SurveyAccess.HasAccessToQuestion(userId, id))
+            {
+                var result = await QuestionCrud.DeleteQuestion(id);
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             else

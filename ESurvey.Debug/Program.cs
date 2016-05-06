@@ -15,11 +15,18 @@ namespace ESurvey.Debug
     {
         static void Main(string[] args)
         {
-            var ligic  = new QuestionCrudLogic();
-            var T = ligic.GetSurveyQuestionList(1006);
-            T.Wait();
-            var res = T.Result;
-            Console.ReadKey();
+            var log = new QuestionCrudLogic();
+            try
+            {
+                var r = log.DeleteQuestion(4);
+                r.Wait();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadKey();
+                
+            }
         }
     }
 }

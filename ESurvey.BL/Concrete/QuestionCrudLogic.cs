@@ -62,7 +62,16 @@ namespace ESurvey.BL.Concrete
         {
             using (var holder = new RepositoryHolder())
             {
-                holder.QuestionRepository.RemoveBy(q => q.Id == id);
+                var quest = await holder.QuestionRepository.GetByIdAsync(id);
+                var number = quest.Number;
+                var quests = await holder.QuestionRepository
+                    .FetchByAsync(q => q.Number > number && q.Parent_Question == null);
+
+                quests.ForEach(q=>q.Number--);
+                holder.QuestionRepository.RemoveBy(q=>q.Parent_Question == id);
+                holder.QuestionRepository.Update(quests);
+                holder.QuestionRepository.Remove(quest);
+                
                 await holder.SaveChangesAsync();
                 return new Result();
             }
@@ -87,7 +96,7 @@ namespace ESurvey.BL.Concrete
             using (var holder = new RepositoryHolder())
             {
                 var questions = await holder.QuestionRepository
-                    .FetchByAsync(q => q.SurveyId == surveyId && q.Parent_Question==null);
+                    .FetchByAsync(q => q.SurveyId == surveyId && (q.Parent_Question==null||q.Parent_Question==0));
                 var mapper = new QuestionListMapper();
                 var data = questions.Select(q => mapper.EntityToUi(q)).ToList();
                 return new DataResult<List<QuestionListUiModel>>(data);

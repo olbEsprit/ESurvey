@@ -51,8 +51,31 @@ angular.module("editorApp").controller('questionListController', [
                 alert("Error Load Question List");
             });
         }
-    }
-]);
+
+        $scope.pendingDelete = function(id) {
+            if (confirm("You Really Wanna Delete?")) {
+                sendDeleteRequest(id);
+            }
+
+        };
+        
+        function sendDeleteRequest (iD) {
+                $http({
+                    method: 'Post',
+                    url: '/Question/Delete/' + iD
+                }).then(function successCallback(response) {
+                    var result = response.data;
+                    if (result.HadError) {
+                        alert("Error: " + result.ErrorMessage);
+                    } else {
+                        loadQuestionList($scope.surveyId);
+                    }
+                }, function errorCallback(response) {
+                    alert("Error Delete Question");
+                });
+            };
+
+    }]);
 
 angular.module("editorApp").directive('questionListDir', [ function () {
     return {

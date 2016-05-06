@@ -46,7 +46,14 @@ namespace ESurvey.DAL.Abstract
             _dbContext.Entry(item).State =  EntityState.Modified;
         }
 
-        
+        public void Update(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                Update(item);
+            }
+        }
+
 
         public void Remove(T item)
         {

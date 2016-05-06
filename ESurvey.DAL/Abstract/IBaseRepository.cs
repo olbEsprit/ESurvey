@@ -30,6 +30,8 @@ namespace ESurvey.DAL.Abstract
         /// <param name="items"></param>
         void RemoveRange(IEnumerable<T> items);
 
+        void Update(IEnumerable<T> items);
+
         /// <summary>
         /// Method for insert data at DB 
         /// </summary>
