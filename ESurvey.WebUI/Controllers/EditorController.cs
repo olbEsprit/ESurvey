@@ -1,20 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using ESurvey.BL.Concrete;
+using Microsoft.AspNet.Identity;
 
 namespace ESurvey.WebUI.Controllers
 {
     public class EditorController : Controller
     {
 
+        private SurveyAccessManager _accessManager;
+
+        public SurveyAccessManager AccessManager
+        {
+            get { return _accessManager; }
+        }
+
+        public EditorController()
+        {
+            _accessManager = new SurveyAccessManager();
+        }
 
 
         // GET: Editor/Edit/5
         [HttpGet]
-        public ActionResult EditSurvey(int id)
+        public async Task<ActionResult> EditSurvey(int? id)
         {
+            if(id == null)
+                return RedirectToAction("UserProfile", "Home");
+
+            var userId = User.Identity.GetUserId();
+
+            if(!await AccessManager.HasAccessToSurvey(userId, id.Value))
+                return RedirectToAction("UserProfile", "Home");
+
             ViewBag.Id = id;
             return View();
         }
@@ -38,6 +60,12 @@ namespace ESurvey.WebUI.Controllers
         public ActionResult QuestionListTemplate(int? id)
         {
             return PartialView("_QuestionListTemplate");
+        }
+
+        [HttpGet]
+        public ActionResult CreateQuestionTemplate()
+        {
+            return PartialView("_CreateQuestionTemplate");
         }
 
     }

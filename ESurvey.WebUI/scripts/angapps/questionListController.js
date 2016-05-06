@@ -1,29 +1,30 @@
-﻿angular.module("editorApp").controller('questionListController', [
-    '$scope', '$http', '$templateCache', function ($scope, $http, $templateCache) {
+﻿//angular.module("editorApp").controller('questionListController', [
+//    '$scope', '$http', '$templateCache', function ($scope, $http, $templateCache) {
 
-        $scope.questionList = {};
+//        $scope.questionList = {};
 
-        $scope.init = function (){
-            loadQuestionList($scope.surveyID);
-        };
+//        $scope.init = function (){
+//            loadQuestionList($scope.surveyID);
+//        };
 
-        $scope.loadQuestionList = function(surveyId) {            
-            $http({
-                method: 'GET',
-                url: '/Question/QuestionList/' + surveyId
-            }).then(function successCallback(response) {
-                var result = response.data;
-                if (result.HadError) {
-                    alert("Error: " + result.ErrorMessage);
-                } else {
-                    $scope.questionList = result.Data;
-                }
-            }, function errorCallback(response) {
-                alert("Error Load Question List");
-            });
-        }
-    }
-]);
+
+//        $scope.loadQuestionList = function(surveyId) {            
+//            $http({
+//                method: 'GET',
+//                url: '/Question/QuestionList/' + surveyId
+//            }).then(function successCallback(response) {
+//                var result = response.data;
+//                if (result.HadError) {
+//                    alert("Error: " + result.ErrorMessage);
+//                } else {
+//                    $scope.questionList = result.Data;
+//                }
+//            }, function errorCallback(response) {
+//                alert("Error Load Question List");
+//            });
+//        }
+//    }
+//]);
 
 
 angular.module("editorApp").controller('questionListController', [
@@ -50,13 +51,17 @@ angular.module("editorApp").controller('questionListController', [
             }, function errorCallback(response) {
                 alert("Error Load Question List");
             });
+        };
+
+
+        $scope.reloadQuestionList = function() {
+            loadQuestionList($scope.surveyId);
         }
 
         $scope.pendingDelete = function(id) {
             if (confirm("You Really Wanna Delete?")) {
                 sendDeleteRequest(id);
             }
-
         };
         
         function sendDeleteRequest (iD) {

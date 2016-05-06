@@ -46,6 +46,7 @@
     <Compile Include="Concrete\SurveyAccessManager.cs" />
     <Compile Include="Concrete\SurveyCrudLogic.cs" />
     <Compile Include="Concrete\SurveyEditor.cs" />
+    <Compile Include="Mappers\AddQuestionMapper.cs" />
     <Compile Include="Mappers\QuestionListMapper.cs" />
     <Compile Include="Mappers\SurveyListMapper.cs" />
     <Compile Include="Mappers\AnswerMapper.cs" />
@@ -57,6 +58,10 @@
     <Folder Include="Abstract\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESurvey.Common\ESurvey.Common.csproj">
+      <Project>{9c94f0e1-6935-441c-85c5-494aa423ca93}</Project>
+      <Name>ESurvey.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESurvey.DAL\ESurvey.DAL.csproj">
       <Project>{c3c79d64-e972-4d38-84d8-feb0ae9cc5b4}</Project>
       <Name>ESurvey.DAL</Name>

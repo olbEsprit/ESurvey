@@ -238,8 +238,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Questions__Quest__59FA5E80">
-          <End Role="QuestionTypes" Type="Self.QuestionTypes" Multiplicity="1" />
+        <Association Name="FK__Questions__Quest__04E4BC85">
+          <End Role="QuestionTypes" Type="Self.QuestionTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuestionTypes">
@@ -250,8 +252,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Questions__Surve__59063A47">
-          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+        <Association Name="FK__Questions__Surve__07C12930">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Survey">
@@ -411,11 +415,11 @@
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Questions1" EntitySet="Questions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Questions__Quest__59FA5E80" Association="Self.FK__Questions__Quest__59FA5E80">
+          <AssociationSet Name="FK__Questions__Quest__04E4BC85" Association="Self.FK__Questions__Quest__04E4BC85">
             <End Role="QuestionTypes" EntitySet="QuestionTypes" />
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Questions__Surve__59063A47" Association="Self.FK__Questions__Surve__59063A47">
+          <AssociationSet Name="FK__Questions__Surve__07C12930" Association="Self.FK__Questions__Surve__07C12930">
             <End Role="Survey" EntitySet="Survey" />
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>

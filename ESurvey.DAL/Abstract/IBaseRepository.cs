@@ -98,6 +98,8 @@ namespace ESurvey.DAL.Abstract
         
 
         Task<int> GetCountAsync();
+        Task<int> GetCountByAsync(Expression<Func<T, bool>> predicate);
+
         Task<T> GetByIdAsync(int id);
         /// <summary>
         /// Remove item by id

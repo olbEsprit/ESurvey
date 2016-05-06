@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ESurvey.BL.Mappers;
+using ESurvey.Common.Enums;
 using ESurvey.DAL.Concrate;
 using ESurvey.UIModels;
 using ESurvey.UIModels.SurveyEditor;
@@ -12,13 +13,27 @@ namespace ESurvey.BL.Concrete
 {
     public class QuestionCrudLogic
     {
-        public async Task<Result> CreateQuestion(QuestionUiModel question)
+
+        
+
+        public async Task<Result> CreateQuestion(AddQuestionUiModel question)
         {
 
             using (var holder = new RepositoryHolder())
             {
-                var entry = new QuestionMapper().UiToEntity(question);
-                holder.QuestionRepository.Insert(entry);
+                var entity = new AddQuestionMapper().UiToEntity(question);
+
+                if (entity.QuestionType == (int)QuestonTypes.Matrix)
+                    entity.Is_matrix = true;
+
+                var number = await holder.QuestionRepository
+                            .GetCountByAsync(q =>
+                                q.SurveyId == entity.SurveyId &&
+                                (q.Parent_Question == null || q.Parent_Question == 0));
+
+                entity.Number = number + 1;
+
+                holder.QuestionRepository.Insert(entity);
                 await holder.SaveChangesAsync();
                 return new Result();
             }
@@ -65,7 +80,7 @@ namespace ESurvey.BL.Concrete
                 var quest = await holder.QuestionRepository.GetByIdAsync(id);
                 var number = quest.Number;
                 var quests = await holder.QuestionRepository
-                    .FetchByAsync(q => q.Number > number && q.Parent_Question == null);
+                    .FetchByAsync(q => q.Number > number && (q.Parent_Question == null || q.Parent_Question==0));
 
                 quests.ForEach(q=>q.Number--);
                 holder.QuestionRepository.RemoveBy(q=>q.Parent_Question == id);

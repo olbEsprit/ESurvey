@@ -132,6 +132,12 @@ namespace ESurvey.DAL.Abstract
         {
             return await _dbContext.Set<T>().CountAsync();
         }
+
+        public async Task<int> GetCountByAsync(Expression<Func<T,bool>> predicate)
+        {
+            return await _dbContext.Set<T>().CountAsync(predicate);
+        }
+
         public T GetById(int id)
         {
             return id > 0 ? _dbContext.Set<T>().Find(id) : null;
@@ -140,6 +146,8 @@ namespace ESurvey.DAL.Abstract
         {
             return id > 0 ? await _dbContext.Set<T>().FindAsync(id) : null;
         }
+
+
 
         #endregion
 

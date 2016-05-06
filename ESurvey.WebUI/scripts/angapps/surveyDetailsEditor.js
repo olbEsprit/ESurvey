@@ -42,10 +42,10 @@
 //    EndLoadSurveyDetails
   //  BeginSendSueveyDetails
     $scope.sendSurveyDetails = function () {
-        alert(JSON.stringify($scope.surveyDetailsEdited));
-        alert(JSON.stringify($scope.surveyDetails));
+      //  alert(JSON.stringify($scope.surveyDetailsEdited));
+        //alert(JSON.stringify($scope.surveyDetails));
         $http({
-            method: 'Post',
+            method: 'POST',
             url: '/Survey/Update',
             data: $scope.surveyDetailsEdited
 

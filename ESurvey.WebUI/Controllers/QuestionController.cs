@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using ESurvey.BL.Concrete;
 using ESurvey.UIModels;
+using ESurvey.UIModels.SurveyEditor;
 using Microsoft.AspNet.Identity;
 
 namespace ESurvey.WebUI.Controllers
@@ -33,7 +35,7 @@ namespace ESurvey.WebUI.Controllers
             _surveyAccessManager = new SurveyAccessManager();
         }
 
-        [HttpGet]
+        [System.Web.Mvc.HttpGet]
         public async Task<JsonResult> QuestionList(int id)
         {
             var userId = User.Identity.GetUserId();
@@ -48,7 +50,7 @@ namespace ESurvey.WebUI.Controllers
             }
         }
 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public async Task<JsonResult> Delete(int id)
         {
             var userId = User.Identity.GetUserId();
@@ -61,6 +63,23 @@ namespace ESurvey.WebUI.Controllers
             {
                 return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
             }
+        }
+
+
+
+        [System.Web.Mvc.HttpPost]
+        public async Task<JsonResult> Create(AddQuestionUiModel question)
+        {
+            var userId = User.Identity.GetUserId();
+                if (await SurveyAccess.HasAccessToSurvey(userId, question.SurveyId))
+                {
+                    var result = await QuestionCrud.CreateQuestion(question);
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
+                }
         }
 
     }

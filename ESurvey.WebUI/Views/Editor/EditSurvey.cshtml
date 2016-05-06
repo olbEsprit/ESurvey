@@ -17,8 +17,11 @@
         <div ng-controller="questionListController" ng-init="init()">
             <question-list-dir></question-list-dir>
 
-        </div>
+            <div ng-controller="questionCreatorController" ng-init="init()">
+                <create-question-directive></create-question-directive>
+            </div>
 
+       </div>
 
     </div>
 </div>
