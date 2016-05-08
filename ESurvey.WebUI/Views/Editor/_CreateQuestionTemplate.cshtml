@@ -1,12 +1,8 @@
 ﻿<div>
     <h1>CreateQuestionTemplate</h1>
-    <ul>
+    <ul class="clearfix">
         <li ng-repeat="type in questionTypes">
-
-            {{type.Title}}
-            <div class="btn-group">
-                <button type="button" class="btn btn-success" ng-click="createQuestion(type.Id)">X</button>
-            </div>
+                <button type="button" class="btn btn-success" ng-click="createQuestion(type.Id)">{{type.Title}}</button>
         </li>
     </ul>
 

@@ -9,19 +9,25 @@
 
 
         <div ng-controller="editorController" ng-init="init()">
-            {{q}}
-            <div class="btn" ng-click="setPath()">BB</div>
-            <survey-details-editor></survey-details-editor>
+            <div class="row">
+                <survey-details-editor></survey-details-editor>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-controller="questionListController" ng-init="init()">
+                <div class="col-md-6">
+                    <question-list-dir></question-list-dir>
+                </div>
+
+                <div class="col-md-2">
+                    <div ng-controller="questionCreatorController" ng-init="init()">
+                        <create-question-directive></create-question-directive>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div ng-controller="questionListController" ng-init="init()">
-            <question-list-dir></question-list-dir>
-
-            <div ng-controller="questionCreatorController" ng-init="init()">
-                <create-question-directive></create-question-directive>
-            </div>
-
-       </div>
+        <div ng-view></div>
 
     </div>
 </div>

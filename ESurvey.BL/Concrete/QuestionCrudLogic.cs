@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ESurvey.BL.Mappers;
 using ESurvey.Common.Enums;
 using ESurvey.DAL.Concrate;
+using ESurvey.Entity;
 using ESurvey.UIModels;
 using ESurvey.UIModels.SurveyEditor;
 
@@ -14,7 +15,63 @@ namespace ESurvey.BL.Concrete
     public class QuestionCrudLogic
     {
 
-        
+        public async Task<Result> MoveQuestion(int surveyId, int from, int to)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+                var repository = holder.QuestionRepository;
+                var maxnumber = await repository
+                            .GetCountByAsync(q =>
+                                q.SurveyId == surveyId &&
+                                (q.Parent_Question == null || q.Parent_Question == 0));
+
+                if (from == to)
+                    return new Result();
+
+                if ( to > maxnumber ||from>maxnumber)
+                {
+                    return new Result("QuestionNumber can't be larger than questions count");
+                }
+
+                if (from <= 0 || to <=0)
+                    return new Result("QuestionNumber Can't be lesser than 1");
+                List<Questions> questions;
+
+                if (from > to)
+                { 
+
+
+                    questions = await repository
+                        .FetchByAsync(q =>
+                            (q.SurveyId == surveyId && q.Parent_Question == null) &&
+                            (q.Number <= from && q.Number >= to));
+
+                    var tQuestion = questions.First(q => q.Number == from);
+                    questions.ForEach(q => q.Number++);
+                    tQuestion.Number = to;
+                }
+                else
+                {
+
+
+                    questions = await repository
+                        .FetchByAsync(q =>
+                            (q.SurveyId == surveyId && q.Parent_Question == null) &&
+                            (q.Number >= from && q.Number <= to));
+
+                    var tQuestion = questions.First(q => q.Number == from);
+                    questions.ForEach(q => q.Number--);
+                    tQuestion.Number = to;
+
+
+                }
+
+                repository.Update(questions);
+                await repository.SaveContextAsync();
+                return new Result();
+
+            }
+        }
 
         public async Task<Result> CreateQuestion(AddQuestionUiModel question)
         {

@@ -1,11 +1,13 @@
 ﻿<div>
     <h1>QlistTEmplate</h1>
-    <ul>
+    <ul class="container">
         <li ng-repeat="quest in questionList | orderBy:Number">
-            
-                Q{{quest.Number}}: &nbsp;
-                {{quest.Title}}&nbsp;
+
+            Q{{quest.Number}}: &nbsp;
+            <span editable-text="quest.Title">{{quest.Title}}</span>&nbsp;
             <div class="btn-group">
+                <a class="btn btn-warning" href="#/EditQuestion/{{quest.Id}} ">EdiQt</a>
+                <a class="btn btn-warning" href="#/answer">Ans</a>
                 <button type="button" class="btn btn-warning">Edit</button>
                 <button type="button" class="btn btn-danger" ng-click="pendingDelete(quest.Id)">X</button>
             </div>

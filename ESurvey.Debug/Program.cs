@@ -15,18 +15,9 @@ namespace ESurvey.Debug
     {
         static void Main(string[] args)
         {
-            var log = new QuestionCrudLogic();
-            try
-            {
-                var r = log.DeleteQuestion(4);
-                r.Wait();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.ReadKey();
-                
-            }
+            var logic = new QuestionCrudLogic();
+            var R = logic.MoveQuestion(1006, 2, 6);
+            R.Wait();
         }
     }
 }

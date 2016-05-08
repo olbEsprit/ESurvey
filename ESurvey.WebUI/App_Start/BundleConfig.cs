@@ -24,12 +24,16 @@ namespace IdentitySample
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/xeditable.min.css"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.min.js",
+                "~/Scripts/angular-route.min.js",
                 "~/Scripts/angular-sanitize.min.js",
-                "~/Scripts/angular-resource-min.js"
+                "~/Scripts/angular-resource-min.js",
+                "~/Scripts/xeditable.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/angularUi").Include(

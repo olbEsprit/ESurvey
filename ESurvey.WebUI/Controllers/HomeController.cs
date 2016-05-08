@@ -16,7 +16,7 @@ namespace IdentitySample.Controllers
         }
 
         [HttpGet]
-        public ActionResult Test()
+        public ActionResult Test(int? id)
         {
             ViewBag.Test = DateTime.Now.ToString();
             return PartialView();
