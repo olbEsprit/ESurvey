@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
@@ -1009,7 +1009,7 @@ angular.mock.dump = function(object) {
  * During unit testing, we want our unit tests to run quickly and have no external dependencies so
  * we don’t want to send [XHR](https://developer.mozilla.org/en/xmlhttprequest) or
  * [JSONP](http://en.wikipedia.org/wiki/JSONP) requests to a real server. All we really need is
- * to verify whether a certain request has been sent or not, or alternatively just let the
+ * to verify whether a certain requestUiModel has been sent or not, or alternatively just let the
  * application make requests, respond with pre-trained responses and assert that the end result is
  * what we expect it to be.
  *
@@ -1017,14 +1017,14 @@ angular.mock.dump = function(object) {
  * `expect` and `when` apis and their shortcuts (`expectGET`, `whenPOST`, etc).
  *
  * When an Angular application needs some data from a server, it calls the $http service, which
- * sends the request to a real server using $httpBackend service. With dependency injection, it is
+ * sends the requestUiModel to a real server using $httpBackend service. With dependency injection, it is
  * easy to inject $httpBackend mock (which has the same API as $httpBackend) and use it to verify
- * the requests and respond with some testing data without sending a request to a real server.
+ * the requests and respond with some testing data without sending a requestUiModel to a real server.
  *
  * There are two ways to specify what test data should be returned as http responses by the mock
  * backend when the code under test makes http requests:
  *
- * - `$httpBackend.expect` - specifies a request expectation
+ * - `$httpBackend.expect` - specifies a requestUiModel expectation
  * - `$httpBackend.when` - specifies a backend definition
  *
  *
@@ -1035,8 +1035,8 @@ angular.mock.dump = function(object) {
  * or they are made in the wrong order.
  *
  * Backend definitions allow you to define a fake backend for your application which doesn't assert
- * if a particular request was made or not, it just returns a trained response if a request is made.
- * The test will pass whether or not the request gets made during testing.
+ * if a particular requestUiModel was made or not, it just returns a trained response if a requestUiModel is made.
+ * The test will pass whether or not the requestUiModel gets made during testing.
  *
  *
  * <table class="table">
@@ -1073,15 +1073,15 @@ angular.mock.dump = function(object) {
  *   </tr>
  * </table>
  *
- * In cases where both backend definitions and request expectations are specified during unit
- * testing, the request expectations are evaluated first.
+ * In cases where both backend definitions and requestUiModel expectations are specified during unit
+ * testing, the requestUiModel expectations are evaluated first.
  *
- * If a request expectation has no response specified, the algorithm will search your backend
+ * If a requestUiModel expectation has no response specified, the algorithm will search your backend
  * definitions for an appropriate response.
  *
- * If a request didn't match any expectation or if the expectation doesn't have the response
+ * If a requestUiModel didn't match any expectation or if the expectation doesn't have the response
  * defined, the backend definitions are evaluated in sequential order to see if any of them match
- * the request. The response from the first matched definition is returned.
+ * the requestUiModel. The response from the first matched definition is returned.
  *
  *
  * ## Flushing HTTP requests
@@ -1184,9 +1184,9 @@ angular.mock.dump = function(object) {
          $httpBackend.flush();
 
          // now you don’t care about the authentication, but
-         // the controller will still send the request and
+         // the controller will still send the requestUiModel and
          // $httpBackend will respond without you having to
-         // specify the expectation and response for this request
+         // specify the expectation and response for this requestUiModel
 
          $httpBackend.expectPOST('/add-msg.py', 'message content').respond(201, '');
          $rootScope.saveMessage('message content');
@@ -1202,7 +1202,7 @@ angular.mock.dump = function(object) {
 
          $httpBackend.expectPOST('/add-msg.py', undefined, function(headers) {
            // check if the header was sent, if it wasn't the expectation won't
-           // match the request and the test will fail
+           // match the requestUiModel and the test will fail
            return headers['Authorization'] == 'xxx';
          }).respond(201, '');
 
@@ -1214,15 +1214,15 @@ angular.mock.dump = function(object) {
  *
  * ## Dynamic responses
  *
- * You define a response to a request by chaining a call to `respond()` onto a definition or expectation.
+ * You define a response to a requestUiModel by chaining a call to `respond()` onto a definition or expectation.
  * If you provide a **callback** as the first parameter to `respond(callback)` then you can dynamically generate
- * a response based on the properties of the request.
+ * a response based on the properties of the requestUiModel.
  *
  * The `callback` function should be of the form `function(method, url, data, headers, params)`.
  *
  * ### Query parameters
  *
- * By default, query parameters on request URLs are parsed into the `params` object. So a request URL
+ * By default, query parameters on requestUiModel URLs are parsed into the `params` object. So a requestUiModel URL
  * of `/list?q=searchstr&orderby=-name` would set `params` to be `{q: 'searchstr', orderby: '-name'}`.
  *
  * ### Regex parameter matching
@@ -1303,7 +1303,7 @@ angular.mock.$HttpBackendProvider = function() {
  *   - auto flushing is disabled
  *
  * Returns instance for e2e testing (when `$delegate` and `$browser` specified):
- *   - passing through (delegating request to real backend) is enabled
+ *   - passing through (delegating requestUiModel to real backend) is enabled
  *   - auto flushing is enabled
  *
  * @param {Object=} $delegate Real $httpBackend instance (allow passing through if specified)
@@ -1403,8 +1403,8 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
     }
     throw wasExpected ?
         new Error('No response defined !') :
-        new Error('Unexpected request: ' + method + ' ' + url + '\n' +
-                  (expectation ? 'Expected ' + expectation : 'No more request expected'));
+        new Error('Unexpected requestUiModel: ' + method + ' ' + url + '\n' +
+                  (expectation ? 'Expected ' + expectation : 'No more requestUiModel expected'));
   }
 
   /**
@@ -1416,14 +1416,14 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @param {string} method HTTP method.
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
-   * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
+   * @param {(string|RegExp|function(string))=} data HTTP requestUiModel body or function that receives
    *   data string and returns true if the data is as expected.
    * @param {(Object|function(Object))=} headers HTTP headers or function that receives http header
    *   object and returns true if the headers match the current definition.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   *   request is handled. You can save this object for later use and invoke `respond` again in
-   *   order to change how a matched request is handled.
+   *   requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   *   order to change how a matched requestUiModel is handled.
    *
    *  - respond –
    *      ```js
@@ -1466,10 +1466,10 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
    * @param {(Object|function(Object))=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   * request is handled. You can save this object for later use and invoke `respond` again in
-   * order to change how a matched request is handled.
+   * requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   * order to change how a matched requestUiModel is handled.
    */
 
   /**
@@ -1481,10 +1481,10 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
    * @param {(Object|function(Object))=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   * request is handled. You can save this object for later use and invoke `respond` again in
-   * order to change how a matched request is handled.
+   * requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   * order to change how a matched requestUiModel is handled.
    */
 
   /**
@@ -1496,10 +1496,10 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
    * @param {(Object|function(Object))=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   * request is handled. You can save this object for later use and invoke `respond` again in
-   * order to change how a matched request is handled.
+   * requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   * order to change how a matched requestUiModel is handled.
    */
 
   /**
@@ -1510,13 +1510,13 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
-   * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
+   * @param {(string|RegExp|function(string))=} data HTTP requestUiModel body or function that receives
    *   data string and returns true if the data is as expected.
    * @param {(Object|function(Object))=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   * request is handled. You can save this object for later use and invoke `respond` again in
-   * order to change how a matched request is handled.
+   * requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   * order to change how a matched requestUiModel is handled.
    */
 
   /**
@@ -1527,13 +1527,13 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
-   * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
+   * @param {(string|RegExp|function(string))=} data HTTP requestUiModel body or function that receives
    *   data string and returns true if the data is as expected.
    * @param {(Object|function(Object))=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   * request is handled. You can save this object for later use and invoke `respond` again in
-   * order to change how a matched request is handled.
+   * requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   * order to change how a matched requestUiModel is handled.
    */
 
   /**
@@ -1544,10 +1544,10 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   * request is handled. You can save this object for later use and invoke `respond` again in
-   * order to change how a matched request is handled.
+   * requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   * order to change how a matched requestUiModel is handled.
    */
   createShortMethods('when');
 
@@ -1560,8 +1560,8 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @param {string} method HTTP method.
    * @param {string} url HTTP url string that supports colon param matching.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   * request is handled. You can save this object for later use and invoke `respond` again in
-   * order to change how a matched request is handled. See #when for more info.
+   * requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   * order to change how a matched requestUiModel is handled. See #when for more info.
    */
   $httpBackend.whenRoute = function(method, url) {
     var pathObj = parseRoute(url);
@@ -1602,20 +1602,20 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @ngdoc method
    * @name $httpBackend#expect
    * @description
-   * Creates a new request expectation.
+   * Creates a new requestUiModel expectation.
    *
    * @param {string} method HTTP method.
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
-   * @param {(string|RegExp|function(string)|Object)=} data HTTP request body or function that
-   *  receives data string and returns true if the data is as expected, or Object if request body
+   * @param {(string|RegExp|function(string)|Object)=} data HTTP requestUiModel body or function that
+   *  receives data string and returns true if the data is as expected, or Object if requestUiModel body
    *  is in JSON format.
    * @param {(Object|function(Object))=} headers HTTP headers or function that receives http header
    *   object and returns true if the headers match the current expectation.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   *  request is handled. You can save this object for later use and invoke `respond` again in
-   *  order to change how a matched request is handled.
+   *  requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   *  order to change how a matched requestUiModel is handled.
    *
    *  - respond –
    *    ```
@@ -1644,113 +1644,113 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @ngdoc method
    * @name $httpBackend#expectGET
    * @description
-   * Creates a new request expectation for GET requests. For more info see `expect()`.
+   * Creates a new requestUiModel expectation for GET requests. For more info see `expect()`.
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
    * @param {Object=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   * request is handled. You can save this object for later use and invoke `respond` again in
-   * order to change how a matched request is handled. See #expect for more info.
+   * requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   * order to change how a matched requestUiModel is handled. See #expect for more info.
    */
 
   /**
    * @ngdoc method
    * @name $httpBackend#expectHEAD
    * @description
-   * Creates a new request expectation for HEAD requests. For more info see `expect()`.
+   * Creates a new requestUiModel expectation for HEAD requests. For more info see `expect()`.
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
    * @param {Object=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   *   request is handled. You can save this object for later use and invoke `respond` again in
-   *   order to change how a matched request is handled.
+   *   requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   *   order to change how a matched requestUiModel is handled.
    */
 
   /**
    * @ngdoc method
    * @name $httpBackend#expectDELETE
    * @description
-   * Creates a new request expectation for DELETE requests. For more info see `expect()`.
+   * Creates a new requestUiModel expectation for DELETE requests. For more info see `expect()`.
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
    * @param {Object=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   *   request is handled. You can save this object for later use and invoke `respond` again in
-   *   order to change how a matched request is handled.
+   *   requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   *   order to change how a matched requestUiModel is handled.
    */
 
   /**
    * @ngdoc method
    * @name $httpBackend#expectPOST
    * @description
-   * Creates a new request expectation for POST requests. For more info see `expect()`.
+   * Creates a new requestUiModel expectation for POST requests. For more info see `expect()`.
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
-   * @param {(string|RegExp|function(string)|Object)=} data HTTP request body or function that
-   *  receives data string and returns true if the data is as expected, or Object if request body
+   * @param {(string|RegExp|function(string)|Object)=} data HTTP requestUiModel body or function that
+   *  receives data string and returns true if the data is as expected, or Object if requestUiModel body
    *  is in JSON format.
    * @param {Object=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   *   request is handled. You can save this object for later use and invoke `respond` again in
-   *   order to change how a matched request is handled.
+   *   requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   *   order to change how a matched requestUiModel is handled.
    */
 
   /**
    * @ngdoc method
    * @name $httpBackend#expectPUT
    * @description
-   * Creates a new request expectation for PUT requests. For more info see `expect()`.
+   * Creates a new requestUiModel expectation for PUT requests. For more info see `expect()`.
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
-   * @param {(string|RegExp|function(string)|Object)=} data HTTP request body or function that
-   *  receives data string and returns true if the data is as expected, or Object if request body
+   * @param {(string|RegExp|function(string)|Object)=} data HTTP requestUiModel body or function that
+   *  receives data string and returns true if the data is as expected, or Object if requestUiModel body
    *  is in JSON format.
    * @param {Object=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   *   request is handled. You can save this object for later use and invoke `respond` again in
-   *   order to change how a matched request is handled.
+   *   requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   *   order to change how a matched requestUiModel is handled.
    */
 
   /**
    * @ngdoc method
    * @name $httpBackend#expectPATCH
    * @description
-   * Creates a new request expectation for PATCH requests. For more info see `expect()`.
+   * Creates a new requestUiModel expectation for PATCH requests. For more info see `expect()`.
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
    *   and returns true if the url matches the current definition.
-   * @param {(string|RegExp|function(string)|Object)=} data HTTP request body or function that
-   *  receives data string and returns true if the data is as expected, or Object if request body
+   * @param {(string|RegExp|function(string)|Object)=} data HTTP requestUiModel body or function that
+   *  receives data string and returns true if the data is as expected, or Object if requestUiModel body
    *  is in JSON format.
    * @param {Object=} headers HTTP headers.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   *   request is handled. You can save this object for later use and invoke `respond` again in
-   *   order to change how a matched request is handled.
+   *   requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   *   order to change how a matched requestUiModel is handled.
    */
 
   /**
    * @ngdoc method
    * @name $httpBackend#expectJSONP
    * @description
-   * Creates a new request expectation for JSONP requests. For more info see `expect()`.
+   * Creates a new requestUiModel expectation for JSONP requests. For more info see `expect()`.
    *
    * @param {string|RegExp|function(string)} url HTTP url or function that receives an url
    *   and returns true if the url matches the current definition.
-   * @param {(Array)=} keys Array of keys to assign to regex matches in request url described above.
+   * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described above.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   *   request is handled. You can save this object for later use and invoke `respond` again in
-   *   order to change how a matched request is handled.
+   *   requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   *   order to change how a matched requestUiModel is handled.
    */
   createShortMethods('expect');
 
@@ -1758,13 +1758,13 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @ngdoc method
    * @name $httpBackend#expectRoute
    * @description
-   * Creates a new request expectation that compares only with the requested route.
+   * Creates a new requestUiModel expectation that compares only with the requested route.
    *
    * @param {string} method HTTP method.
    * @param {string} url HTTP url string that supports colon param matching.
    * @returns {requestHandler} Returns an object with `respond` method that controls how a matched
-   * request is handled. You can save this object for later use and invoke `respond` again in
-   * order to change how a matched request is handled. See #expect for more info.
+   * requestUiModel is handled. You can save this object for later use and invoke `respond` again in
+   * order to change how a matched requestUiModel is handled. See #expect for more info.
    */
   $httpBackend.expectRoute = function(method, url) {
     var pathObj = parseRoute(url);
@@ -1784,11 +1784,11 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    */
   $httpBackend.flush = function(count, digest) {
     if (digest !== false) $rootScope.$digest();
-    if (!responses.length) throw new Error('No pending request to flush !');
+    if (!responses.length) throw new Error('No pending requestUiModel to flush !');
 
     if (angular.isDefined(count) && count !== null) {
       while (count--) {
-        if (!responses.length) throw new Error('No more pending request to flush !');
+        if (!responses.length) throw new Error('No more pending requestUiModel to flush !');
         responses.shift()();
       }
     } else {
@@ -1846,7 +1846,7 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @ngdoc method
    * @name $httpBackend#resetExpectations
    * @description
-   * Resets all request expectations, but preserves all backend definitions. Typically, you would
+   * Resets all requestUiModel expectations, but preserves all backend definitions. Typically, you would
    * call resetExpectations during a multiple-phase test when you want to reuse the same instance of
    * $httpBackend mock.
    */
@@ -2304,9 +2304,9 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *
  * As opposed to unit-testing, in an end-to-end testing scenario or in scenario when an application
  * is being developed with the real backend api replaced with a mock, it is often desirable for
- * certain category of requests to bypass the mock and issue a real http request (e.g. to fetch
+ * certain category of requests to bypass the mock and issue a real http requestUiModel (e.g. to fetch
  * templates or static files from the webserver). To configure the backend with this behavior
- * use the `passThrough` request handler of `when` instead of `respond`.
+ * use the `passThrough` requestUiModel handler of `when` instead of `respond`.
  *
  * Additionally, we don't want to manually have to flush mocked out requests like we do during unit
  * testing. For this reason the e2e $httpBackend flushes mocked out requests
@@ -2347,14 +2347,14 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  * @param {string} method HTTP method.
  * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
- * @param {(string|RegExp)=} data HTTP request body.
+ * @param {(string|RegExp)=} data HTTP requestUiModel body.
  * @param {(Object|function(Object))=} headers HTTP headers or function that receives http header
  *   object and returns true if the headers match the current definition.
- * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
+ * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
- *   control how a matched request is handled. You can save this object for later use and invoke
- *   `respond` or `passThrough` again in order to change how a matched request is handled.
+ *   control how a matched requestUiModel is handled. You can save this object for later use and invoke
+ *   `respond` or `passThrough` again in order to change how a matched requestUiModel is handled.
  *
  *  - respond –
  *    ```
@@ -2364,8 +2364,8 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *    – The respond method takes a set of static data to be returned or a function that can return
  *    an array containing response status (number), response data (Array|Object|string), response
  *    headers (Object), and the text for the status (string).
- *  - passThrough – `{function()}` – Any request matching a backend definition with
- *    `passThrough` handler will be passed through to the real backend (an XHR request will be made
+ *  - passThrough – `{function()}` – Any requestUiModel matching a backend definition with
+ *    `passThrough` handler will be passed through to the real backend (an XHR requestUiModel will be made
  *    to the server.)
  *  - Both methods return the `requestHandler` object for possible overrides.
  */
@@ -2380,11 +2380,11 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
  * @param {(Object|function(Object))=} headers HTTP headers.
- * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
+ * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
- *   control how a matched request is handled. You can save this object for later use and invoke
- *   `respond` or `passThrough` again in order to change how a matched request is handled.
+ *   control how a matched requestUiModel is handled. You can save this object for later use and invoke
+ *   `respond` or `passThrough` again in order to change how a matched requestUiModel is handled.
  */
 
 /**
@@ -2397,11 +2397,11 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
  * @param {(Object|function(Object))=} headers HTTP headers.
- * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
+ * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
- *   control how a matched request is handled. You can save this object for later use and invoke
- *   `respond` or `passThrough` again in order to change how a matched request is handled.
+ *   control how a matched requestUiModel is handled. You can save this object for later use and invoke
+ *   `respond` or `passThrough` again in order to change how a matched requestUiModel is handled.
  */
 
 /**
@@ -2414,11 +2414,11 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
  * @param {(Object|function(Object))=} headers HTTP headers.
- * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
+ * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
- *   control how a matched request is handled. You can save this object for later use and invoke
- *   `respond` or `passThrough` again in order to change how a matched request is handled.
+ *   control how a matched requestUiModel is handled. You can save this object for later use and invoke
+ *   `respond` or `passThrough` again in order to change how a matched requestUiModel is handled.
  */
 
 /**
@@ -2430,13 +2430,13 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *
  * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
- * @param {(string|RegExp)=} data HTTP request body.
+ * @param {(string|RegExp)=} data HTTP requestUiModel body.
  * @param {(Object|function(Object))=} headers HTTP headers.
- * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
+ * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
- *   control how a matched request is handled. You can save this object for later use and invoke
- *   `respond` or `passThrough` again in order to change how a matched request is handled.
+ *   control how a matched requestUiModel is handled. You can save this object for later use and invoke
+ *   `respond` or `passThrough` again in order to change how a matched requestUiModel is handled.
  */
 
 /**
@@ -2448,13 +2448,13 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *
  * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
- * @param {(string|RegExp)=} data HTTP request body.
+ * @param {(string|RegExp)=} data HTTP requestUiModel body.
  * @param {(Object|function(Object))=} headers HTTP headers.
- * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
+ * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
- *   control how a matched request is handled. You can save this object for later use and invoke
- *   `respond` or `passThrough` again in order to change how a matched request is handled.
+ *   control how a matched requestUiModel is handled. You can save this object for later use and invoke
+ *   `respond` or `passThrough` again in order to change how a matched requestUiModel is handled.
  */
 
 /**
@@ -2466,13 +2466,13 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *
  * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
- * @param {(string|RegExp)=} data HTTP request body.
+ * @param {(string|RegExp)=} data HTTP requestUiModel body.
  * @param {(Object|function(Object))=} headers HTTP headers.
- * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
+ * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
- *   control how a matched request is handled. You can save this object for later use and invoke
- *   `respond` or `passThrough` again in order to change how a matched request is handled.
+ *   control how a matched requestUiModel is handled. You can save this object for later use and invoke
+ *   `respond` or `passThrough` again in order to change how a matched requestUiModel is handled.
  */
 
 /**
@@ -2484,11 +2484,11 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *
  * @param {string|RegExp|function(string)} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
- * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
+ * @param {(Array)=} keys Array of keys to assign to regex matches in requestUiModel url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
- *   control how a matched request is handled. You can save this object for later use and invoke
- *   `respond` or `passThrough` again in order to change how a matched request is handled.
+ *   control how a matched requestUiModel is handled. You can save this object for later use and invoke
+ *   `respond` or `passThrough` again in order to change how a matched requestUiModel is handled.
  */
 /**
  * @ngdoc method
@@ -2500,8 +2500,8 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  * @param {string} method HTTP method.
  * @param {string} url HTTP url string that supports colon param matching.
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
- *   control how a matched request is handled. You can save this object for later use and invoke
- *   `respond` or `passThrough` again in order to change how a matched request is handled.
+ *   control how a matched requestUiModel is handled. You can save this object for later use and invoke
+ *   `respond` or `passThrough` again in order to change how a matched requestUiModel is handled.
  */
 angular.mock.e2e = {};
 angular.mock.e2e.$httpBackendDecorator =

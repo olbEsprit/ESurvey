@@ -28,57 +28,105 @@
 
 
 angular.module("editorApp").controller('questionListController', [
-    '$scope', '$http', function ($scope, $http) {
+    '$scope', 'qListService', function ($scope, qListService) {
 
-        
+
+        $scope.questionList = [];
 
         $scope.init = function () {
-            loadQuestionList($scope.surveyId);
-            //alert("Loda");
+            qListService.setSurveyId($scope.surveyId);
+            qListService.subscribeOnModelChange(onModelChange);
+            qListService.reloadQuestionList();
+            
+            
         };
 
-        function loadQuestionList(surveyId) {
-            $http({
-                method: 'GET',
-                url: '/Question/QuestionList/' + surveyId
-            }).then(function successCallback(response) {
-                var result = response.data;
-                if (result.HadError) {
-                    alert("Error: " + result.ErrorMessage);
-                } else {
-                    $scope.questionList = result.Data;
-                }
-            }, function errorCallback(response) {
-                alert("Error Load Question List");
-            });
+        function onModelChange() {
+            $scope.questionList = qListService.getQList();
+            CalculateNumbers();
+        }
+
+        $scope.pendingDelete = function (id) {
+            if (confirm("You Really Wanna Delete?")) {
+                sendDeleteRequest(id);
+            }
         };
+
+        function sendDeleteRequest(id) {
+            qListService.deleteQuestionById(id);
+        }
+
+
+
+        $scope.renameQuestion = function (q) {
+            qListService.renameQuestion(q.Id, q.Title);
+            return false;
+        };
+
+        $scope.setQuestionNumber = function(q) {
+            qListService.setQuestionNumber(q.Id, q.Number);
+            return false;
+        };
+
+        $scope.numbers = [];
+
+        function CalculateNumbers (){
+            var res = [];
+            for (var i = 1; i <= $scope.questionList.length; i++) {
+                res.push({num:i, value:i});
+            }
+            $scope.numbers = res;
+        };
+
+        function getById(id) {
+            $scope.questionList.forEach(function(item, index) {
+                 if (item.Id == id) {
+                     return item;
+                 } else {
+                     return null;
+                 }
+                });
+        }
+
+        
+        //function loadQuestionList(surveyId) {
+        //    $http({
+        //        method: 'GET',
+        //        url: '/Question/QuestionList/' + surveyId
+        //    }).then(function successCallback(response) {
+        //        var result = response.data;
+        //        if (result.HadError) {
+        //            alert("Error: " + result.ErrorMessage);
+        //        } else {
+        //            $scope.questionList = result.Data;
+        //        }
+        //    }, function errorCallback(response) {
+        //        alert("Error Load Question List");
+        //    });
+        //};
 
 
         $scope.reloadQuestionList = function() {
             loadQuestionList($scope.surveyId);
         }
 
-        $scope.pendingDelete = function(id) {
-            if (confirm("You Really Wanna Delete?")) {
-                sendDeleteRequest(id);
-            }
-        };
         
-        function sendDeleteRequest (iD) {
-                $http({
-                    method: 'Post',
-                    url: '/Question/Delete/' + iD
-                }).then(function successCallback(response) {
-                    var result = response.data;
-                    if (result.HadError) {
-                        alert("Error: " + result.ErrorMessage);
-                    } else {
-                        loadQuestionList($scope.surveyId);
-                    }
-                }, function errorCallback(response) {
-                    alert("Error Delete Question");
-                });
-            };
+        
+        //function sendDeleteRequest (iD) {
+        //        $http({
+        //            method: 'Post',
+        //            url: '/Question/Delete/' + iD
+        //        }).then(function successCallback(response) {
+        //            var result = response.data;
+        //            if (result.HadError) {
+        //                alert("Error: " + result.ErrorMessage);
+        //            } else {
+        //                loadQuestionList($scope.surveyId);
+        //            }
+        //        }, function errorCallback(response) {
+        //            alert("Error Delete Question");
+        //        });
+        //    };
 
     }]);
 

@@ -19,6 +19,13 @@ namespace ESurvey.BL.Mappers
                 Title = question.Title,
                 Is_matrix = question.IsMatrix,
                 Is_hidden = question.IsHidden,
+                RequireAnswer = question.RequriedAnswer,
+                AllowMultipleAnswers = question.AllowMultiple,
+                OtherAnswer = question.OtherAnswer,
+                Number = question.Number,
+                QuestionType = question.Type
+
+                
 
             };
         }
@@ -31,7 +38,12 @@ namespace ESurvey.BL.Mappers
                 SurveyId = question.SurveyId,
                 Title = question.Title,
                 IsMatrix = question.Is_matrix,
-                IsHidden = question.Is_hidden
+                IsHidden = question.Is_hidden,
+                RequriedAnswer = question.RequireAnswer,
+                AllowMultiple = question.AllowMultipleAnswers,
+                OtherAnswer = question.OtherAnswer,
+                Number = question.Number,
+                Type = question.QuestionType
             };
         }
 

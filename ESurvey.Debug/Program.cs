@@ -15,9 +15,7 @@ namespace ESurvey.Debug
     {
         static void Main(string[] args)
         {
-            var logic = new QuestionCrudLogic();
-            var R = logic.MoveQuestion(1006, 2, 6);
-            R.Wait();
+           
         }
     }
 }

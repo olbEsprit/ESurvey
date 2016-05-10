@@ -58,9 +58,9 @@ namespace IdentitySample
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseGoogleAuthentication(
+                clientId: "627984783008-bnqklb7e1ctrs3begicun6konmhpb3ed.apps.googleusercontent.com",
+                clientSecret: "JnmA6Lo_RZILGmFLbRKDbhG3");
         }
     }
 }

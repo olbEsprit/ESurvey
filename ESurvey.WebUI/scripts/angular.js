@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
@@ -4131,7 +4131,7 @@ function annotate(fn, strictDi, name) {
  * The **service providers** are constructor functions. When instantiated they must contain a
  * property called `$get`, which holds the **service factory** function.
  *
- * When you request a service, the {@link auto.$injector $injector} is responsible for finding the
+ * When you requestUiModel a service, the {@link auto.$injector $injector} is responsible for finding the
  * correct **service provider**, instantiating it and then calling its `$get` **service factory**
  * function to get the instance of the **service**.
  *
@@ -5890,7 +5890,7 @@ function Browser(window, document, $log, $sniffer) {
    * @private
    * Note: this method is used only by scenario runner
    * TODO(vojta): prefix this method with $$ ?
-   * @param {function()} callback Function that will be called when no outstanding request
+   * @param {function()} callback Function that will be called when no outstanding requestUiModel
    */
   self.notifyWhenNoOutstandingRequests = function(callback) {
     if (outstandingRequestCount === 0) {
@@ -6731,7 +6731,7 @@ function $TemplateCacheProvider() {
  * * **falsy:** No scope will be created for the directive. The directive will use its parent's scope.
  *
  * * **`true`:** A new child scope that prototypically inherits from its parent will be created for
- * the directive's element. If multiple directives on the same element request a new scope,
+ * the directive's element. If multiple directives on the same element requestUiModel a new scope,
  * only one new scope is created. The new scope rule does not apply for the root of the template
  * since the root of the template always gets a new scope.
  *
@@ -10287,7 +10287,7 @@ function $HttpParamSerializerProvider() {
    * * `{'foo': ['bar', 'baz']}` results in `foo=bar&foo=baz` (repeated key for each array element)
    * * `{'foo': {'bar':'baz'}}` results in `foo=%7B%22bar%22%3A%22baz%22%7D"` (stringified and encoded representation of an object)
    *
-   * Note that serializer will sort the request parameters alphabetically.
+   * Note that serializer will sort the requestUiModel parameters alphabetically.
    * */
 
   this.$get = function() {
@@ -10320,7 +10320,7 @@ function $HttpParamSerializerJQLikeProvider() {
    * jQuery's [`param()`](http://api.jquery.com/jquery.param/) method logic.
    * The serializer will also sort the params alphabetically.
    *
-   * To use it for serializing `$http` request parameters, set it as the `paramSerializer` property:
+   * To use it for serializing `$http` requestUiModel parameters, set it as the `paramSerializer` property:
    *
    * ```js
    * $http({
@@ -10467,7 +10467,7 @@ function headersGetter(headers) {
 /**
  * Chain all given functions
  *
- * This function is used for both request and response transforming
+ * This function is used for both requestUiModel and response transforming
  *
  * @param {*} data Data to transform.
  * @param {function(string=)} headers HTTP headers getter fn.
@@ -10527,7 +10527,7 @@ function $HttpProvider() {
    *
    *
    * - **`defaults.paramSerializer`** - `{string|function(Object<string,string>):string}` - A function
-   *  used to the prepare string representation of request parameters (specified as an object).
+   *  used to the prepare string representation of requestUiModel parameters (specified as an object).
    *  If specified as string, it is interpreted as a function registered with the {@link auto.$injector $injector}.
    *  Defaults to {@link ng.$httpParamSerializer $httpParamSerializer}.
    *
@@ -10536,7 +10536,7 @@ function $HttpProvider() {
     // transform incoming response data
     transformResponse: [defaultHttpResponseTransform],
 
-    // transform outgoing request data
+    // transform outgoing requestUiModel data
     transformRequest: [function(d) {
       return isObject(d) && !isFile(d) && !isBlob(d) && !isFormData(d) ? toJson(d) : d;
     }],
@@ -10615,10 +10615,10 @@ function $HttpProvider() {
    * @description
    *
    * Array containing service factories for all synchronous or asynchronous {@link ng.$http $http}
-   * pre-processing of request or postprocessing of responses.
+   * pre-processing of requestUiModel or postprocessing of responses.
    *
-   * These service factories are ordered by request, i.e. they are applied in the same order as the
-   * array, on request, but reverse order, on response.
+   * These service factories are ordered by requestUiModel, i.e. they are applied in the same order as the
+   * array, on requestUiModel, but reverse order, on response.
    *
    * {@link ng.$http#interceptors Interceptors detailed info}
    **/
@@ -10638,7 +10638,7 @@ function $HttpProvider() {
     /**
      * Interceptors stored in reverse order. Inner interceptors before outer interceptors.
      * The reversal is needed so that we can build up the interception chain around the
-     * server request.
+     * server requestUiModel.
      */
     var reversedInterceptors = [];
 
@@ -10675,10 +10675,10 @@ function $HttpProvider() {
      *
      * ## General usage
      * The `$http` service is a function which takes a single argument — a {@link $http#usage configuration object} —
-     * that is used to generate an HTTP request and returns  a {@link ng.$q promise}.
+     * that is used to generate an HTTP requestUiModel and returns  a {@link ng.$q promise}.
      *
      * ```js
-     *   // Simple GET request example:
+     *   // Simple GET requestUiModel example:
      *   $http({
      *     method: 'GET',
      *     url: '/someUrl'
@@ -10697,7 +10697,7 @@ function $HttpProvider() {
      *     functions.
      *   - **status** – `{number}` – HTTP status code of the response.
      *   - **headers** – `{function([headerName])}` – Header getter function.
-     *   - **config** – `{Object}` – The configuration object that was used to generate the request.
+     *   - **config** – `{Object}` – The configuration object that was used to generate the requestUiModel.
      *   - **statusText** – `{string}` – HTTP status text of the response.
      *
      * A response status code between 200 and 299 is considered a success status and
@@ -10709,7 +10709,7 @@ function $HttpProvider() {
      * ## Shortcut methods
      *
      * Shortcut methods are also available. All shortcut methods require passing in the URL, and
-     * request data must be passed in for POST/PUT requests. An optional config can be passed as the
+     * requestUiModel data must be passed in for POST/PUT requests. An optional config can be passed as the
      * last argument.
      *
      * ```js
@@ -10731,7 +10731,7 @@ function $HttpProvider() {
      * ## Writing Unit Tests that use $http
      * When unit testing (using {@link ngMock ngMock}), it is necessary to call
      * {@link ngMock.$httpBackend#flush $httpBackend.flush()} to flush each pending
-     * request using trained responses.
+     * requestUiModel using trained responses.
      *
      * ```
      * $httpBackend.expectGET(...);
@@ -10777,7 +10777,7 @@ function $HttpProvider() {
      * In addition, you can supply a `headers` property in the config object passed when
      * calling `$http(config)`, which overrides the defaults without changing them globally.
      *
-     * To explicitly remove a header automatically added via $httpProvider.defaults.headers on a per request basis,
+     * To explicitly remove a header automatically added via $httpProvider.defaults.headers on a per requestUiModel basis,
      * Use the `headers` property, setting the desired header to `undefined`. For example:
      *
      * ```js
@@ -10812,7 +10812,7 @@ function $HttpProvider() {
      * ### Default Transformations
      *
      * The `$httpProvider` provider and `$http` service expose `defaults.transformRequest` and
-     * `defaults.transformResponse` properties. If a request does not provide its own transformations
+     * `defaults.transformResponse` properties. If a requestUiModel does not provide its own transformations
      * then these will be applied.
      *
      * You can augment or replace the default transformations by modifying these properties by adding to or
@@ -10822,7 +10822,7 @@ function $HttpProvider() {
      *
      * Request transformations (`$httpProvider.defaults.transformRequest` and `$http.defaults.transformRequest`):
      *
-     * - If the `data` property of the request configuration object contains an object, serialize it
+     * - If the `data` property of the requestUiModel configuration object contains an object, serialize it
      *   into JSON format.
      *
      * Response transformations (`$httpProvider.defaults.transformResponse` and `$http.defaults.transformResponse`):
@@ -10833,7 +10833,7 @@ function $HttpProvider() {
      *
      * ### Overriding the Default Transformations Per Request
      *
-     * If you wish override the request/response transformations only for a single request then provide
+     * If you wish override the requestUiModel/response transformations only for a single requestUiModel then provide
      * `transformRequest` and/or `transformResponse` properties on the configuration object passed
      * into `$http`.
      *
@@ -10883,16 +10883,16 @@ function $HttpProvider() {
      * {@link $httpProvider#defaults `$httpProvider.defaults.cache`} property.
      *
      * When caching is enabled, {@link ng.$http `$http`} stores the response from the server using
-     * the relevant cache object. The next time the same request is made, the response is returned
-     * from the cache without sending a request to the server.
+     * the relevant cache object. The next time the same requestUiModel is made, the response is returned
+     * from the cache without sending a requestUiModel to the server.
      *
      * Take note that:
      *
      *   * Only GET and JSONP requests are cached.
-     *   * The cache key is the request URL including search parameters; headers are not considered.
+     *   * The cache key is the requestUiModel URL including search parameters; headers are not considered.
      *   * Cached responses are returned asynchronously, in the same way as responses from the server.
      *   * If multiple identical requests are made using the same cache, which is not yet populated,
-     *     one request will be made to the server and remaining requests will return the same response.
+     *     one requestUiModel will be made to the server and remaining requests will return the same response.
      *   * A cache-control header on the response does not affect if or how responses are cached.
      *
      *
@@ -10902,7 +10902,7 @@ function $HttpProvider() {
      * {@link ng.$q $q and deferred/promise APIs}.
      *
      * For purposes of global error handling, authentication, or any kind of synchronous or
-     * asynchronous pre-processing of request or postprocessing of responses, it is desirable to be
+     * asynchronous pre-processing of requestUiModel or postprocessing of responses, it is desirable to be
      * able to intercept requests before they are handed to the server and
      * responses before they are handed over to the application code that
      * initiated these requests. The interceptors leverage the {@link ng.$q
@@ -10914,7 +10914,7 @@ function $HttpProvider() {
      *
      * There are two kinds of interceptors (and two kinds of rejection interceptors):
      *
-     *   * `request`: interceptors get called with a http {@link $http#usage config} object. The function is free to
+     *   * `requestUiModel`: interceptors get called with a http {@link $http#usage config} object. The function is free to
      *     modify the `config` object or create a new one. The function needs to return the `config`
      *     object directly, or a promise containing the `config` or a new `config` object.
      *   * `requestError`: interceptor gets called when a previous interceptor threw an error or
@@ -10931,7 +10931,7 @@ function $HttpProvider() {
      *   $provide.factory('myHttpInterceptor', function($q, dependency1, dependency2) {
      *     return {
      *       // optional method
-     *       'request': function(config) {
+     *       'requestUiModel': function(config) {
      *         // do something on success
      *         return config;
      *       },
@@ -10970,7 +10970,7 @@ function $HttpProvider() {
      *   // alternatively, register the interceptor via an anonymous factory
      *   $httpProvider.interceptors.push(function($q, dependency1, dependency2) {
      *     return {
-     *      'request': function(config) {
+     *      'requestUiModel': function(config) {
      *          // same as above
      *       },
      *
@@ -10996,7 +10996,7 @@ function $HttpProvider() {
      *
      * A [JSON vulnerability](http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx)
      * allows third party website to turn your JSON resource URL into
-     * [JSONP](http://en.wikipedia.org/wiki/JSONP) request under some conditions. To
+     * [JSONP](http://en.wikipedia.org/wiki/JSONP) requestUiModel under some conditions. To
      * counter this your server can prefix all JSON requests with following string `")]}',\n"`.
      * Angular will automatically strip the prefix before processing it as JSON.
      *
@@ -11025,9 +11025,9 @@ function $HttpProvider() {
      * The header will not be set for cross-domain requests.
      *
      * To take advantage of this, your server needs to set a token in a JavaScript readable session
-     * cookie called `XSRF-TOKEN` on the first HTTP GET request. On subsequent XHR requests the
+     * cookie called `XSRF-TOKEN` on the first HTTP GET requestUiModel. On subsequent XHR requests the
      * server can verify that the cookie matches `X-XSRF-TOKEN` HTTP header, and therefore be sure
-     * that only JavaScript running on your domain could have sent the request. The token must be
+     * that only JavaScript running on your domain could have sent the requestUiModel. The token must be
      * unique for each user and must be verifiable by the server (to prevent the JavaScript from
      * making up its own tokens). We recommend that the token is a digest of your site's
      * authentication cookie with a [salt](https://en.wikipedia.org/wiki/Salt_(cryptography&#41;)
@@ -11035,19 +11035,19 @@ function $HttpProvider() {
      *
      * The name of the headers can be specified using the xsrfHeaderName and xsrfCookieName
      * properties of either $httpProvider.defaults at config-time, $http.defaults at run-time,
-     * or the per-request config object.
+     * or the per-requestUiModel config object.
      *
      * In order to prevent collisions in environments where multiple Angular apps share the
      * same domain or subdomain, we recommend that each application uses unique cookie name.
      *
-     * @param {object} config Object describing the request to be made and how it should be
+     * @param {object} config Object describing the requestUiModel to be made and how it should be
      *    processed. The object has following properties:
      *
      *    - **method** – `{string}` – HTTP method (e.g. 'GET', 'POST', etc)
      *    - **url** – `{string}` – Absolute or relative URL of the resource that is being requested.
      *    - **params** – `{Object.<string|Object>}` – Map of strings or objects which will be serialized
      *      with the `paramSerializer` and appended as GET parameters.
-     *    - **data** – `{string|Object}` – Data to be sent as the request message data.
+     *    - **data** – `{string|Object}` – Data to be sent as the requestUiModel message data.
      *    - **headers** – `{Object}` – Map of strings or functions which return strings representing
      *      HTTP headers to send to the server. If the return value of a function is null, the
      *      header will not be sent. Functions accept a config object as an argument.
@@ -11062,17 +11062,17 @@ function $HttpProvider() {
      *    - **transformRequest** –
      *      `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
      *      transform function or an array of such functions. The transform function takes the http
-     *      request body and headers and returns its transformed (typically serialized) version.
-     *      See {@link ng.$http#overriding-the-default-transformations-per-request
+     *      requestUiModel body and headers and returns its transformed (typically serialized) version.
+     *      See {@link ng.$http#overriding-the-default-transformations-per-requestUiModel
      *      Overriding the Default Transformations}
      *    - **transformResponse** –
      *      `{function(data, headersGetter, status)|Array.<function(data, headersGetter, status)>}` –
      *      transform function or an array of such functions. The transform function takes the http
      *      response body, headers and status and returns its transformed (typically deserialized) version.
-     *      See {@link ng.$http#overriding-the-default-transformations-per-request
+     *      See {@link ng.$http#overriding-the-default-transformations-per-requestUiModel
      *      Overriding the Default Transformations}
      *    - **paramSerializer** - `{string|function(Object<string,string>):string}` - A function used to
-     *      prepare the string representation of request parameters (specified as an object).
+     *      prepare the string representation of requestUiModel parameters (specified as an object).
      *      If specified as string, it is interpreted as function registered with the
      *      {@link $injector $injector}, which means you can create your own serializer
      *      by registering it as a {@link auto.$provide#service service}.
@@ -11082,7 +11082,7 @@ function $HttpProvider() {
      *      {@link ng.$cacheFactory `$cacheFactory`} to enable or disable caching of the HTTP response.
      *      See {@link $http#caching $http Caching} for more information.
      *    - **timeout** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise}
-     *      that should abort the request when resolved.
+     *      that should abort the requestUiModel when resolved.
      *    - **withCredentials** - `{boolean}` - whether to set the `withCredentials` flag on the
      *      XHR object. See [requests with credentials](https://developer.mozilla.org/docs/Web/HTTP/Access_control_CORS#Requests_with_credentials)
      *      for more information.
@@ -11090,7 +11090,7 @@ function $HttpProvider() {
      *      [XMLHttpRequest.responseType](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#xmlhttprequest-responsetype).
      *
      * @returns {HttpPromise} Returns a {@link ng.$q `Promise}` that will be resolved to a response object
-     *                        when the request succeeds or fails.
+     *                        when the requestUiModel succeeds or fails.
      *
      *
      * @property {Array.<Object>} pendingRequests Array of config objects for currently pending
@@ -11159,7 +11159,7 @@ function $HttpProvider() {
   var sampleJsonpBtn = element(by.id('samplejsonpbtn'));
   var invalidJsonpBtn = element(by.id('invalidjsonpbtn'));
 
-  it('should make an xhr GET request', function() {
+  it('should make an xhr GET requestUiModel', function() {
     sampleGetBtn.click();
     fetchBtn.click();
     expect(status.getText()).toMatch('200');
@@ -11167,14 +11167,14 @@ function $HttpProvider() {
   });
 
 // Commented out due to flakes. See https://github.com/angular/angular.js/issues/9185
-// it('should make a JSONP request to angularjs.org', function() {
+// it('should make a JSONP requestUiModel to angularjs.org', function() {
 //   sampleJsonpBtn.click();
 //   fetchBtn.click();
 //   expect(status.getText()).toMatch('200');
 //   expect(data.getText()).toMatch(/Super Hero!/);
 // });
 
-  it('should make JSONP request to invalid URL and invoke the error handler',
+  it('should make JSONP requestUiModel to invalid URL and invoke the error handler',
       function() {
     invalidJsonpBtn.click();
     fetchBtn.click();
@@ -11187,11 +11187,11 @@ function $HttpProvider() {
     function $http(requestConfig) {
 
       if (!isObject(requestConfig)) {
-        throw minErr('$http')('badreq', 'Http request configuration must be an object.  Received: {0}', requestConfig);
+        throw minErr('$http')('badreq', 'Http requestUiModel configuration must be an object.  Received: {0}', requestConfig);
       }
 
       if (!isString(requestConfig.url)) {
-        throw minErr('$http')('badreq', 'Http request configuration url must be a string.  Received: {0}', requestConfig.url);
+        throw minErr('$http')('badreq', 'Http requestUiModel configuration url must be a string.  Received: {0}', requestConfig.url);
       }
 
       var config = extend({
@@ -11223,7 +11223,7 @@ function $HttpProvider() {
           config.withCredentials = defaults.withCredentials;
         }
 
-        // send request
+        // send requestUiModel
         return sendReq(config, reqData).then(transformResponse, transformResponse);
       };
 
@@ -11332,9 +11332,9 @@ function $HttpProvider() {
      * @name $http#get
      *
      * @description
-     * Shortcut method to perform `GET` request.
+     * Shortcut method to perform `GET` requestUiModel.
      *
-     * @param {string} url Relative or absolute URL specifying the destination of the request
+     * @param {string} url Relative or absolute URL specifying the destination of the requestUiModel
      * @param {Object=} config Optional configuration object
      * @returns {HttpPromise} Future object
      */
@@ -11344,9 +11344,9 @@ function $HttpProvider() {
      * @name $http#delete
      *
      * @description
-     * Shortcut method to perform `DELETE` request.
+     * Shortcut method to perform `DELETE` requestUiModel.
      *
-     * @param {string} url Relative or absolute URL specifying the destination of the request
+     * @param {string} url Relative or absolute URL specifying the destination of the requestUiModel
      * @param {Object=} config Optional configuration object
      * @returns {HttpPromise} Future object
      */
@@ -11356,9 +11356,9 @@ function $HttpProvider() {
      * @name $http#head
      *
      * @description
-     * Shortcut method to perform `HEAD` request.
+     * Shortcut method to perform `HEAD` requestUiModel.
      *
-     * @param {string} url Relative or absolute URL specifying the destination of the request
+     * @param {string} url Relative or absolute URL specifying the destination of the requestUiModel
      * @param {Object=} config Optional configuration object
      * @returns {HttpPromise} Future object
      */
@@ -11368,9 +11368,9 @@ function $HttpProvider() {
      * @name $http#jsonp
      *
      * @description
-     * Shortcut method to perform `JSONP` request.
+     * Shortcut method to perform `JSONP` requestUiModel.
      *
-     * @param {string} url Relative or absolute URL specifying the destination of the request.
+     * @param {string} url Relative or absolute URL specifying the destination of the requestUiModel.
      *                     The name of the callback should be the string `JSON_CALLBACK`.
      * @param {Object=} config Optional configuration object
      * @returns {HttpPromise} Future object
@@ -11382,9 +11382,9 @@ function $HttpProvider() {
      * @name $http#post
      *
      * @description
-     * Shortcut method to perform `POST` request.
+     * Shortcut method to perform `POST` requestUiModel.
      *
-     * @param {string} url Relative or absolute URL specifying the destination of the request
+     * @param {string} url Relative or absolute URL specifying the destination of the requestUiModel
      * @param {*} data Request content
      * @param {Object=} config Optional configuration object
      * @returns {HttpPromise} Future object
@@ -11395,9 +11395,9 @@ function $HttpProvider() {
      * @name $http#put
      *
      * @description
-     * Shortcut method to perform `PUT` request.
+     * Shortcut method to perform `PUT` requestUiModel.
      *
-     * @param {string} url Relative or absolute URL specifying the destination of the request
+     * @param {string} url Relative or absolute URL specifying the destination of the requestUiModel
      * @param {*} data Request content
      * @param {Object=} config Optional configuration object
      * @returns {HttpPromise} Future object
@@ -11408,9 +11408,9 @@ function $HttpProvider() {
       * @name $http#patch
       *
       * @description
-      * Shortcut method to perform `PATCH` request.
+      * Shortcut method to perform `PATCH` requestUiModel.
       *
-      * @param {string} url Relative or absolute URL specifying the destination of the request
+      * @param {string} url Relative or absolute URL specifying the destination of the requestUiModel
       * @param {*} data Request content
       * @param {Object=} config Optional configuration object
       * @returns {HttpPromise} Future object
@@ -11423,7 +11423,7 @@ function $HttpProvider() {
          *
          * @description
          * Runtime equivalent of the `$httpProvider.defaults` property. Allows configuration of
-         * default headers, withCredentials as well as request and response transformations.
+         * default headers, withCredentials as well as requestUiModel and response transformations.
          *
          * See "Setting HTTP Headers" and "Transforming Requests and Responses" sections above.
          */
@@ -11459,7 +11459,7 @@ function $HttpProvider() {
 
 
     /**
-     * Makes the request.
+     * Makes the requestUiModel.
      *
      * !!! ACCESSES CLOSURE VARS:
      * $httpBackend, defaults, $log, $rootScope, defaultCache, $http.pendingRequests
@@ -11487,7 +11487,7 @@ function $HttpProvider() {
         cachedResp = cache.get(url);
         if (isDefined(cachedResp)) {
           if (isPromiseLike(cachedResp)) {
-            // cached request has already been sent, but there is no response yet
+            // cached requestUiModel has already been sent, but there is no response yet
             cachedResp.then(resolvePromiseWithResult, resolvePromiseWithResult);
           } else {
             // serving from cache
@@ -11505,7 +11505,7 @@ function $HttpProvider() {
 
 
       // if we won't have the response in cache, set the xsrf headers and
-      // send the request to the backend
+      // send the requestUiModel to the backend
       if (isUndefined(cachedResp)) {
         var xsrfValue = urlIsSameOrigin(config.url)
             ? $$cookieReader()[config.xsrfCookieName || defaults.xsrfCookieName]
@@ -11628,8 +11628,8 @@ function $HttpProvider() {
  * });
  * ```
  *
- * @param {string} method HTTP method of the request (GET, POST, PUT, ..)
- * @param {string} url URL of the request.
+ * @param {string} method HTTP method of the requestUiModel (GET, POST, PUT, ..)
+ * @param {string} url URL of the requestUiModel.
  */
 function $xhrFactoryProvider() {
   this.$get = function() {
@@ -11717,7 +11717,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
 
       var requestError = function() {
         // The response is always empty
-        // See https://xhr.spec.whatwg.org/#request-error-steps and https://fetch.spec.whatwg.org/#concept-network-error
+        // See https://xhr.spec.whatwg.org/#requestUiModel-error-steps and https://fetch.spec.whatwg.org/#concept-network-error
         completeRequest(callback, -1, null, null, '');
       };
 
@@ -18885,7 +18885,7 @@ var $templateRequestMinErr = minErr('$compile');
  * @ngdoc provider
  * @name $templateRequestProvider
  * @description
- * Used to configure the options passed to the {@link $http} service when making a template request.
+ * Used to configure the options passed to the {@link $http} service when making a template requestUiModel.
  *
  * For example, it can be used for specifying the "Accept" header that is sent to the server, when
  * requesting a template.
@@ -18898,7 +18898,7 @@ function $TemplateRequestProvider() {
    * @ngdoc method
    * @name $templateRequestProvider#httpOptions
    * @description
-   * The options to be passed to the {@link $http} service when making the request.
+   * The options to be passed to the {@link $http} service when making the requestUiModel.
    * You can use this to override options such as the "Accept" header for template requests.
    *
    * The {@link $templateRequest} will set the `cache` and the `transformResponse` properties of the
@@ -18921,8 +18921,8 @@ function $TemplateRequestProvider() {
    *
    * @description
    * The `$templateRequest` service runs security checks then downloads the provided template using
-   * `$http` and, upon success, stores the contents inside of `$templateCache`. If the HTTP request
-   * fails or the response data of the HTTP request is empty, a `$compile` error will be thrown (the
+   * `$http` and, upon success, stores the contents inside of `$templateCache`. If the HTTP requestUiModel
+   * fails or the response data of the HTTP requestUiModel is empty, a `$compile` error will be thrown (the
    * exception can be thwarted by setting the 2nd parameter of the function to true). Note that the
    * contents of `$templateCache` are trusted, so the call to `$sce.getTrustedUrl(tpl)` is omitted
    * when `tpl` is of type string and `$templateCache` has the matching entry.
@@ -18930,8 +18930,8 @@ function $TemplateRequestProvider() {
    * If you want to pass custom options to the `$http` service, such as setting the Accept header you
    * can configure this via {@link $templateRequestProvider#httpOptions}.
    *
-   * @param {string|TrustedResourceUrl} tpl The HTTP request template URL
-   * @param {boolean=} ignoreRequestError Whether or not to ignore the exception when the request fails or the template is empty
+   * @param {string|TrustedResourceUrl} tpl The HTTP requestUiModel template URL
+   * @param {boolean=} ignoreRequestError Whether or not to ignore the exception when the requestUiModel fails or the template is empty
    *
    * @return {Promise} a promise for the HTTP response data of the given URL.
    *
@@ -19122,7 +19122,7 @@ function $TimeoutProvider() {
       * The return value of calling `$timeout` is a promise, which will be resolved when
       * the delay has passed and the timeout function, if provided, is executed.
       *
-      * To cancel a timeout request, call `$timeout.cancel(promise)`.
+      * To cancel a timeout requestUiModel, call `$timeout.cancel(promise)`.
       *
       * In tests you can use {@link ngMock.$timeout `$timeout.flush()`} to
       * synchronously flush the queue of deferred functions.
@@ -19282,11 +19282,11 @@ function urlResolve(url) {
 }
 
 /**
- * Parse a request URL and determine whether this is a same-origin request as the application document.
+ * Parse a requestUiModel URL and determine whether this is a same-origin requestUiModel as the application document.
  *
- * @param {string|object} requestUrl The url of the request as a string that will be resolved
+ * @param {string|object} requestUrl The url of the requestUiModel as a string that will be resolved
  * or a parsed URL object.
- * @returns {boolean} Whether the request is for the same origin as the application document.
+ * @returns {boolean} Whether the requestUiModel is for the same origin as the application document.
  */
 function urlIsSameOrigin(requestUrl) {
   var parsed = (isString(requestUrl)) ? urlResolve(requestUrl) : requestUrl;
@@ -25008,7 +25008,7 @@ forEach(
         restrict: 'A',
         compile: function($element, attr) {
           // We expose the powerful $event object on the scope that provides access to the Window,
-          // etc. that isn't protected by the fast paths in $parse.  We explicitly request better
+          // etc. that isn't protected by the fast paths in $parse.  We explicitly requestUiModel better
           // checks at the cost of speed since event handler expressions are not executed as
           // frequently as regular change detection.
           var fn = $parse(attr[directiveName], /* interceptorFn */ null, /* expensiveChecks */ true);
@@ -25275,7 +25275,7 @@ forEach(
  * @description
  * Enables binding angular expressions to onsubmit events.
  *
- * Additionally it prevents the default action (which for form means sending the request to the
+ * Additionally it prevents the default action (which for form means sending the requestUiModel to the
  * server and reloading the current page), but only if the form does not contain `action`,
  * `data-action`, or `x-action` attributes.
  *
@@ -25744,7 +25744,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  * @name ngInclude#$includeContentError
  * @eventType emit on the scope ngInclude was declared in
  * @description
- * Emitted when a template HTTP request yields an erroneous response (status < 200 || status > 299)
+ * Emitted when a template HTTP requestUiModel yields an erroneous response (status < 200 || status > 299)
  *
  * @param {Object} angularEvent Synthetic event object.
  * @param {String} src URL of content to load.
@@ -25795,7 +25795,7 @@ var ngIncludeDirective = ['$templateRequest', '$anchorScroll', '$animate',
           var thisChangeId = ++changeCounter;
 
           if (src) {
-            //set the 2nd param to true to ignore the template request error so that the inner
+            //set the 2nd param to true to ignore the template requestUiModel error so that the inner
             //contents and scope can be cleaned up.
             $templateRequest(src, true).then(function(response) {
               if (scope.$$destroyed) return;
@@ -26138,7 +26138,7 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
  * ```
  *
  * @property {Object.<string, function>} $asyncValidators A collection of validations that are expected to
- *      perform an asynchronous validation (e.g. a HTTP request). The validation function that is provided
+ *      perform an asynchronous validation (e.g. a HTTP requestUiModel). The validation function that is provided
  *      is expected to return a promise when it is run during the model validation process. Once the promise
  *      is delivered then the validation status will be set to true when fulfilled and false when rejected.
  *      When the asynchronous validators are triggered, each of the validators will run in parallel and the model

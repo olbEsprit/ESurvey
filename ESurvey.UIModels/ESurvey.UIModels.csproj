@@ -49,11 +49,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SurveyEditor\AddQuestionUiModel.cs" />
     <Compile Include="SurveyEditor\AnswerUIModel.cs" />
+    <Compile Include="SurveyEditor\ChangePostitionRequestUiModel.cs" />
     <Compile Include="SurveyEditor\QuestionListUiModel.cs" />
     <Compile Include="SurveyEditor\QuestionUIModel.cs" />
+    <Compile Include="SurveyEditor\RenameQuestionUiModel.cs" />
     <Compile Include="SurveyEditor\SurveyUIModel.cs" />
     <Compile Include="SurveyListUi.cs" />
     <Compile Include="SurveyRequest.cs" />
+    <Compile Include="ToggleOtherAnswerRequest.cs" />
     <Compile Include="ViewModels\ProfileUiModel.cs" />
   </ItemGroup>
   <ItemGroup />

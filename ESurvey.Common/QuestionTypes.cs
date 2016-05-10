@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESurvey.Common.Enums
 {
-    public enum QuestonTypes
+    public enum QuestionType
     {
         MultiSelect=1,
         Open,

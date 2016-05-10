@@ -30,6 +30,9 @@ namespace ESurvey.Entity
         public bool Is_matrix { get; set; }
         public Nullable<int> Parent_Question { get; set; }
         public int Number { get; set; }
+        public bool RequireAnswer { get; set; }
+        public bool AllowMultipleAnswers { get; set; }
+        public bool OtherAnswer { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnsweredQuestions> AnsweredQuestions { get; set; }

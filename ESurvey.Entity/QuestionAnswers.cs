@@ -25,6 +25,7 @@ namespace ESurvey.Entity
         public bool Is_hidden { get; set; }
         public string Title { get; set; }
         public int Type { get; set; }
+        public bool IsUserAnswer { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnsweredQuestionsOptions> AnsweredQuestionsOptions { get; set; }

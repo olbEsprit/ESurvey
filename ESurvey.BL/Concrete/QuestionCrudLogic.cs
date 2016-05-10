@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ESurvey.BL.Mappers;
 using ESurvey.Common.Enums;
 using ESurvey.DAL.Concrate;
+using ESurvey.DAL.Concrete;
 using ESurvey.Entity;
 using ESurvey.UIModels;
 using ESurvey.UIModels.SurveyEditor;
@@ -15,102 +16,139 @@ namespace ESurvey.BL.Concrete
     public class QuestionCrudLogic
     {
 
-        public async Task<Result> MoveQuestion(int surveyId, int from, int to)
+        //public async Task<Result> MoveQuestion(int surveyId, int from, int to)
+        //{
+
+        //}
+        public async Task<int> GetQuestionType(int id)
         {
             using (var holder = new RepositoryHolder())
             {
-                var repository = holder.QuestionRepository;
-                var maxnumber = await repository
-                            .GetCountByAsync(q =>
-                                q.SurveyId == surveyId &&
-                                (q.Parent_Question == null || q.Parent_Question == 0));
-
-                if (from == to)
-                    return new Result();
-
-                if ( to > maxnumber ||from>maxnumber)
-                {
-                    return new Result("QuestionNumber can't be larger than questions count");
-                }
-
-                if (from <= 0 || to <=0)
-                    return new Result("QuestionNumber Can't be lesser than 1");
-                List<Questions> questions;
-
-                if (from > to)
-                { 
-
-
-                    questions = await repository
-                        .FetchByAsync(q =>
-                            (q.SurveyId == surveyId && q.Parent_Question == null) &&
-                            (q.Number <= from && q.Number >= to));
-
-                    var tQuestion = questions.First(q => q.Number == from);
-                    questions.ForEach(q => q.Number++);
-                    tQuestion.Number = to;
-                }
-                else
-                {
-
-
-                    questions = await repository
-                        .FetchByAsync(q =>
-                            (q.SurveyId == surveyId && q.Parent_Question == null) &&
-                            (q.Number >= from && q.Number <= to));
-
-                    var tQuestion = questions.First(q => q.Number == from);
-                    questions.ForEach(q => q.Number--);
-                    tQuestion.Number = to;
-
-
-                }
-
-                repository.Update(questions);
-                await repository.SaveContextAsync();
-                return new Result();
-
+                return (await holder.QuestionRepository.GetByIdAsync(id)).QuestionType;
             }
         }
 
-        public async Task<Result> CreateQuestion(AddQuestionUiModel question)
+        private async Task<Result> CreateMultiSelectQuestion(AddQuestionUiModel question)
         {
-
             using (var holder = new RepositoryHolder())
             {
                 var entity = new AddQuestionMapper().UiToEntity(question);
-
-                if (entity.QuestionType == (int)QuestonTypes.Matrix)
-                    entity.Is_matrix = true;
-
                 var number = await holder.QuestionRepository
                             .GetCountByAsync(q =>
                                 q.SurveyId == entity.SurveyId &&
                                 (q.Parent_Question == null || q.Parent_Question == 0));
-
                 entity.Number = number + 1;
+                holder.QuestionRepository.Insert(entity);
+                await holder.SaveChangesAsync();
+                return new Result();
+            }
+        }
+
+        private async Task<Result> CreateMatrixQuestion(AddQuestionUiModel question)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+                var entity = new AddQuestionMapper().UiToEntity(question);
+                var number = await holder.QuestionRepository
+                            .GetCountByAsync(q =>
+                                q.SurveyId == entity.SurveyId &&
+                                (q.Parent_Question == null || q.Parent_Question == 0));
+                entity.Number = number + 1;
+                entity.Is_matrix = true;
 
                 holder.QuestionRepository.Insert(entity);
                 await holder.SaveChangesAsync();
                 return new Result();
             }
         }
+
+
+        private async Task<Result> CreateOpenQuestion(AddQuestionUiModel question)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+                var entity = new AddQuestionMapper().UiToEntity(question);
+                var number = await holder.QuestionRepository
+                            .GetCountByAsync(q =>
+                                q.SurveyId == entity.SurveyId &&
+                                (q.Parent_Question == null || q.Parent_Question == 0));
+                entity.Number = number + 1;
+                entity.OtherAnswer = true;
+                holder.QuestionRepository.Insert(entity);
+                
+                
+                await holder.SaveChangesAsync();
+                var  answer = new QuestionAnswers()
+                    {
+                        QuestionId = entity.Id,
+                        Title = "Other",
+                        IsUserAnswer = true
+                    };
+                holder.AnswerRepository.Insert(answer);
+                await holder.SaveChangesAsync();
+                return new Result();
+            }
+        }
+
+        public async Task<Result> CreateQuestion(AddQuestionUiModel question)
+        {
+            if (question.QuestionTypeId == (int)QuestionType.Matrix)
+                return await CreateMatrixQuestion(question);
+            if (question.QuestionTypeId == (int) QuestionType.MultiSelect)
+                return await CreateMultiSelectQuestion(question);
+            if (question.QuestionTypeId == (int) QuestionType.Open)
+                return await CreateOpenQuestion(question);
+            return new Result("Invalid Question Type");
+
+        }
+
+
+        public async Task<Result> ToggleOtherAnswerOption(ToggleOtherAnswerRequest request)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+
+                var ans = await holder.QuestionRepository.GetByIdAsync(request.QuestionId);
+                ans.OtherAnswer = request.Toggle;
+                holder.QuestionRepository.Update(ans);
+
+                if (request.Toggle == false)
+                {
+                    holder.AnswerRepository.RemoveBy(a => a.QuestionId == request.QuestionId && a.IsUserAnswer == true);
+                }
+                else
+                {
+                    var answer = new QuestionAnswers()
+                    {
+                        QuestionId = request.QuestionId,
+                        IsUserAnswer = true,
+                        Title = ""
+                    };
+
+                    holder.AnswerRepository.Insert(answer);
+                }
+                await holder.SaveChangesAsync();
+
+            }
+
+            return new Result();
+        }
         /*
-        public async void UpdateQuestion(AlterQuestionRequest request)
+        public async void UpdateQuestion(AlterQuestionRequest requestUiModel)
         {
             using (var holder = new RepositoryHolder())
             {
                 var questionMapper = new QuestionMapper();
-                var question = questionMapper.UiToEntity(request.Question);
+                var question = questionMapper.UiToEntity(requestUiModel.Question);
 
 
-                question.SurveyId = request.SurveyId;
+                question.SurveyId = requestUiModel.SurveyId;
                 holder.QuestionRepository.Update(question);
                 
 
                 
                 var aMapper = new AnswerMapper();
-                foreach (var answer in aMapper.UiToEntity(request.Answers))
+                foreach (var answer in aMapper.UiToEntity(requestUiModel.Answers))
                 {
                     answer.QuestionId = question.Id;
                     if (answer.Id != 0)
@@ -123,7 +161,7 @@ namespace ESurvey.BL.Concrete
                     }
                 }
 
-                var deleteId = request.DeletedAnswersId;
+                var deleteId = requestUiModel.DeletedAnswersId;
                 holder.AnswerRepository.RemoveBy(a => deleteId.Contains(a.Id));
 
                 await holder.SaveChangesAsync();
@@ -185,6 +223,84 @@ namespace ESurvey.BL.Concrete
                 await holder.SaveChangesAsync();
                 return new Result();
             }
+        }
+
+        public async Task<DataResult<QuestionListUiModel>> RenameQuestion(RenameQuestionUiModel requestUi)
+        {
+            using (var holder = new RepositoryHolder ())
+            {
+                var repository = holder.QuestionRepository;
+                var entiy = await repository.GetByIdAsync(requestUi.Id);
+                entiy.Title = requestUi.Name;
+                await holder.SaveChangesAsync();
+                var mapper = new QuestionListMapper();
+                var result = mapper.EntityToUi(entiy);
+                return new DataResult<QuestionListUiModel>(result);
+            }
+        }
+
+        public async Task<int> GetQuestionCount(int surveyId)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+               var result = await holder.QuestionRepository
+                    .FetchByAsync(q => q.SurveyId == surveyId && q.Parent_Question == null);
+                return result.Count();
+            }
         } 
+
+        public async Task<Result> ChangeQuestionPostion(ChangePostitionRequestUiModel requestUiModel)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+                var repository = holder.QuestionRepository;
+                var entity = await repository.GetByIdAsync(requestUiModel.Id);
+                var maxnumber = await GetQuestionCount(entity.SurveyId);
+                int to = requestUiModel.Position;
+                int from = entity.Number;
+                int surveyId = entity.SurveyId;
+
+                if (from == to)
+                    return new Result();
+                if (to <= 0 || to > maxnumber)
+                    return new Result("Invalid Position");
+
+                List<Questions> questions;
+
+                if (from > to)
+                {
+
+
+                    questions = await repository
+                        .FetchByAsync(q =>
+                            (q.SurveyId == surveyId && q.Parent_Question == null) &&
+                            (q.Number <= from && q.Number >= to));
+
+                    var tQuestion = questions.First(q => q.Number == from);
+                    questions.ForEach(q => q.Number++);
+                    tQuestion.Number = to;
+                }
+                else
+                {
+
+
+                    questions = await repository
+                        .FetchByAsync(q =>
+                            (q.SurveyId == surveyId && q.Parent_Question == null) &&
+                            (q.Number >= from && q.Number <= to));
+
+                    var tQuestion = questions.First(q => q.Number == from);
+                    questions.ForEach(q => q.Number--);
+                    tQuestion.Number = to;
+
+
+                }
+
+                repository.Update(questions);
+                await repository.SaveContextAsync();
+                return new Result();
+
+            }
+        }
     }
 }

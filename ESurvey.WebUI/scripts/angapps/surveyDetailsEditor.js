@@ -29,7 +29,7 @@
                 alert("Error: " + result.ErrorMessage);
                 $scope.refreshSurveyDetails();
             } else {
-                alert(JSON.stringify(result));
+             //   alert(JSON.stringify(result));
                 $scope.surveyDetails = result.Data;
 
                 $scope.refreshSurveyDetails();

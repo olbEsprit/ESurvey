@@ -98,8 +98,9 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuestionId" Type="int" Nullable="false" />
           <Property Name="Is_hidden" Type="bit" Nullable="false" />
-          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="IsUserAnswer" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Questions">
           <Key>
@@ -113,6 +114,9 @@
           <Property Name="Is_matrix" Type="bit" Nullable="false" />
           <Property Name="Parent_Question" Type="int" />
           <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="RequireAnswer" Type="bit" Nullable="false" />
+          <Property Name="AllowMultipleAnswers" Type="bit" Nullable="false" />
+          <Property Name="OtherAnswer" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="QuestionTypes">
           <Key>
@@ -211,18 +215,6 @@
             </Principal>
             <Dependent Role="QuestionAnswers">
               <PropertyRef Name="QuestionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__QuestionAn__Type__60A75C0F">
-          <End Role="AnswerTypes" Type="Self.AnswerTypes" Multiplicity="1" />
-          <End Role="QuestionAnswers" Type="Self.QuestionAnswers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AnswerTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="QuestionAnswers">
-              <PropertyRef Name="Type" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -407,10 +399,6 @@
             <End Role="Questions" EntitySet="Questions" />
             <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
           </AssociationSet>
-          <AssociationSet Name="FK__QuestionAn__Type__60A75C0F" Association="Self.FK__QuestionAn__Type__60A75C0F">
-            <End Role="AnswerTypes" EntitySet="AnswerTypes" />
-            <End Role="QuestionAnswers" EntitySet="QuestionAnswers" />
-          </AssociationSet>
           <AssociationSet Name="FK__Questions__Paren__6E01572D" Association="Self.FK__Questions__Paren__6E01572D">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Questions1" EntitySet="Questions" />
@@ -559,11 +547,12 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QuestionId" Type="Int32" Nullable="false" />
           <Property Name="Is_hidden" Type="Boolean" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AnsweredQuestionsOptions" Relationship="Self.FK__AnsweredQ__Answe__6B24EA82" FromRole="QuestionAnswers" ToRole="AnsweredQuestionsOptions" />
           <NavigationProperty Name="AnswerTypes" Relationship="Self.FK__QuestionAn__Type__60A75C0F" FromRole="QuestionAnswers" ToRole="AnswerTypes" />
           <NavigationProperty Name="Questions" Relationship="Self.FK__QuestionA__Quest__5FB337D6" FromRole="QuestionAnswers" ToRole="Questions" />
+          <Property Name="IsUserAnswer" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Questions">
           <Key>
@@ -583,6 +572,9 @@
           <NavigationProperty Name="QuestionTypes" Relationship="Self.FK__Questions__Quest__59FA5E80" FromRole="Questions" ToRole="QuestionTypes" />
           <NavigationProperty Name="Survey" Relationship="Self.FK__Questions__Surve__59063A47" FromRole="Questions" ToRole="Survey" />
           <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="RequireAnswer" Type="Boolean" Nullable="false" />
+          <Property Name="AllowMultipleAnswers" Type="Boolean" Nullable="false" />
+          <Property Name="OtherAnswer" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="QuestionTypes">
           <Key>
@@ -994,6 +986,7 @@
           <EntitySetMapping Name="QuestionAnswers">
             <EntityTypeMapping TypeName="ESurveyModel.QuestionAnswers">
               <MappingFragment StoreEntitySet="QuestionAnswers">
+                <ScalarProperty Name="IsUserAnswer" ColumnName="IsUserAnswer" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
                 <ScalarProperty Name="Is_hidden" ColumnName="Is_hidden" />
@@ -1005,6 +998,9 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="ESurveyModel.Questions">
               <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="OtherAnswer" ColumnName="OtherAnswer" />
+                <ScalarProperty Name="AllowMultipleAnswers" ColumnName="AllowMultipleAnswers" />
+                <ScalarProperty Name="RequireAnswer" ColumnName="RequireAnswer" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />

@@ -17,7 +17,7 @@
     <AssemblyName>ESurvey.WebUI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44366</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -221,6 +221,7 @@
     </Content>
     <Content Include="scripts\angapps\adminapp.js" />
     <Content Include="scripts\angapps\editorApp.js" />
+    <Content Include="scripts\angapps\questionEditorController.js" />
     <Content Include="scripts\angapps\questionListController.js" />
     <Content Include="scripts\angapps\questionCreatorController.js" />
     <Content Include="scripts\angapps\surveyDetailsEditor.js" />
@@ -252,6 +253,9 @@
     <Content Include="Views\Editor\SurveyDetailsForm.cshtml" />
     <Content Include="Views\Editor\_QuestionListTemplate.cshtml" />
     <Content Include="Views\Editor\_CreateQuestionTemplate.cshtml" />
+    <Content Include="Views\Editor\_MultiSelectEditor.cshtml" />
+    <Content Include="Views\Editor\_OpenEditor.cshtml" />
+    <Content Include="Views\Editor\_MatrixEditor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -335,6 +339,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\EditorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -355,6 +360,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Answer\" />
     <Folder Include="Views\ESurvey\" />
     <Folder Include="Views\Question\" />
     <Folder Include="Views\Survey\" />
@@ -363,6 +369,10 @@
     <ProjectReference Include="..\ESurvey.BL\ESurvey.BL.csproj">
       <Project>{1af7fe88-5b91-4f44-9316-9b53503dbcc5}</Project>
       <Name>ESurvey.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESurvey.Common\ESurvey.Common.csproj">
+      <Project>{9c94f0e1-6935-441c-85c5-494aa423ca93}</Project>
+      <Name>ESurvey.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESurvey.UIModels\ESurvey.UIModels.csproj">
       <Project>{4351602b-706d-4344-83b4-92f6a5756cb9}</Project>
@@ -384,7 +394,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51734</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51734/</IISUrl>
+          <IISUrl>https://localhost:44366/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

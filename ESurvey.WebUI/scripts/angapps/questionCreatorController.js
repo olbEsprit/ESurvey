@@ -1,5 +1,5 @@
 ﻿angular.module("editorApp").controller('questionCreatorController', [
-    '$scope', '$http', function ($scope, $http) {
+    '$scope', 'qListService', function ($scope, qListService) {
 
         $scope.questionTypes = [
             {
@@ -15,32 +15,15 @@
                 Title: "Matrix"
             }
         ];
+
         $scope.createQuestion = function(typeId) {
-            var model = {
-                SurveyId: $scope.surveyId,
-                QuestionTypeId: typeId
-            };
-            sendQuestion(model);
+            
+            qListService.createQuestion(typeId);
         };
 
         
 
-        function sendQuestion(addQuestionUiModel) {
-            $http({
-                method: 'POST',
-                url: '/Question/Create',
-                data: addQuestionUiModel
-        }).then(function successCallback(response) {
-                    var result = response.data;
-                    if (result.HadError) {
-                        alert("Error: " + result.ErrorMessage);
-                    } else {
-                        $scope.reloadQuestionList();
-                    }
-                }, function errorCallback(response) {
-                    alert("Error Create Question");
-                });
-            };
+        
     }
 ]);
 

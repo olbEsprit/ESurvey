@@ -27,7 +27,7 @@ namespace IdentitySample
                       "~/Content/site.css",
                       "~/Content/xeditable.min.css"
                       ));
-
+           
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.min.js",
                 "~/Scripts/angular-route.min.js",
@@ -50,8 +50,8 @@ namespace IdentitySample
             "~/scripts/angapps/editorApp.js",
             "~/scripts/angapps/surveyDetailsEditor.js",
             "~/scripts/angapps/questionListController.js",
-            "~/scripts/angapps/questionCreatorController.js"
-
+            "~/scripts/angapps/questionCreatorController.js",
+            "~/scripts/angapps/questionEditorController.js"
             ));
         }
     }

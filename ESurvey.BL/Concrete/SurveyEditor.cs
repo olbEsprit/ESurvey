@@ -58,7 +58,7 @@ namespace ESurvey.BL.Concrete
                 if (question.Is_matrix)
                 {
                     var children = await questions.FetchByAsync(q => q.Parent_Question == question.Id);
-                    uiQuestion.Children = children.Select(q=>qMapper.EntityToUi(q)).ToList();
+                   
                 }
 
 

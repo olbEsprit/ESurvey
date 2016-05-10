@@ -21,7 +21,7 @@
       var self = this;
 
       //  Returns a promise which gets the template, either
-      //  from the template parameter or via a request to the
+      //  from the template parameter or via a requestUiModel to the
       //  template url parameter.
       var getTemplate = function(template, templateUrl) {
         var deferred = $q.defer();

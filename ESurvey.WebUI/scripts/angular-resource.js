@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
@@ -106,7 +106,7 @@ function shallowClearAndCopy(src, dst) {
  *
  * @param {Object=} paramDefaults Default values for `url` parameters. These can be overridden in
  *   `actions` methods. If a parameter value is a function, it will be executed every time
- *   when a param value needs to be obtained for a request (unless the param was overridden).
+ *   when a param value needs to be obtained for a requestUiModel (unless the param was overridden).
  *
  *   Each key value in the parameter object is first bound to url template if present and then any
  *   excess keys are appended to the url search query after the `?`.
@@ -135,7 +135,7 @@ function shallowClearAndCopy(src, dst) {
  *     `DELETE`, `JSONP`, etc).
  *   - **`params`** – {Object=} – Optional set of pre-bound parameters for this action. If any of
  *     the parameter value is a function, it will be executed every time when a param value needs to
- *     be obtained for a request (unless the param was overridden).
+ *     be obtained for a requestUiModel (unless the param was overridden).
  *   - **`url`** – {string} – action specific `url` override. The url templating is supported just
  *     like for the resource-level urls.
  *   - **`isArray`** – {boolean=} – If true then the returned object for this action is an array,
@@ -143,8 +143,8 @@ function shallowClearAndCopy(src, dst) {
  *   - **`transformRequest`** –
  *     `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
  *     transform function or an array of such functions. The transform function takes the http
- *     request body and headers and returns its transformed (typically serialized) version.
- *     By default, transformRequest will contain one function that checks if the request data is
+ *     requestUiModel body and headers and returns its transformed (typically serialized) version.
+ *     By default, transformRequest will contain one function that checks if the requestUiModel data is
  *     an object and serializes to using `angular.toJson`. To prevent this behavior, set
  *     `transformRequest` to an empty array: `transformRequest: []`
  *   - **`transformResponse`** –
@@ -155,17 +155,17 @@ function shallowClearAndCopy(src, dst) {
  *     like a JSON string and deserializes it using `angular.fromJson`. To prevent this behavior,
  *     set `transformResponse` to an empty array: `transformResponse: []`
  *   - **`cache`** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
- *     GET request, otherwise if a cache instance built with
+ *     GET requestUiModel, otherwise if a cache instance built with
  *     {@link ng.$cacheFactory $cacheFactory}, this cache will be used for
  *     caching.
  *   - **`timeout`** – `{number}` – timeout in milliseconds.<br />
  *     **Note:** In contrast to {@link ng.$http#usage $http.config}, {@link ng.$q promises} are
  *     **not** supported in $resource, because the same value would be used for multiple requests.
  *     If you are looking for a way to cancel requests, you should use the `cancellable` option.
- *   - **`cancellable`** – `{boolean}` – if set to true, the request made by a "non-instance" call
+ *   - **`cancellable`** – `{boolean}` – if set to true, the requestUiModel made by a "non-instance" call
  *     will be cancelled (if not already completed) by calling `$cancelRequest()` on the call's
  *     return value. Calling `$cancelRequest()` for a non-cancellable or an already
- *     completed/cancelled request will have no effect.<br />
+ *     completed/cancelled requestUiModel will have no effect.<br />
  *   - **`withCredentials`** - `{boolean}` - whether to set the `withCredentials` flag on the
  *     XHR object. See
  *     [requests with credentials](https://developer.mozilla.org/en/http_access_control#section_5)
@@ -181,7 +181,7 @@ function shallowClearAndCopy(src, dst) {
  *
  *   - **`stripTrailingSlashes`** – {boolean} – If true then the trailing
  *   slashes from any calculated URL will be stripped. (Defaults to true.)
- *   - **`cancellable`** – {boolean} – If true, the request made by a "non-instance" call will be
+ *   - **`cancellable`** – {boolean} – If true, the requestUiModel made by a "non-instance" call will be
  *   cancelled (if not already completed) by calling `$cancelRequest()` on the call's return value.
  *   This can be overwritten per action. (Defaults to false.)
  *
@@ -253,8 +253,8 @@ function shallowClearAndCopy(src, dst) {
  *
  *   The Resource instances and collections have these additional methods:
  *
- *   - `$cancelRequest`: If there is a cancellable, pending request related to the instance or
- *      collection, calling this method will abort the request.
+ *   - `$cancelRequest`: If there is a cancellable, pending requestUiModel related to the instance or
+ *      collection, calling this method will abort the requestUiModel.
  *
  * @example
  *
@@ -344,13 +344,13 @@ function shallowClearAndCopy(src, dst) {
  *
  * @example
  *
- * # Creating a custom 'PUT' request
+ * # Creating a custom 'PUT' requestUiModel
  *
- * In this example we create a custom method on our resource to make a PUT request
+ * In this example we create a custom method on our resource to make a PUT requestUiModel
  * ```js
  *    var app = angular.module('app', ['ngResource', 'ngRoute']);
  *
- *    // Some APIs expect a PUT request in the format URL/object/ID
+ *    // Some APIs expect a PUT requestUiModel in the format URL/object/ID
  *    // Here we are creating an 'update' method
  *    app.factory('Notes', ['$resource', function($resource) {
  *    return $resource('/notes/:id', null,
@@ -370,7 +370,7 @@ function shallowClearAndCopy(src, dst) {
  *    // Now call update passing in the ID first then the object you are updating
  *    Notes.update({ id:$id }, note);
  *
- *    // This will PUT /notes/ID with the note object in the request payload
+ *    // This will PUT /notes/ID with the note object in the requestUiModel payload
  *    }]);
  * ```
  *
@@ -378,7 +378,7 @@ function shallowClearAndCopy(src, dst) {
  *
  * # Cancelling requests
  *
- * If an action's configuration specifies that it is cancellable, you can cancel the request related
+ * If an action's configuration specifies that it is cancellable, you can cancel the requestUiModel related
  * to an instance or collection (as long as it is a result of a "non-instance" call):
  *
    ```js
@@ -391,7 +391,7 @@ function shallowClearAndCopy(src, dst) {
      // ...somewhere in the PlanVacationController...
      ...
      this.onDestinationChanged = function onDestinationChanged(destination) {
-       // We don't care about any pending request for hotels
+       // We don't care about any pending requestUiModel for hotels
        // in a different destination any more
        this.availableHotels.$cancelRequest();
 

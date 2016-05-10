@@ -1,4 +1,4 @@
-var Microsoft;
+﻿var Microsoft;
 (function (Microsoft) {
     var ApplicationInsights;
     (function (ApplicationInsights) {
@@ -743,7 +743,7 @@ var Microsoft;
             AjaxMonitor.prototype.sendHandler = function (xhr, content) {
                 xhr.ajaxData.requestSentTime = ApplicationInsights.dateTime.Now();
                 if (!this.appInsights.config.disableCorrelationHeaders && (ApplicationInsights.UrlHelper.parseUrl(xhr.ajaxData.getAbsoluteUrl()).host == this.currentWindowHost)) {
-                    xhr.setRequestHeader("x-ms-request-id", xhr.ajaxData.id);
+                    xhr.setRequestHeader("x-ms-requestUiModel-id", xhr.ajaxData.id);
                 }
                 xhr.ajaxData.xhrMonitoringState.sendDone = true;
             };

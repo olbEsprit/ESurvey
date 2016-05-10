@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ESurvey.BL.Mappers;
 using ESurvey.DAL.Concrate;
+using ESurvey.Entity;
 using ESurvey.UIModels;
 using ESurvey.UIModels.SurveyEditor;
 
@@ -68,6 +69,8 @@ namespace ESurvey.BL.Concrete
                 var answer = mapper.EntityToUi(answerEntity);
                 return new DataResult<AnswerUiModel>(answer);
             }
-        } 
+        }
+
+       
     }
 }

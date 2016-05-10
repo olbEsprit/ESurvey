@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using ESurvey.BL.Concrete;
 using ESurvey.UIModels;
@@ -35,7 +30,7 @@ namespace ESurvey.WebUI.Controllers
             _surveyAccessManager = new SurveyAccessManager();
         }
 
-        [System.Web.Mvc.HttpGet]
+        [HttpGet]
         public async Task<JsonResult> QuestionList(int id)
         {
             var userId = User.Identity.GetUserId();
@@ -44,13 +39,10 @@ namespace ESurvey.WebUI.Controllers
                 var result = await QuestionCrud.GetSurveyQuestionList(id);
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            else
-            {
-                return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
-            }
+            return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
         }
 
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         public async Task<JsonResult> Delete(int id)
         {
             var userId = User.Identity.GetUserId();
@@ -59,15 +51,34 @@ namespace ESurvey.WebUI.Controllers
                 var result = await QuestionCrud.DeleteQuestion(id);
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            else
+            return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> Rename(RenameQuestionUiModel request)
+        {
+            var userId = User.Identity.GetUserId();
+            if (await SurveyAccess.HasAccessToQuestion(userId, request.Id))
             {
-                return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
+                var result = await QuestionCrud.RenameQuestion(request);
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
+            return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> SetPosition(ChangePostitionRequestUiModel requestUiModel)
+        {
+            var userId = User.Identity.GetUserId();
+            if (await SurveyAccess.HasAccessToQuestion(userId, requestUiModel.Id))
+            {
+                var result = await QuestionCrud.ChangeQuestionPostion(requestUiModel);
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
         }
 
 
-
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         public async Task<JsonResult> Create(AddQuestionUiModel question)
         {
             var userId = User.Identity.GetUserId();
@@ -76,10 +87,44 @@ namespace ESurvey.WebUI.Controllers
                     var result = await QuestionCrud.CreateQuestion(question);
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
-                else
-                {
-                    return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
-                }
+            return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> Details(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            if (await SurveyAccess.HasAccessToQuestion(userId, id))
+            {
+                var res = await QuestionCrud.GetQuestion(id);
+                return Json(res, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Update(QuestionUiModel model)
+        {
+            var userId = User.Identity.GetUserId();
+            if (await SurveyAccess.HasAccessToQuestion(userId, model.Id))
+            {
+                var res = await QuestionCrud.UpdateQuestion(model);
+                return Json(res);
+            }
+            return Json(new Result("No Access"));
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> ToggleOtherAnswerOption(ToggleOtherAnswerRequest model)
+        {
+            var userId = User.Identity.GetUserId();
+            if (await SurveyAccess.HasAccessToQuestion(userId, model.QuestionId))
+            {
+                var res = await QuestionCrud.ToggleOtherAnswerOption(model);
+                return Json(res);
+            }
+            return Json(new Result("No Access"));
         }
 
     }
