@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using ESurvey.BL.Concrete;
 using ESurvey.UIModels;
@@ -45,16 +46,25 @@ namespace ESurvey.WebUI.Controllers
         [HttpPost]
         public async Task<JsonResult> Delete(int id)
         {
-            var userId = User.Identity.GetUserId();
-            if (await SurveyAccess.HasAccessToQuestion(userId, id))
+            try
             {
-                var result = await QuestionCrud.DeleteQuestion(id);
-                return Json(result, JsonRequestBehavior.AllowGet);
+                var userId = User.Identity.GetUserId();
+                if (await SurveyAccess.HasAccessToQuestion(userId, id))
+                {
+                    var result = await QuestionCrud.DeleteQuestion(id);
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
             }
+            catch (Exception e)
+            {
+                var y = e.Message;
+                return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
+            }
+            
             return Json(new Result("No Access"), JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> Rename(RenameQuestionUiModel request)
+        public async Task<JsonResult> Rename(RenameRequestUiModel request)
         {
             var userId = User.Identity.GetUserId();
             if (await SurveyAccess.HasAccessToQuestion(userId, request.Id))
@@ -114,6 +124,8 @@ namespace ESurvey.WebUI.Controllers
             return Json(new Result("No Access"));
         }
 
+
+       
 
         [HttpPost]
         public async Task<JsonResult> ToggleOtherAnswerOption(ToggleOtherAnswerRequest model)

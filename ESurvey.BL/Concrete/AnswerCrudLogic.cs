@@ -13,15 +13,54 @@ namespace ESurvey.BL.Concrete
 {
     public class AnswerCrudLogic
     {
-        public async Task<Result> CreateAnswer(AnswerUiModel answerUi)
+        public async Task<DataResult<AnswerUiModel>> CreateAnswer(int id)
         {
-            using (var holder = new RepositoryHolder())
+            try
             {
-                var answerEntity = new AnswerMapper().UiToEntity(answerUi);
-                holder.AnswerRepository.Insert(answerEntity);
-                await holder.SaveChangesAsync();
-                return new Result();
+                using (var holder = new RepositoryHolder())
+                {
+
+                    var answerEntity = new QuestionAnswers()
+                    {
+                        QuestionId = id,
+                        Title = "Untitled",
+                    };
+                    holder.AnswerRepository.Insert(answerEntity);
+                    await holder.SaveChangesAsync();
+                    var res = new AnswerMapper().EntityToUi(answerEntity);
+                    return new DataResult<AnswerUiModel>(res);
+                }
             }
+            catch (Exception e)
+            {
+
+                var g = e.Message;
+                return null;
+            }
+        }
+    
+
+
+        public async Task<Result> Rename(RenameRequestUiModel model)
+        {
+            try
+            {
+                using (var holder = new RepositoryHolder())
+                {
+                    var repository = holder.AnswerRepository;
+                    var entity = await repository.GetByIdAsync(model.Id);
+                    entity.Title = model.Name;
+                    repository.Update(entity);
+                    await holder.SaveChangesAsync();
+                    return new Result();
+                }
+            }
+            catch (Exception)
+            {
+
+                return new Result("FAil");
+            }
+            
         }
 
         public async Task<Result> DeleteAnswer(int ansverId)
@@ -41,7 +80,7 @@ namespace ESurvey.BL.Concrete
             using (var holder = new RepositoryHolder())
             {
                 var repository = holder.AnswerRepository;
-                var answers = await repository.FetchByAsync(a => a.QuestionId == questionId);
+                var answers = await repository.FetchByAsync(a => a.QuestionId == questionId && !a.IsUserAnswer);
                 var mapper = new AnswerMapper();
                 var answersUi = answers.Select(a => mapper.EntityToUi(a)).ToList();
                 return new DataResult<List<AnswerUiModel>>(answersUi);
@@ -71,6 +110,21 @@ namespace ESurvey.BL.Concrete
             }
         }
 
-       
+        public async Task<DataResult<AnswerUiModel>> GetCustomAnswer(int questionId)
+        {
+            using (var holder = new RepositoryHolder())
+            {
+                var answerEntity =
+                    (await holder.AnswerRepository.FetchByAsync(a => a.IsUserAnswer && a.QuestionId == questionId))
+                        .First();
+                if (answerEntity == null)
+                    return new DataResult<AnswerUiModel>("No Answers in the Hell");
+                var mapper = new AnswerMapper();
+                var answer = mapper.EntityToUi(answerEntity);
+                return new DataResult<AnswerUiModel>(answer);
+            }
+        }
+
+
     }
 }

@@ -10,16 +10,18 @@
             "Matrix"
         ];
 
+        $scope.QuestionId = $routeParams.QuestionId;
+
         $scope.QuestionDetails = {};
 
         $scope.EditedDetails = {};
 
-        
+        $scope.TName = "Noname";
 
         $scope.init = function() {
             qEditorService.SetQuestionId($routeParams.QuestionId);
             $scope.LoadDetails();
-            $scope.TypeName = Types[$scope.QuestionDetails]
+            $scope.TName = Types[$scope.QuestionDetails.Type];
         };
 
 
@@ -29,7 +31,7 @@
                     if (result.HadError) {
                         alert(result.ErrorMessage);
                     } else {
-                        $scope.QuestionDetails = result.Data;
+                        $scope.QuestionDetails = result.Data;            
                         cancelEditedDetails();
                     }
                 }
@@ -38,10 +40,8 @@
 
 
         $scope.SendDetails = function () {
-            alert("semd");
             qEditorService.UpdateQuestion($scope.EditedDetails).then(
                 function (result) {
-                    alert(JSON.stringify(result));
                     if (result.HadError) {
                         alert(result.ErrorMessage);
                     } else {
@@ -54,7 +54,7 @@
         $scope.toggleOtherAnswer = function () {
             
             var val = $scope.EditedDetails.OtherAnswer;
-            alert(val);
+        
             qEditorService.toggleOtherAnswerOption(val).then(
                 function(data) {
                     if (data.HadError) {

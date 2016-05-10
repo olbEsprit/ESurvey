@@ -140,7 +140,8 @@ editorApp.service('qListService', ["$http",function ($http) {
         });
     };
 
-    this.renameQuestion = function(questionId, newName) {
+    this.renameQuestion = function (questionId, newName) {
+        //alert(questionId);
         var endpoint = "/Question/Rename";
         var model = {
             Id: questionId,
@@ -370,39 +371,248 @@ editorApp.controller('mainController',['$scope','$http','$templateCache', functi
 ]);
 
 
+editorApp.service('multiAnswerService', [
+    "$http", function($http) {
 
-editorApp.service('MultiAnswerService', ["$http", function ($http) {
+
+        this.FetchAnswers = function(id) {
+            return $http.get("/Answer/All/" + id);
+        };
+
+
+        this.CreateAnswer = function(id) {
+            return $http.post("/Answer/Create/" + id);
+
+        };
+
+        this.DeleteAnswer = function (id) {
+            return $http.post("/Answer/Delete/" + id);
+
+        };
+
+
+        this.RenameAnswer = function(model) {
+            return $http.post("/Answer/Rename", model);
+        };
+
+        this.ChangeNumber = function(model) {
+            return $http.post("/Answer/ChangeNumber/", model);
+        };
+
+
+        this.Hide = function (model) {
+            return $http.post("/Answer/Hide/", model);
+        };
+    }
+]);
+
+editorApp.service('matrixRowService', [
+    "$http", function ($http) {
+
+
+        this.FetchRows = function (id) {
+            return $http.get("/Row/All/" + id);
+        };
+
+
+        this.CreateRow = function (id) {
+            return $http.post("/Answer/Create/" + id);
+
+        };
+
+        this.DeleteRow = function (id) {
+            return $http.post("/Answer/Delete/" + id);
+
+        };
+
+
+        this.RenameRow = function (model) {
+            return $http.post("/Answer/Rename", model);
+        };
+
+        this.ChangeNumber = function (model) {
+            return $http.post("/Answer/ChangeNumber/", model);
+        };
+
+
+        this.Hide = function (model) {
+            return $http.post("/Answer/Hide/", model);
+        };
+    }
+]);
+
+
+
+
+editorApp.controller('multiAnswerController', ['$scope', 'multiAnswerService', '$q', function ($scope, multiAnswerService, $q) {
+
+        $scope.answers = [];    
+        $scope.loadAnswers = function () {
+
+        multiAnswerService.FetchAnswers($scope.QuestionId)
+            .then(function (result) {
+                if (result.data.HadError) {
+                    alert(result.data.ErrorMessage);
+                } else {
+                    $scope.answers = result.data.Data;
+                }
+            }, function(data) { alert("FetchAnswrsError") });
+    };
+
+        $scope.CreateAnswer = function() {
+            multiAnswerService.CreateAnswer($scope.QuestionId)
+            .then(function (result) {
+                if (result.data.HadError) {
+                    alert(result.data.ErrorMessage);
+                } else {
+                    $scope.answers.push(result.data.Data);
+                }
+            }, function (data) { alert("Create AnswerError") });
+        };
+
+
+        $scope.DeleteAnswer = function (id) {
+            multiAnswerService.DeleteAnswer(id)
+            .then(function (result) {
+                if (result.data.HadError) {
+                    alert(result.data.ErrorMessage);
+                } else {
+                    deleteById(id);
+                }
+            }, function (data) { alert("Delete AnswerError") });
+        };
+
+        $scope.Rename = function (data) {
+            var d = $q.defer();
+            var model = {
+                Id:data.Id,
+                Name:data.Title
+            };
+            multiAnswerService.RenameAnswer(model).then(function(responce) {
+                var res = responce.data;
+                if (res.HadError) {
+                  alert(res.ErrorMessage);  
+                } else {
+                    
+                }
+
+            }, function() {});
+        };
+
+
+        function deleteById(id) {
+            $scope.answers = $scope.answers.filter(function (val) {
+                return val.Id !== id;
+            });
+
+        };
+
+
+
+        $scope.init = function (id) {
+            $scope.QuestionId = id;
+            $scope.loadAnswers();
+        };
+
+
+    }
+]);
+
+
+
+
+editorApp.service('qEditorService', ["$http", function ($http) {
+
+
+    var me = this;
+
+    var questionId = 0;
+    var questionType = 0;
+
+    this.GetQuestionId = function() {
+        return questionId;
+    };
+
+    this.SetQuestionId = function (newId) {
+        questionId = newId;
+    };
+
+    this.setQuestionType = function (newType) {
+        questionType = newId;
+    };
+    this.setQuestionType = function () {
+        return questionType;
+    };
+
+
+    var QuestionDetails = {};
 
     
-    function sendDeleteRequest(id) {
-        return $http({
-            method: 'Post',
-            url: '/Question/Delete/' + iD
-        }).then(function successCallback(response) {
-            var result = response.data;
-            return result;
-        }, function errorCallback(response) {
-            alert("Error Delete Question");
-        });
+
+    this.ReloadQuestionDetails = function() {
+        LoadQuestionDetails().then(
+            function (data) {
+                if (data.HadError) {
+                    alert(data.ErrorMessage);
+                } else {
+                    QuestionDetails = data.Data;
+                }
+
+            });
     };
 
-
-    function sendCreateRequest(addQuestionUiModel) {
+    this.toggleOtherAnswerOption = function(val) {
+        var model = {
+            QuestionId: questionId,
+            Toggle: val
+        };
         return $http({
             method: 'POST',
-            url: '/Question/Create',
-            data: addQuestionUiModel
+            url: '/Question/ToggleOtherAnswerOption/',
+            data: model
         }).then(function successCallback(response) {
             var result = response.data;
             return result;
         }, function errorCallback(response) {
-            alert("Error Create Question");
+            alert("Error Toggle Other Question");
         });
     };
 
+    
+
+
+    this.LoadQuestionDetails = function() {
+        return FetchQuestionDetails(questionId);
+    }
+
+
+
+    function FetchQuestionDetails (id) {
+                return $http({
+                    method: 'GET',
+                    url: '/Question/Details/' + id
+                }).then(function successCallback(response) {
+                    var result = response.data;
+                    return result;
+                }, function errorCallback(response) {
+                    alert("Error Fetch Question");
+                });
+    };
+
+    
+
+    this.UpdateQuestion = function (model) {
+        return $http({
+            method: 'POST',
+            url: '/Question/Update/',
+            data: model
+        }).then(function successCallback(response) {
+            var result = response.data;
+            return result;
+        }, function errorCallback(response) {
+            alert("Error Yodate Question");
+            alert(response.Message);
+        });
+    };
 
 }]);
-
-
-
-

@@ -52,7 +52,7 @@
     <Compile Include="SurveyEditor\ChangePostitionRequestUiModel.cs" />
     <Compile Include="SurveyEditor\QuestionListUiModel.cs" />
     <Compile Include="SurveyEditor\QuestionUIModel.cs" />
-    <Compile Include="SurveyEditor\RenameQuestionUiModel.cs" />
+    <Compile Include="SurveyEditor\RenameRequestUiModel.cs" />
     <Compile Include="SurveyEditor\SurveyUIModel.cs" />
     <Compile Include="SurveyListUi.cs" />
     <Compile Include="SurveyRequest.cs" />

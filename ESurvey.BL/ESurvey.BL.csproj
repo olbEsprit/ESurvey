@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Concrete\AnswerCrudLogic.cs" />
+    <Compile Include="Concrete\MatrixRowCrudLogic.cs" />
     <Compile Include="Concrete\QuestionCrudLogic.cs" />
     <Compile Include="Concrete\QuestionEditor.cs" />
     <Compile Include="Concrete\SurveyAccessManager.cs" />

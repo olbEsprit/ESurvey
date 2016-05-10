@@ -58,8 +58,8 @@ angular.module("editorApp").controller('questionListController', [
 
 
 
-        $scope.renameQuestion = function (q) {
-            qListService.renameQuestion(q.Id, q.Title);
+        $scope.renameQuestion = function (q,$data) {
+            qListService.renameQuestion(q.Id, $data);
             return false;
         };
 

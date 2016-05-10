@@ -5,7 +5,7 @@
         <li ng-repeat="quest in questionList | orderBy:'Number'">
 
             Q<span editable-select="quest.Number" onaftersave="setQuestionNumber(quest)" e-ng-options="q.num as q.num for q in numbers">{{quest.Number}}</span>&nbsp;
-            <span editable-text="quest.Title" onaftersave="renameQuestion(quest)">{{quest.Title}}</span>&nbsp;
+            <span editable-text="quest.Title" onbeforesave="renameQuestion(quest, $data)">{{quest.Title}}</span>&nbsp;
             <div class="btn-group" align="right" >
                 <a class="btn btn-warning" align="right" href="#/EditQuestion/{{quest.Id}} ">EdiQt</a>
                 <a class="btn btn-warning" align="right" href="#/answer">Ans</a>

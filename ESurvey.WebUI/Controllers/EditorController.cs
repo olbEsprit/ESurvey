@@ -52,6 +52,7 @@ namespace ESurvey.WebUI.Controllers
             if (!await AccessManager.HasAccessToQuestion(userId, id))
                 return RedirectToAction("UserProfile", "Home");
 
+            ViewBag.Id = id;
 
             var res = await new QuestionCrudLogic().GetQuestionType(id);
 

@@ -122,8 +122,8 @@ namespace ESurvey.BL.Concrete
                     {
                         QuestionId = request.QuestionId,
                         IsUserAnswer = true,
-                        Title = ""
-                    };
+                        Title = "Other"
+                     };
 
                     holder.AnswerRepository.Insert(answer);
                 }
@@ -225,13 +225,13 @@ namespace ESurvey.BL.Concrete
             }
         }
 
-        public async Task<DataResult<QuestionListUiModel>> RenameQuestion(RenameQuestionUiModel requestUi)
+        public async Task<DataResult<QuestionListUiModel>> RenameQuestion(RenameRequestUiModel requestRequestUi)
         {
             using (var holder = new RepositoryHolder ())
             {
                 var repository = holder.QuestionRepository;
-                var entiy = await repository.GetByIdAsync(requestUi.Id);
-                entiy.Title = requestUi.Name;
+                var entiy = await repository.GetByIdAsync(requestRequestUi.Id);
+                entiy.Title = requestRequestUi.Name;
                 await holder.SaveChangesAsync();
                 var mapper = new QuestionListMapper();
                 var result = mapper.EntityToUi(entiy);

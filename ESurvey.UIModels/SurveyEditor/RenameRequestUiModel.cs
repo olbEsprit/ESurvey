@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESurvey.UIModels.SurveyEditor
 {
-    public class RenameQuestionUiModel
+    public class RenameRequestUiModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

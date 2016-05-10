@@ -1,9 +1,9 @@
 ﻿<div>
 
     <div>
-        {{surveyDetails.Title}}<br />
-        {{surveyDetails.Id}}<br />
-                {{surveyDetails.OwnerId}}<br/>
+        {{surveyDetailsEdited.Title}}<br />
+        {{surveyDetailsEdited.Id}}<br />
+        {{surveyDetailsEdited.OwnerId}}<br />
     </div>
         
     <form class="form-group">
@@ -11,9 +11,7 @@
         <input type="button" ng-click="refreshSurveyDetails()" value="Reset" />
         <input type="submit" ng-click="sendSurveyDetails()" value="Save"/>
         <br />
-        {{surveyDetailsEdited.Title}}<br />
-        {{surveyDetailsEdited.Id}}<br />
-        {{surveyDetailsEdited.OwnerId}}<br />
+  
         
 
     </form>
