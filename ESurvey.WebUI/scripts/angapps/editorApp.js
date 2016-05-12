@@ -410,36 +410,123 @@ editorApp.service('matrixRowService', [
     "$http", function ($http) {
 
 
-        this.FetchRows = function (id) {
-            return $http.get("/Row/All/" + id);
+        this.FetchRows = function (parentId) {
+            return $http.get("/MatrixRow/All/" + parentId);
         };
 
 
-        this.CreateRow = function (id) {
-            return $http.post("/Answer/Create/" + id);
+        this.CreateRow = function (parentId) {
+            return $http.post("/MatrixRow/Create/"+parentId);
 
         };
 
         this.DeleteRow = function (id) {
-            return $http.post("/Answer/Delete/" + id);
+            return $http.post("/MatrixRow/Delete/" + id);
 
         };
 
 
         this.RenameRow = function (model) {
-            return $http.post("/Answer/Rename", model);
+            return $http.post("/MatrixRow/Rename", model);
         };
 
         this.ChangeNumber = function (model) {
-            return $http.post("/Answer/ChangeNumber/", model);
+            return $http.post("/MatrixRow/ChangeNumber/", model);
         };
 
 
         this.Hide = function (model) {
-            return $http.post("/Answer/Hide/", model);
+            return $http.post("/MatrixRow/Hide/", model);
         };
     }
 ]);
+
+
+editorApp.controller('matrixRowController', ['$scope', 'matrixRowService', function ($scope, matrixRowService) {
+
+    $scope.rows = [];
+
+    var unchangedRow = {};
+
+
+    $scope.loadRows = function () {
+
+        matrixRowService.FetchRows($scope.parentId)
+            .then(function (result) {
+                if (result.data.HadError) {
+                    alert(result.data.ErrorMessage);
+                } else {
+                    $scope.rows = result.data.Data;
+                }
+            }, function (data) { alert("Fetch Rows Error") });
+    };
+
+    $scope.CreateRow = function () {
+        matrixRowService.CreateRow($scope.parentId)
+        .then(function (result) {
+            if (result.data.HadError) {
+                alert(result.data.ErrorMessage);
+            } else {
+                $scope.rows.push(result.data.Data);
+            }
+        }, function (data) { alert("Create Row Error") });
+    };
+
+
+    $scope.DeleteRow = function (id) {
+        alert(id);
+        matrixRowService.DeleteRow(id)
+        .then(function (result) {
+            if (result.data.HadError) {
+                alert(result.data.ErrorMessage);
+            } else {
+                deleteById(id);
+            }
+        }, function (data) { alert("Delete AnswerError") });
+    };
+
+    $scope.Rename = function (data) {
+        if (data.Id === unchangedRow.Id && data.Title === unchangedRow.Title) {
+            return;
+        }
+
+        var model = {
+            Id: data.Id,
+            Name: data.Title
+        };
+        matrixRowService.RenameRow(model).then(function (responce) {
+            var res = responce.data;
+            if (res.HadError) {
+                alert(res.ErrorMessage);
+            } else {
+
+            }
+
+        }, function () { });
+    };
+
+
+    function deleteById(id) {
+        $scope.rows = $scope.rows.filter(function (val) {
+            return val.Id !== id;
+        });
+    };
+
+        $scope.watchNameChange = function(model) {
+            unchangedRow = angular.copy(model);
+        };
+
+        
+
+    $scope.init = function (id) {
+        $scope.parentId = id;
+        $scope.loadRows();
+    };
+
+
+}
+]);
+
 
 
 

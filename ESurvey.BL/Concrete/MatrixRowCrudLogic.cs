@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ESurvey.BL.Mappers;
+using ESurvey.Common.Enums;
 using ESurvey.DAL.Concrate;
 using ESurvey.Entity;
 using ESurvey.UIModels;
@@ -13,23 +14,26 @@ namespace ESurvey.BL.Concrete
 {
     public class MatrixRowCrudLogic
     {
-        public async Task<Result> Create(AddQuestionUiModel question)
+        public async Task<DataResult<QuestionUiModel>> Create(int parentId)
         {
             using (var holder = new RepositoryHolder())
             {
-                var entity = new AddQuestionMapper().UiToEntity(question);
+                var parent = await holder.QuestionRepository.GetByIdAsync(parentId);
                 var number = await holder.QuestionRepository
-                    .GetCountByAsync(q => q.Parent_Question == question.SurveyId);
-                var parent = await holder.QuestionRepository.GetByIdAsync(question.SurveyId);
-                            
-                entity.Number = number + 1;
-                entity.Is_matrix = true;
-                entity.Parent_Question = parent.Id;
-                entity.SurveyId = parent.SurveyId;
-                holder.QuestionRepository.Insert(entity);
-                await holder.SaveChangesAsync();
+                    .GetCountByAsync(q => q.Parent_Question == parentId);
+                var entity = new Questions()
+                {
+                    Is_matrix = true,
+                    Title = "Untitled",
+                    QuestionType = (int)QuestionType.Matrix,
+                    Parent_Question = parentId,
+                    SurveyId = parent.SurveyId,
+                    Number = number + 1};
+                    holder.QuestionRepository.Insert(entity);
+                    await holder.SaveChangesAsync();
+                    var result = new QuestionMapper().EntityToUi(entity);
 
-                return new Result();
+                    return new DataResult<QuestionUiModel>(result);
             }
         }
 

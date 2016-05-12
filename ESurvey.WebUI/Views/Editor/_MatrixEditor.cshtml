@@ -12,9 +12,37 @@
                 <input type="checkbox" ng-model="EditedDetails.IsHidden">Hidden<br />
                 <input type="checkbox" ng-model="EditedDetails.AllowMultiple">Allow Multiple<br />
                 <input type="checkbox" ng-model="EditedDetails.RequriedAnswer">Require Answer<br />
-                <input type="checkbox" ng-model="EditedDetails.OtherAnswer" ng-change="toggleOtherAnswer()">OtherAnswer<br />
                 <button ng-click="SendDetails()">Save</button>
             </form>
         </div>
+
+        <div class="row" ng-controller="multiAnswerController" ng-init="init(@ViewBag.Id)">
+
+            <ul>
+                <li ng-repeat="ans in answers ">
+                    <input type="text" ng-model="ans.Title" ng-blur="Rename(ans)"/>
+                    <button class="btn btn-danger" ng-click="DeleteAnswer(ans.Id)">X</button>
+                </li>
+            </ul>
+            <hr/>
+            <div class="col-md-4">
+                <button class="btn btn-success" ng-click="CreateAnswer()">Create</button>
+            </div>
+        </div>
+
+        <div class="row" ng-controller="matrixRowController" ng-init="init(@ViewBag.Id)">
+
+            <ul>
+                <li ng-repeat="row in rows ">
+                    <input type="text" ng-model="row.Title" ng-focus="watchNameChange(row)" ng-blur="Rename(row)" />
+                    <button class="btn btn-danger" ng-click="DeleteRow(row.Id)">X</button>
+                </li>
+            </ul>
+            <hr />
+            <div class="col-md-4">
+                <button class="btn btn-success" ng-click="CreateRow()">Create</button>
+            </div>
+        </div>
+
     </div>
 </div>

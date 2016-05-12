@@ -16,9 +16,8 @@
                 <button ng-click="SendDetails()">Save</button>
             </form>
         </div>
-        <br/>
-        <br />
-        <div ng-controller="multiAnswerController" ng-init="init(@ViewBag.Id)">
+       
+        <div class="row" ng-controller="multiAnswerController" ng-init="init(@ViewBag.Id)">
 
             <ul>
                 <li ng-repeat="ans in answers ">
@@ -30,24 +29,21 @@
 
 
 
-                
+                <li ng-show="QuestionDetails.OtherAnswer">
+                    Other <input type="text" disabled />
+                </li>    
 
             </ul>
             <hr/>
-            <li ng-show="QuestionDetails.OtherAnswer">
-                Other <input type="text" disabled />
-            </li>
-            <div class="row">
+            
+
 
                 <div class="col-md-4">
                     <button class="btn btn-success" ng-click="CreateAnswer()">Create</button>
                 </div>
-
-
-
             </div>
             
         
         </div>
-    </div>
 </div>
+

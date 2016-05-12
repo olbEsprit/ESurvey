@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ESurvey.BL.Mappers;
 using ESurvey.Common.Enums;
 using ESurvey.DAL.Concrate;
-using ESurvey.DAL.Concrete;
 using ESurvey.Entity;
 using ESurvey.UIModels;
 using ESurvey.UIModels.SurveyEditor;
 
 namespace ESurvey.BL.Concrete
 {
+    
     public class QuestionCrudLogic
     {
 
