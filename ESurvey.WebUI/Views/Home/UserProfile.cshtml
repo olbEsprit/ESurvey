@@ -6,23 +6,30 @@
 <h2>UserProfile</h2>
 <div>
     <div ng-app="adminApp">
-        <div ng-controller="profileContorller">            
-            <ul>
-                <li ng-repeat="survey in surveys">
-                    {{survey.Title}}
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-warning" ng-click="redirectToEdit(survey.Id)">Edit</button>
-                        <button type="button" class="btn btn-info" ng-click="redirectToPublish(survey.Id)">Publish</button>
-                        <button type="button" class="btn btn-danger" ng-click="deleteSurvey(survey)">X</button>
+        <div ng-controller="profileContorller">
+            <div ng-repeat="survey in surveys">
+                    <div class="container">
+                        <div class="col-sm-4">
+                            <div class="well-sm">
+                                {{survey.Title}}
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-md btn-warning" ng-click="redirectToEdit(survey.Id)">Edit</button>
+                                        <button type="button" class="btn btn-md btn-info" ng-click="redirectToPublish(survey.Id)">Publish</button>
+                                        <button type="button" class="btn btn-md btn-danger" ng-click="deleteSurvey(survey)">X</button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
                     </div>
-                </li>
-            </ul>
+                </div>
             <div ng-show="loading" class="loading">
                 <img width="100" height="100" src="https://d13yacurqjgara.cloudfront.net/users/608059/screenshots/2032455/spinner.gif">LOADING...
             </div>
         </div>
     </div>
-    <button type="button" class="btn-success" id="createSurveyButton">Create new!</button>
+    <button type="button" class="btn btn-success" id="createSurveyButton">Create new!</button>
     <div id="loadSpinner">
     <img width="100" id="loadSpinner"  visibility: hidden height="100" src="https://d13yacurqjgara.cloudfront.net/users/608059/screenshots/2032455/spinner.gif">LOADING...
     </div>
