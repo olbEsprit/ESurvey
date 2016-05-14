@@ -3,19 +3,19 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-md-10"><h3 class="panel-title"><b>Question: {{EditedDetails.Number}} {{EditedDetails.Title}}  {{TNamr}}</b></h3></div>
-            <div class="col-md-2"><a href="#" class="btn btn-success pull-right">Close</a></div>
+            <div class="col-md-2"><a href="#" class="btn btn-default pull-right">Close</a></div>
         </div>
     </div>
     <div class="panel-body">
         <div class="col-md-7">
-            <form novalidate class="simple-form ">
+            <form novalidate class="simple-form form-inline">
                 <h4>Title:</h4> <input class="form-control" type="text" ng-model="EditedDetails.Title"/><br/>
                 <input type="checkbox" ng-model="EditedDetails.IsHidden">Hidden<br/>
                 <input type="checkbox" ng-model="EditedDetails.AllowMultiple">Allow Multiple<br/>
                 <input type="checkbox" ng-model="EditedDetails.RequriedAnswer">Require Answer<br/>
                 <input type="checkbox" ng-model="EditedDetails.OtherAnswer" ng-change="toggleOtherAnswer()">OtherAnswer<br/>
+                <button class="btn btn-default" ng-click="SendDetails()">Save</button>
             </form>
-            <button class="btn btn-lg btn-success pull-right" ng-click="SendDetails()">Save</button>
         </div>
        
         <div class="col-md-5" ng-controller="multiAnswerController" ng-init="init(@ViewBag.Id)">
